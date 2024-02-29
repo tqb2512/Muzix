@@ -4,6 +4,7 @@ import { song } from "@prisma/client";
 export interface Player {
     song: song;
     urlSource: string;
+    urlImage: string;
     time: number;
     status: "playing" | "paused" | "stopped";
 }
@@ -11,6 +12,7 @@ export interface Player {
 const initialState: Player = {
     song: {} as song,
     urlSource: "",
+    urlImage: "",
     time: 0,
     status: "stopped",
 };
@@ -21,6 +23,9 @@ const playerSlice = createSlice({
     reducers: {
         setUrlSource: (state, action: PayloadAction<string>) => {
             state.urlSource = action.payload;
+        },
+        setUrlImage: (state, action: PayloadAction<string>) => {
+            state.urlImage = action.payload;
         },
         setSong: (state, action: PayloadAction<song>) => {
             state.song = action.payload;
@@ -34,5 +39,5 @@ const playerSlice = createSlice({
     },
 });
 
-export const { setUrlSource, setSong, setTime, setStatus } = playerSlice.actions;
+export const { setUrlSource, setUrlImage, setSong, setTime, setStatus } = playerSlice.actions;
 export default playerSlice.reducer;

@@ -3,6 +3,7 @@ import React from "react";
 import { song, album, artist } from "@prisma/client";
 import * as queue from "@/libs/features/slices/queue";
 import { useDispatch } from "react-redux";
+import Link from "next/link";
 
 interface Song extends song{
   album: album & {
@@ -36,6 +37,11 @@ export default function Home() {
           );
         })}
       </ul>
+      <div className="mt-4">
+        <Link href="/artist">
+          Artist
+        </Link>
+      </div>
     </div>
   );
 }

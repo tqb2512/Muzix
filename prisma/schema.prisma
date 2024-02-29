@@ -64,7 +64,7 @@ model song {
   album_id               String                   @db.Uuid
   name                   String
   lyrics                 String?
-  duration_ms            Int                      @default(0)
+  duration_ms            Float                    @default(0) @db.Real
   artist_contribute_song artist_contribute_song[]
   playlist_song          playlist_song[]
   album                  album                    @relation(fields: [album_id], references: [album_id], onDelete: Cascade, onUpdate: NoAction, map: "public_song_album_id_fkey")
