@@ -1,5 +1,20 @@
-export default function RightBar() {
+import InfoButton from "./Buttons/Info";
+import LyricsButton from "./Buttons/Lyrics";
+import QueueButton from "./Buttons/Queue";
+import VolumeBar from "./VolumeBar";
+
+
+export default function RightBar({ audioRef }: { audioRef: any }) {
     return (
-        <div className="w-3/12">RightBar</div>
+        <div className="flex items-center w-3/12 space-x-4 justify-end">
+            <div className="flex justify-end w-1/2 flex-grow">
+                <div className="flex items-center space-x-4">
+                    <InfoButton className="w-4 h-4 fill-current text-gray-300 hover:text-white flex-shrink-0" />
+                    <LyricsButton className="w-4 h-4 fill-current text-gray-300 hover:text-white flex-shrink-0" />
+                    <QueueButton className="w-4 h-4 fill-current text-gray-300 hover:text-white flex-shrink-0" />
+                </div>
+                <VolumeBar audioRef={audioRef} />
+            </div>
+        </div >
     )
 }

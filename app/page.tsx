@@ -5,7 +5,7 @@ import * as queue from "@/libs/features/slices/queue";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
 
-interface Song extends song{
+interface Song extends song {
   album: album & {
     artist: artist;
   };

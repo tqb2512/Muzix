@@ -1,12 +1,11 @@
 "use client"
 import { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { skipToken } from "@reduxjs/toolkit/query";
 import { RootState } from "@/libs/store";
 import * as player from "@/libs/features/slices/player";
 import * as queue from "@/libs/features/slices/queue";
 import * as songsAPI from "@/libs/features/apiSlices/songs";
-import * as albumsAPI from "@/libs/features/apiSlices/albums";
-import Image from "next/image";
 import NowPlaying from "./NowPlaying";
 import RightBar from "./RightBar";
 import PlayButton from "./Buttons/Play";
@@ -29,11 +28,12 @@ export default function AudioPlayer() {
     const playerState = useSelector((state: RootState) => state.player);
     const queueState = useSelector((state: RootState) => state.queue);
     const audioRef = useRef<HTMLAudioElement>(null);
-    const { data: songUrl } = songsAPI.useGetSongbyIdQuery(playerState.song.song_id);
+    const { data: songUrl } = songsAPI.useGetSongbyIdQuery(playerState.song.song_id || skipToken);
 
     useEffect(() => {
         if (songUrl) {
-            dispatch(player.setUrlSource(songUrl?.url));
+            dispatch(player.setUrlSource(songUrl.url));
+            console.log(songUrl.url);
         }
     }, [songUrl, dispatch]);
 
@@ -114,19 +114,19 @@ export default function AudioPlayer() {
                     </div>
 
                     <div className="flex items-center justify-between w-10/12 space-x-4">
-                        <div>
+                        <div className="whitespace-nowrap">
                             {toMMSS(playerState.time)}
                         </div>
 
                         <ProgressBar audioRef={audioRef} />
 
-                        <div>
+                        <div className="whitespace-nowrap">
                             {playerState.song.song_id ? toMMSS(audioRef.current?.duration || 0) : "--:--"}
                         </div>
                     </div>
                 </div>
-
-                <RightBar />
+                        
+                <RightBar audioRef={audioRef} />
 
             </div>
         </div>

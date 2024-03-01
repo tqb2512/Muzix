@@ -2,6 +2,7 @@
 import { song, album, artist_contribute_song, artist } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { skipToken } from "@reduxjs/toolkit/query";
 import { RootState } from "@/libs/store";
 import * as player from "@/libs/features/slices/player";
 import * as albumsAPI from "@/libs/features/apiSlices/albums";
@@ -21,7 +22,7 @@ export default function NowPlaying() {
 
     const dispatch = useDispatch();
     const playerState = useSelector((state: RootState) => state.player);
-    const { data: albumCoverUrl } = albumsAPI.useGetCoverbyIdQuery(playerState.song.album_id);
+    const { data: albumCoverUrl } = albumsAPI.useGetCoverbyIdQuery(playerState.song.album_id || skipToken);
     const [song, setSong] = useState<Song | null>(null);
 
     useEffect(() => {
@@ -43,7 +44,7 @@ export default function NowPlaying() {
         <div className="flex items-center space-x-4 w-3/12">
 
             <div className="">
-                <Image src={playerState.urlImage} alt="Album cover" width={58} height={58} className="rounded-md" />
+                <Image src={playerState.urlImage || "/next.svg"} alt="Album cover" width={58} height={58} className="rounded-md" />
             </div>
 
             <div className="flex flex-col space-y-1">
