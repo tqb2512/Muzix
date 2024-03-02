@@ -1,6 +1,6 @@
 "use client"
 import { song, album, artist_contribute_song, artist } from "@prisma/client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { RootState } from "@/libs/store";
@@ -24,6 +24,8 @@ export default function NowPlaying() {
     const playerState = useSelector((state: RootState) => state.player);
     const { data: albumCoverUrl } = albumsAPI.useGetCoverbyIdQuery(playerState.song.album_id || skipToken);
     const [song, setSong] = useState<Song | null>(null);
+
+
 
     useEffect(() => {
         if (playerState.song.song_id)
@@ -49,12 +51,14 @@ export default function NowPlaying() {
 
             <div className="flex flex-col space-y-1">
                 
-                <Link
-                    href={`/albums/${song?.album.album_id}`}
-                    className="text-sm font-bold hover:text-white hover:underline w-60 overflow-hidden whitespace-nowrap"
-                >
-                    <span>{song?.name}</span>
-                </Link>
+                <div>
+                    <Link
+                        href={`/albums/${song?.album.album_id}`}
+                        className="text-sm font-bold hover:text-white hover:underline"
+                    >
+                        {song?.name}
+                    </Link>
+                </div>
 
                 <div className="text-xs text-gray-500">
                     <Link

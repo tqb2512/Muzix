@@ -14,7 +14,7 @@ export default function ProgressBar({ audioRef }: { audioRef: any }) {
 
     return (
         <div
-            className="h-1 w-10/12 bg-gray-500 rounded-full hover:cursor-pointer"
+            className="h-1 w-full bg-gray-500 rounded-full hover:cursor-pointer"
             ref={barRef}
             onMouseOver={(e) => {
                 progressRef.current?.classList.add("bg-green-500");

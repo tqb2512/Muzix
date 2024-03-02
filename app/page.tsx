@@ -25,7 +25,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div>
+    <div className="h-full">
       <ul>
         {songs.map((song) => {
           return (

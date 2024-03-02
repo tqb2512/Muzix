@@ -22,7 +22,7 @@ function toMMSS(seconds: number) {
     return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
 }
 
-export default function AudioPlayer() {
+export default function AudioPlayer({className}: {className?: string}) {
 
     const dispatch = useDispatch();
     const playerState = useSelector((state: RootState) => state.player);
@@ -57,7 +57,7 @@ export default function AudioPlayer() {
     }
 
     return (
-        <div>
+        <div className={className}>
             <audio
                 ref={audioRef}
                 id="audioPlayer"
@@ -69,7 +69,7 @@ export default function AudioPlayer() {
                 onEnded={() => dispatch(queue.shift())}
             ></audio>
 
-            <div className="flex items-center justify-between ">
+            <div className="flex items-center justify-between">
 
                 <NowPlaying />
 
@@ -113,14 +113,14 @@ export default function AudioPlayer() {
                         </button>
                     </div>
 
-                    <div className="flex items-center justify-between w-10/12 space-x-4">
-                        <div className="whitespace-nowrap">
+                    <div className="flex items-center justify-between w-10/12 space-x-2">
+                        <div className="whitespace-nowrap text-sm">
                             {toMMSS(playerState.time)}
                         </div>
 
                         <ProgressBar audioRef={audioRef} />
 
-                        <div className="whitespace-nowrap">
+                        <div className="whitespace-nowrap text-sm">
                             {playerState.song.song_id ? toMMSS(audioRef.current?.duration || 0) : "--:--"}
                         </div>
                     </div>

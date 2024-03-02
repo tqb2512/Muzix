@@ -14,16 +14,20 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       animation: {
-        marquee: "marquee 5s linear infinite alternate",
+        marquee: "marquee 5s linear infinite",
       },
       keyframes: {
         marquee: {
-          "0%": { textIndent: "0%" },
-          "10%": { textIndent: "0%" },
-          "90%": { textIndent: "-10%" },
-          "100%": { textIndent: "-10%" },
+          "0%": { transform: "translate(0, 0)" },
+          "100%": { transform: "translate(-100%, 0)" },
         },
       },
+      colors: {
+        "dark-background": "#121212",
+        "gray-button": "#b2b2b2",
+        "gray-button-2": "#ffffff12",
+        "hover-gray-button": "#ffffff33",
+      }
     },
   },
   plugins: [],
