@@ -17,13 +17,13 @@ export function LibrarySection({ isExpanded = true }: { isExpanded?: boolean }) 
         <div className="rounded-lg bg-dark-background h-full">
             <div className="flex items-center justify-between ml-2">
                 <div
-                    className="font-bold flex items-center p-4 text-gray-button hover:text-white hover:underline transition-all duration-300 ease-in-out">
-                    <Icons.LibraryIcon className="w-7 h-7 mr-4 fill-current flex-shrink-0" />
+                    className="font-bold flex items-center p-4 text-gray-button hover:text-white transition-all duration-300 ease-in-out">
+                    <Icons.Library className="w-7 h-7 mr-4 fill-current flex-shrink-0" />
                     {isExpanded && "Library"}
                 </div>
                 {isExpanded &&
                     <div className="hover:bg-neutral-800 hover:text-white text-gray-button rounded-full w-8 h-8 flex items-center justify-center mx-4 transition-all duration-300 ease-in-out">
-                        <Icons.AddIcon className="w-4 h-4 fill-current flex-shrink-0" />
+                        <Icons.Add className="w-4 h-4 fill-current flex-shrink-0" />
                     </div>
                 }
             </div>
@@ -43,7 +43,7 @@ export function LibrarySection({ isExpanded = true }: { isExpanded?: boolean }) 
             {isExpanded &&
             <div className="flex items-center justify-between mt-4">
                 <div className="hover:bg-neutral-800 hover:text-white text-gray-button rounded-full w-8 h-8 flex items-center justify-center mx-4 transition-all duration-300 ease-in-out">
-                    <Icons.SearchIcon className="w-4 h-4 fill-current" />
+                    <Icons.Search className="w-4 h-4 fill-current" />
                 </div>
             </div>
             }

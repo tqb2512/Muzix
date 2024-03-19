@@ -25,8 +25,6 @@ export default function NowPlaying() {
     const { data: albumCoverUrl } = albumsAPI.useGetCoverbyIdQuery(playerState.song.album_id || skipToken);
     const [song, setSong] = useState<Song | null>(null);
 
-
-
     useEffect(() => {
         if (playerState.song.song_id)
             fetch(`/api/songs/${playerState.song.song_id}`)
@@ -45,8 +43,8 @@ export default function NowPlaying() {
     return (
         <div className="flex items-center space-x-4 w-3/12">
 
-            <div className="">
-                <Image src={playerState.urlImage || "/next.svg"} alt="Album cover" width={58} height={58} className="rounded-md" />
+            <div className="flex-shrink-0">
+                <Image src={playerState.urlImage || "/next.svg"} alt="Album cover" width={58} height={58} className="rounded-md flex-shrink-0" />
             </div>
 
             <div className="flex flex-col space-y-1">

@@ -27,6 +27,8 @@ const config: Config = {
         "gray-button": "#b2b2b2",
         "gray-button-2": "#ffffff12",
         "hover-gray-button": "#ffffff33",
+        "gray-text": "#a7a7a7",
+        "hover-gray-background": "#2a2a2a",
       }
     },
   },

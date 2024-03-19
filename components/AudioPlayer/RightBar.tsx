@@ -2,7 +2,7 @@ import InfoButton from "./Buttons/Info";
 import LyricsButton from "./Buttons/Lyrics";
 import QueueButton from "./Buttons/Queue";
 import VolumeBar from "./VolumeBar";
-
+import Link from "next/link";
 
 export default function RightBar({ audioRef }: { audioRef: any }) {
     return (
@@ -11,7 +11,9 @@ export default function RightBar({ audioRef }: { audioRef: any }) {
                 <div className="flex items-center space-x-4">
                     <InfoButton className="w-4 h-4 fill-current text-gray-300 hover:text-white flex-shrink-0" />
                     <LyricsButton className="w-4 h-4 fill-current text-gray-300 hover:text-white flex-shrink-0" />
-                    <QueueButton className="w-4 h-4 fill-current text-gray-300 hover:text-white flex-shrink-0" />
+                    <Link href="/queue">
+                        <QueueButton className="w-4 h-4 fill-current text-gray-300 hover:text-white flex-shrink-0" />
+                    </Link>
                 </div>
                 <VolumeBar audioRef={audioRef} />
             </div>

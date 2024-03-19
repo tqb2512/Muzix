@@ -5,6 +5,7 @@ import { s3Client } from "@/app/api/base";
 
 export async function GET(req: Request) {
     const id = new URL(req.url).searchParams.get("id") || ""
+    const quality = new URL(req.url).searchParams.get("quality") || "medium"
 
     if (id === "") {
         return NextResponse.json({ error: "No id provided" }, { status: 400 });
@@ -12,7 +13,7 @@ export async function GET(req: Request) {
 
     const url = await getSignedUrl(s3Client, new GetObjectCommand({
         Bucket: process.env.NEXT_PUBLIC_S3_BUCKET || "",
-        Key: `Images/Albums/${id}/cover.jpg`
+        Key: `Songs/${id}/${quality}.mp3`
     }));
 
     return NextResponse.json({ url }, { status: 200 });

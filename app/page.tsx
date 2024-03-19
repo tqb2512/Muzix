@@ -4,6 +4,7 @@ import { song, album, artist } from "@prisma/client";
 import * as queue from "@/libs/features/slices/queue";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
+import HomeContainer from "@/components/HomeContainer";
 
 interface Song extends song {
   album: album & {
@@ -26,22 +27,7 @@ export default function Home() {
 
   return (
     <div className="h-full">
-      <ul>
-        {songs.map((song) => {
-          return (
-            <li key={song.song_id}>
-              {song.name} - {song.album.name} - {song.album.artist.name}
-              <button onClick={() => dispatch(queue.play(song))}>Play</button>
-              <button onClick={() => dispatch(queue.push(song))}>Add to Queue</button>
-            </li>
-          );
-        })}
-      </ul>
-      <div className="mt-4">
-        <Link href="/artist">
-          Artist
-        </Link>
-      </div>
+      <HomeContainer />
     </div>
   );
 }

@@ -13,6 +13,7 @@ model album {
   name            String
   artist_id       String            @db.Uuid
   artist          artist            @relation(fields: [artist_id], references: [artist_id], onDelete: Cascade, onUpdate: NoAction, map: "public_album_artist_id_fkey")
+  section_albums  section_albums[]
   song            song[]
   user_like_album user_like_album[]
 }
@@ -23,6 +24,7 @@ model artist {
   name                   String
   album                  album[]
   artist_contribute_song artist_contribute_song[]
+  section_artists        section_artists[]
   user_following_artist  user_following_artist[]
 }
 
@@ -44,6 +46,7 @@ model playlist {
   name                    String?
   user                    user                      @relation(fields: [user_id], references: [user_id], onDelete: Cascade, onUpdate: NoAction, map: "public_playlist_user_id_fkey")
   playlist_song           playlist_song[]
+  section_playlists       section_playlists[]
   user_following_playlist user_following_playlist[]
 }
 
@@ -137,4 +140,47 @@ model user_like_song {
   user       user     @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "public_user_like_song_user_id_fkey")
 
   @@id([user_id, song_id])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model section {
+  section_id        String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name              String?
+  created_at        DateTime?           @default(now()) @db.Timestamptz(6)
+  section_albums    section_albums[]
+  section_artists   section_artists[]
+  section_playlists section_playlists[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model section_albums {
+  section_id String    @db.Uuid
+  album_id   String    @db.Uuid
+  created_at DateTime? @default(now()) @db.Timestamptz(6)
+  album      album     @relation(fields: [album_id], references: [album_id], onDelete: NoAction, onUpdate: NoAction, map: "public_section_albums_album_id_fkey")
+  section    section   @relation(fields: [section_id], references: [section_id], onDelete: NoAction, onUpdate: NoAction, map: "public_section_albums_section_id_fkey")
+
+  @@id([section_id, album_id])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model section_artists {
+  section_id String    @db.Uuid
+  artist_id  String    @db.Uuid
+  created_at DateTime? @default(now()) @db.Timestamptz(6)
+  artist     artist    @relation(fields: [artist_id], references: [artist_id], onDelete: NoAction, onUpdate: NoAction, map: "public_section_artists_artist_id_fkey")
+  section    section   @relation(fields: [section_id], references: [section_id], onDelete: NoAction, onUpdate: NoAction, map: "public_section_artists_section_id_fkey")
+
+  @@id([section_id, artist_id])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model section_playlists {
+  section_id  String    @db.Uuid
+  playlist_id String    @db.Uuid
+  created_at  DateTime? @default(now()) @db.Timestamptz(6)
+  playlist    playlist  @relation(fields: [playlist_id], references: [playlist_id], onDelete: NoAction, onUpdate: NoAction, map: "public_section_playlists_playlist_id_fkey")
+  section     section   @relation(fields: [section_id], references: [section_id], onDelete: NoAction, onUpdate: NoAction, map: "public_section_playlists_section_id_fkey")
+
+  @@id([section_id, playlist_id])
 }

@@ -33,8 +33,17 @@ const queueSlice = createSlice({
                 state.songs.splice(index, 1);
             }
         },
+        playAtIndex: (state, action: PayloadAction<number>) => {
+            const index = action.payload;
+            if (index >= 0 && index < state.songs.length) {
+                const song = state.songs[index];
+                state.songs.splice(index, 1);
+                state.songs.unshift(song);
+                setSong(song);
+            }
+        }
     },
 });
 
-export const { play, clear, push, shift, removeAtIndex } = queueSlice.actions;
+export const { play, clear, push, shift, removeAtIndex, playAtIndex } = queueSlice.actions;
 export default queueSlice.reducer;

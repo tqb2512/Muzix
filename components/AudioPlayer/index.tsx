@@ -28,12 +28,11 @@ export default function AudioPlayer({className}: {className?: string}) {
     const playerState = useSelector((state: RootState) => state.player);
     const queueState = useSelector((state: RootState) => state.queue);
     const audioRef = useRef<HTMLAudioElement>(null);
-    const { data: songUrl } = songsAPI.useGetSongbyIdQuery(playerState.song.song_id || skipToken);
+    const { data: songUrl } = songsAPI.useGetFilebyIdQuery(playerState.song.song_id || skipToken);
 
     useEffect(() => {
         if (songUrl) {
             dispatch(player.setUrlSource(songUrl.url));
-            console.log(songUrl.url);
         }
     }, [songUrl, dispatch]);
 
@@ -62,7 +61,7 @@ export default function AudioPlayer({className}: {className?: string}) {
                 ref={audioRef}
                 id="audioPlayer"
                 src={playerState.urlSource}
-                autoPlay
+                //autoPlay
                 onTimeUpdate={(e) => dispatch(player.setTime(e.currentTarget.currentTime))}
                 onPlay={() => dispatch(player.setStatus("playing"))}
                 onPause={() => dispatch(player.setStatus("paused"))}
