@@ -1,21 +1,32 @@
 import * as albumsAPI from '@/libs/features/apiSlices/albums'
 import { album, artist } from '@prisma/client'
 import Image from 'next/image'
-
+import Link from 'next/link'
 
 export default function AlbumBox({ album, artist }: { album: album, artist: artist }) {
     const { data, error, isLoading } = albumsAPI.useGetCoverbyIdQuery(album.album_id)
+
+
+
     return (
-        <div className="w-52 h-72 p-4 rounded-md hover:bg-hover-gray-background transition duration-300">
-            <div className="flex flex-col items-center justify-center">
-                <Image src={data?.url || "/next.svg"} alt="album image" width={176} height={176} className='rounded-md' />
-                <div className="mt-2 w-44 truncate">
-                    {album.name}
-                </div>
-                <div className="w-44 text-gray-text text-sm">
-                    {artist.name}
+        <Link
+            href={`/album/${album.album_id}`}
+            className="w-52 h-[276px] p-3 rounded-md hover:bg-hover-gray-background transition duration-300">
+            <div className="w-full h-full">
+                <div className="flex flex-col items-center w-full h-full">
+                    <div className="rounded-md overflow-hidden relative w-full h-[184px]">
+                        <Image src={data?.url || "/next.svg"} alt="album image" layout='fill' objectFit='cover' />
+                    </div>
+                    <div className="mt-2 w-full">
+                        <div className="truncate">
+                            {album.name}
+                        </div>
+                        <div className="text-gray-text text-sm">
+                            {artist.name}
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </Link>
     )
 }

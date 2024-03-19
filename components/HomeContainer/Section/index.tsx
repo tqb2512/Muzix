@@ -1,7 +1,9 @@
 import { section, section_albums, section_playlists, section_artists, album, artist, playlist } from "@prisma/client"
 import AlbumBox from "./Album";
 import ArtistBox from "./Artist";
+import PlaylistBox from "./Playlist";
 import React from "react";
+import Link from "next/link";
 
 interface Section extends section {
     section_albums: section_albums & {
@@ -21,15 +23,16 @@ function sortByCreatedAt(a: any, b: any) {
     return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
 }
 
-export default function Section( { section }: { section: Section } ) {
-    
+export default function Section({ section }: { section: Section }) {
+
     const items = [...section.section_albums, ...section.section_artists, ...section.section_playlists]
     items.sort(sortByCreatedAt)
 
-    const [numberOfItems, setNumberOfItems] = React.useState(6)
+    const [numOfCols, setNumOfCols] = React.useState(6);
+    const containerRef = React.useRef<HTMLDivElement>(null);
 
     const renderItems = items.map((item, index) => {
-        if (index >= numberOfItems) {
+        if (index >= numOfCols) {
             return null
         }
         if ('album' in item) {
@@ -37,24 +40,51 @@ export default function Section( { section }: { section: Section } ) {
         } else if ('artist' in item) {
             return <ArtistBox key={index} artist={item.artist} />
         } else if ('playlist' in item) {
-            return <div key={index}></div>
+            return <PlaylistBox key={index} playlist={item.playlist} />
         }
     })
 
+    React.useEffect(() => {
+        const handleResize = (entries: any) => {
+            for (let entry of entries) {
+                setNumOfCols(Math.floor(entry.contentRect.width / 208));
+            }
+        };
+    
+        const resizeObserver = new ResizeObserver(handleResize);
+    
+        if (containerRef.current) {
+            resizeObserver.observe(containerRef.current);
+        }
+    
+        return () => {
+            if (containerRef.current) {
+                resizeObserver.unobserve(containerRef.current);
+            }
+        };
+    }, []);
+
     return (
         <div
+            ref={containerRef}
             className="flex flex-col w-full h-full mt-6">
             <div className="flex flex-row justify-between">
-                <h1
+                <Link
+                    href={`/section/${section.section_id}`}
                     className="text-2xl font-bold hover:underline"
-                >{section.name}</h1>
-                <h1
+                >{section.name}</Link>
+                <Link
+                    href={`/section/${section.section_id}`}
                     className="text-gray-text hover:underline font-bold"
-                >Show all</h1>
+                >Show all</Link>
             </div>
 
-            <div 
-                className="grid grid-cols-6 gap-4 mt-2">
+            <div
+                className={`grid gap-4 mt-2`}
+                style={{
+                    gridTemplateColumns: `repeat(${numOfCols}, minmax(0, 1fr))`
+                }}
+            >
                 {renderItems}
             </div>
         </div>
