@@ -1,3 +1,4 @@
+"use client";
 import * as sectionsAPI from "@/libs/features/apiSlices/sections";
 import React, { useEffect } from "react";
 import Section from "./Section";
@@ -30,51 +31,36 @@ export default function HomeContainer() {
 
     return (
         <div>
-            {isLoading ? (
-                <div>Loading...</div>
-            ) : (
-                <div>
-                    {sections.map((section) => (
-                        <Section key={section.section_id} section={section} />
-                    ))}
-                </div>
-            )}
-            {isLoading ? (
-                <div>Loading...</div>
-            ) : (
-                <div>
-                    {sections.map((section) => (
-                        <Section key={section.section_id} section={section} />
-                    ))}
-                </div>
-            )}
-            {isLoading ? (
-                <div>Loading...</div>
-            ) : (
-                <div>
-                    {sections.map((section) => (
-                        <Section key={section.section_id} section={section} />
-                    ))}
-                </div>
-            )}
-            {isLoading ? (
-                <div>Loading...</div>
-            ) : (
-                <div>
-                    {sections.map((section) => (
-                        <Section key={section.section_id} section={section} />
-                    ))}
-                </div>
-            )}
-            {isLoading ? (
-                <div>Loading...</div>
-            ) : (
-                <div>
-                    {sections.map((section) => (
-                        <Section key={section.section_id} section={section} />
-                    ))}
-                </div>
-            )}
+            <div>
+                {sections.map((section) => (
+                    <Section key={section.section_id} section={section} />
+                ))}
+            </div>
+            <div>
+                {sections.map((section) => (
+                    <Section key={section.section_id} section={section} />
+                ))}
+            </div>
+            <div>
+                {sections.map((section) => (
+                    <Section key={section.section_id} section={section} />
+                ))}
+            </div>
+            <div>
+                {sections.map((section) => (
+                    <Section key={section.section_id} section={section} />
+                ))}
+            </div>
+            <div>
+                {sections.map((section) => (
+                    <Section key={section.section_id} section={section} />
+                ))}
+            </div>
+            <div>
+                {sections.map((section) => (
+                    <Section key={section.section_id} section={section} />
+                ))}
+            </div>
         </div>
     )
 }

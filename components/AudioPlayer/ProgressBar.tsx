@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/libs/store";
 import * as player from "@/libs/features/slices/player";
@@ -10,7 +10,6 @@ export default function ProgressBar({ audioRef }: { audioRef: any }) {
     const playerState = useSelector((state: RootState) => state.player);
     const progressRef = useRef<HTMLDivElement>(null);
     const barRef = useRef<HTMLDivElement>(null);
-    const knobRef = useRef<HTMLDivElement>(null);
 
     return (
         <div

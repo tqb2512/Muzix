@@ -1,6 +1,5 @@
-"use client"
-import Link from "next/link";
-import * as Icons from "./Icons"
+"use client";
+import * as Icons from "./Icons";
 import { useState } from "react";
 
 const categories = [
@@ -41,11 +40,11 @@ export function LibrarySection({ isExpanded = true }: { isExpanded?: boolean }) 
             }
 
             {isExpanded &&
-            <div className="flex items-center justify-between mt-4">
-                <div className="hover:bg-neutral-800 hover:text-white text-gray-button rounded-full w-8 h-8 flex items-center justify-center mx-4 transition-all duration-300 ease-in-out">
-                    <Icons.Search className="w-4 h-4 fill-current" />
+                <div className="flex items-center justify-between mt-4">
+                    <div className="hover:bg-neutral-800 hover:text-white text-gray-button rounded-full w-8 h-8 flex items-center justify-center mx-4 transition-all duration-300 ease-in-out">
+                        <Icons.Search className="w-4 h-4 fill-current" />
+                    </div>
                 </div>
-            </div>
             }
 
 

@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { song, album, artist, artist_contribute_song} from "@prisma/client";
+import { song, album, artist, artist_contribute_song } from "@prisma/client";
 
 interface Song extends song {
     album: album & {

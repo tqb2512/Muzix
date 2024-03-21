@@ -1,4 +1,4 @@
-export default function ArtistPage() {
+export default function ArtistDetailPage() {
     return (
         <div>
             <h1>ArtistPage</h1>

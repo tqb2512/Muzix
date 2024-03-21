@@ -1,4 +1,4 @@
-export default function SongPage() {
+export default function SongDetailPage() {
     return (
         <div>
             <h1>SongPage</h1>

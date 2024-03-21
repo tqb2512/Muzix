@@ -1,8 +1,7 @@
-"use client"
-
+"use client";
 import { LibrarySection } from "./Library";
 import NavigatorSection from "./Navigator";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 
 export default function SideBar({ className }: { className?: string }) {
 

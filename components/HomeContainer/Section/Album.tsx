@@ -1,16 +1,14 @@
-import * as albumsAPI from '@/libs/features/apiSlices/albums'
-import { album, artist } from '@prisma/client'
-import Image from 'next/image'
-import Link from 'next/link'
+import * as albumsAPI from "@/libs/features/apiSlices/albums";
+import { album, artist } from "@prisma/client";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function AlbumBox({ album, artist }: { album: album, artist: artist }) {
     const { data, error, isLoading } = albumsAPI.useGetCoverbyIdQuery(album.album_id)
 
-
-
     return (
         <Link
-            href={`/album/${album.album_id}`}
+            href={`/app/album/${album.album_id}`}
             className="w-52 h-[276px] p-3 rounded-md hover:bg-hover-gray-background transition duration-300">
             <div className="w-full h-full">
                 <div className="flex flex-col items-center w-full h-full">

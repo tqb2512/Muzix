@@ -1,5 +1,5 @@
 import Link from "next/link";
-import * as Icons from "./Icons"
+import * as Icons from "./Icons";
 
 interface NavigatorProps {
     title: string;

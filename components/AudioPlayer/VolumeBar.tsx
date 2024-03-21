@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import VolumeButton from "./Buttons/Volume";
+import * as Icons from "./Icons";
 
 export default function VolumeBar({ audioRef}: { audioRef: any }) {
 
@@ -8,7 +8,7 @@ export default function VolumeBar({ audioRef}: { audioRef: any }) {
 
     return (
         <div className="flex items-center space-x-3 w-full m-4 max-w-28">
-            <VolumeButton className="w-4 h-4 fill-current text-gray-300 hover:text-white flex-shrink-0" />
+            <Icons.Volume className="w-4 h-4 fill-current text-gray-300 hover:text-white flex-shrink-0" />
             <div
                 ref={barRef}
                 className="bg-gray-500 rounded-full hover:cursor-pointer h-1 w-10/12 flex-shrink-0"

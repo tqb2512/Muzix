@@ -1,4 +1,4 @@
-export default function PlaylistPage() {
+export default function PlaylistDetailPage() {
     return (
         <div>
             <h1>Playlist Page</h1>

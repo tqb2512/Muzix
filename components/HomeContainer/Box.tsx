@@ -7,7 +7,7 @@ interface BoxProps {
     link: string;
 }
 
-export default function Box({title, description, image, link}: BoxProps) {
+export default function Box({ title, description, image, link }: BoxProps) {
     return (
         <div className="flex flex-col items-center justify-center w-64 h-70 bg-white rounded-md shadow-md">
             <Image src={image} alt="box image" width={64} height={64} />

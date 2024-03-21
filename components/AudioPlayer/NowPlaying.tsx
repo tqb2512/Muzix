@@ -1,6 +1,6 @@
 "use client"
 import { song, album, artist_contribute_song, artist } from "@prisma/client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { RootState } from "@/libs/store";
@@ -51,7 +51,7 @@ export default function NowPlaying() {
                 
                 <div>
                     <Link
-                        href={`/albums/${song?.album.album_id}`}
+                        href={`/app/albums/${song?.album.album_id}`}
                         className="text-sm font-bold hover:text-white hover:underline"
                     >
                         {song?.name}
@@ -60,14 +60,14 @@ export default function NowPlaying() {
 
                 <div className="text-xs text-gray-500">
                     <Link
-                        href={`/artists/${song?.album.artist.artist_id}`}
+                        href={`/app/artists/${song?.album.artist.artist_id}`}
                         className="hover:text-white hover:underline"
                     >
                         {song?.album.artist.name}
                     </Link>
                     {song?.artist_contribute_song.map((artist) => {
                         return (
-                            <Link key={artist.artist.artist_id} href={`/artists/${artist.artist.artist_id}`}>
+                            <Link key={artist.artist.artist_id} href={`/app/artists/${artist.artist.artist_id}`}>
                                 <span>, {artist.artist.name}</span>
                             </Link>
                         );

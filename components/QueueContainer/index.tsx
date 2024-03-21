@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { song, album, artist, artist_contribute_song } from "@prisma/client";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/libs/store";

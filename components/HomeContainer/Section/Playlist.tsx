@@ -1,14 +1,14 @@
-import * as playlistsAPI from '@/libs/features/apiSlices/playlists'
-import { playlist } from '@prisma/client'
-import Image from 'next/image'
-import Link from 'next/link'
+import * as playlistsAPI from "@/libs/features/apiSlices/playlists";
+import { playlist } from "@prisma/client";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function PlaylistBox({ playlist }: { playlist: playlist }) {
     const { data, error, isLoading } = playlistsAPI.useGetCoverbyIdQuery(playlist.playlist_id)
 
     return (
         <Link
-            href={`/playlist/${playlist.playlist_id}`}
+            href={`/app/playlist/${playlist.playlist_id}`}
             className="w-52 h-[276px] p-3 rounded-md hover:bg-hover-gray-background transition duration-300">
             <div className="w-full h-full">
                 <div className="flex flex-col items-center w-full h-full">

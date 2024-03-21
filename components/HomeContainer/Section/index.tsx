@@ -1,4 +1,4 @@
-import { section, section_albums, section_playlists, section_artists, album, artist, playlist } from "@prisma/client"
+import { section, section_albums, section_playlists, section_artists, album, artist, playlist } from "@prisma/client";
 import AlbumBox from "./Album";
 import ArtistBox from "./Artist";
 import PlaylistBox from "./Playlist";
@@ -26,10 +26,9 @@ function sortByCreatedAt(a: any, b: any) {
 export default function Section({ section }: { section: Section }) {
 
     const items = [...section.section_albums, ...section.section_artists, ...section.section_playlists]
-    items.sort(sortByCreatedAt)
-
     const [numOfCols, setNumOfCols] = React.useState(6);
     const containerRef = React.useRef<HTMLDivElement>(null);
+    items.sort(sortByCreatedAt)
 
     const renderItems = items.map((item, index) => {
         if (index >= numOfCols) {
@@ -50,13 +49,13 @@ export default function Section({ section }: { section: Section }) {
                 setNumOfCols(Math.floor(entry.contentRect.width / 208));
             }
         };
-    
+
         const resizeObserver = new ResizeObserver(handleResize);
-    
+
         if (containerRef.current) {
             resizeObserver.observe(containerRef.current);
         }
-    
+
         return () => {
             if (containerRef.current) {
                 resizeObserver.unobserve(containerRef.current);

@@ -8,12 +8,7 @@ import * as queue from "@/libs/features/slices/queue";
 import * as songsAPI from "@/libs/features/apiSlices/songs";
 import NowPlaying from "./NowPlaying";
 import RightBar from "./RightBar";
-import PlayButton from "./Buttons/Play";
-import PauseButton from "./Buttons/Pause";
-import ShuffleButton from "./Buttons/Shuffle";
-import PreviousButton from "./Buttons/Previous";
-import NextButton from "./Buttons/Next";
-import RepeatButton from "./Buttons/Repeat";
+import * as Icons from "./Icons"
 import ProgressBar from "./ProgressBar";
 
 function toMMSS(seconds: number) {
@@ -75,7 +70,7 @@ export default function AudioPlayer({className}: {className?: string}) {
                 <div className="flex flex-col items-center justify-center flex-grow space-y-2">
                     <div className="flex space-x-8">
                         <button>
-                            <ShuffleButton className="w-4 h-4 fill-current text-gray-300 hover:text-white" />
+                            <Icons.Shuffle className="w-4 h-4 fill-current text-gray-300 hover:text-white" />
                         </button>
 
                         <button onClick={() => {
@@ -86,14 +81,14 @@ export default function AudioPlayer({className}: {className?: string}) {
 
                                 }
                         }}>
-                            <PreviousButton className="w-4 h-4 fill-current text-gray-300 hover:text-white" />
+                            <Icons.Previous className="w-4 h-4 fill-current text-gray-300 hover:text-white" />
                         </button>
 
                         <button onClick={handlePlayBtn} className="flex items-center justify-center w-8 h-8 bg-white rounded-full">
                             {
                                 playerState.status !== "playing" ?
-                                    <PlayButton className="w-4 h-4 fill-current text-black" /> :
-                                    <PauseButton className="w-4 h-4 fill-current text-black" />
+                                    <Icons.Play className="w-4 h-4 fill-current text-black" /> :
+                                    <Icons.Pause className="w-4 h-4 fill-current text-black" />
                             }
                         </button>
 
@@ -104,11 +99,11 @@ export default function AudioPlayer({className}: {className?: string}) {
 
                             }
                         }}>
-                            <NextButton className="w-4 h-4 fill-current text-gray-300 hover:text-white" />
+                            <Icons.Next className="w-4 h-4 fill-current text-gray-300 hover:text-white" />
                         </button>
 
                         <button>
-                            <RepeatButton className="w-4 h-4 fill-current text-gray-300 hover:text-white" />
+                            <Icons.Repeat className="w-4 h-4 fill-current text-gray-300 hover:text-white" />
                         </button>
                     </div>
 

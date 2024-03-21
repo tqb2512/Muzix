@@ -21,6 +21,6 @@ export async function GET(req: Request) {
         return song !== undefined;
     });
     quality?.shift();
-    
+
     return NextResponse.json({ quality }, { status: 200 });
 }
