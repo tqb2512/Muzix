@@ -10,12 +10,12 @@ interface NavigatorProps {
 const navigators: NavigatorProps[] = [
     {
         title: "Home",
-        link: "/",
+        link: "/app",
         icon: Icons.HomeIcon
     },
     {
         title: "Search",
-        link: "/search",
+        link: "/app/search",
         icon: Icons.SearchIcon
     }
 ]

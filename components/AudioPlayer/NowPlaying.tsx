@@ -43,12 +43,15 @@ export default function NowPlaying() {
     return (
         <div className="flex items-center space-x-4 w-3/12">
 
-            <div className="flex-shrink-0">
-                <Image src={playerState.urlImage || "/next.svg"} alt="Album cover" width={58} height={58} className="rounded-md flex-shrink-0" />
-            </div>
+            <Image
+                src={playerState.urlImage || "/next.svg"}
+                alt="Album cover"
+                width={58}
+                height={58}
+                className="rounded-md flex-shrink-0" />
 
             <div className="flex flex-col space-y-1">
-                
+
                 <div>
                     <Link
                         href={`/app/albums/${song?.album.album_id}`}
