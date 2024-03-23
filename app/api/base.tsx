@@ -1,5 +1,6 @@
-import { PrismaClient } from '@prisma/client'
-import { S3Client } from '@aws-sdk/client-s3'
+import { PrismaClient } from "@prisma/client";
+import { S3Client } from "@aws-sdk/client-s3";
+import { createClient } from "@supabase/supabase-js";
 
 const globalForPrisma = global as unknown as { prisma: PrismaClient }
 
@@ -15,3 +16,5 @@ const credentials = {
 }
 
 export const s3Client = new S3Client({ region: process.env.NEXT_PUBLIC_S3_REGION, credentials })
+
+export const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL || "", process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "")
