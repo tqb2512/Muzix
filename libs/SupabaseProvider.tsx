@@ -16,15 +16,15 @@ export default function SupabaseProvider({ children }: { children: React.ReactNo
     const router = useRouter();
     const [supabase] = useState(() => createClient())
 
-    useEffect(() => {
-        const { data: { subscription } } = supabase.auth.onAuthStateChange(() => {
-            router.refresh()
-        })
+    // useEffect(() => {
+    //     const { data: { subscription } } = supabase.auth.onAuthStateChange(() => {
+    //         router.refresh()
+    //     })
 
-        return () => {
-            subscription.unsubscribe()
-        }
-    }, [router, supabase])
+    //     return () => {
+    //         subscription.unsubscribe()
+    //     }
+    // }, [router, supabase])
 
     return (
         <SupabaseContext.Provider value={{ client: supabase }}>

@@ -3,13 +3,13 @@ import { updateSession } from '@/utils/supabase/middleware'
 
 export async function middleware(request: NextRequest) {
     
-    await updateSession(request)
+    // await updateSession(request)
     
-    return NextResponse.next({
-        request: {
-            headers: request.headers,
-        },
-    })
+    // return NextResponse.next({
+    //     request: {
+    //         headers: request.headers,
+    //     },
+    // })
 }
 
 
