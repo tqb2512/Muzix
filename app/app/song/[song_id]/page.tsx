@@ -1,7 +1,9 @@
-export default function SongDetailPage() {
+import SongContainer from "@/components/SongContainer";
+
+export default function SongDetailPage({ params }: { params: { song_id: string } }) {
     return (
         <div>
-            <h1>SongPage</h1>
+            <SongContainer song_id={params.song_id} />
         </div>
     )
 }

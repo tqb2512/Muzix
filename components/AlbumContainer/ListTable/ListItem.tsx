@@ -47,9 +47,8 @@ export default function ListItem({ song, index }: ListItemProps) {
                             ))}
                         </div>
                     </div>
+
                 </div>
-                <Link href={`/app/album/${song.album_id}`} className="text-left w-2/5 truncate overflow-hidden hover:underline">{song.album.name}</Link>
-                <div className="text-left w-1/4 truncate overflow-hidden">{new Date(song.playlist_song[0].created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</div>
 
             </div>
             <div className="text-center w-32 truncate overflow-hidden">{song.duration_ms}</div>

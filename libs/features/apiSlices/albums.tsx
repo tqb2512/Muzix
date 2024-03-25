@@ -1,7 +1,20 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { song, album } from "@prisma/client";
+import { song, album, artist, artist_contribute_song } from "@prisma/client";
 interface Response {
     url: string;
+}
+
+interface Song extends song {
+    album: album & {
+        artist: artist;
+    };
+    artist_contribute_song: artist_contribute_song & {
+        artist: artist;
+    }[];
+}
+
+interface Album extends album {
+    artist: artist;
 }
 
 export const albumsAPI = createApi({
@@ -11,10 +24,10 @@ export const albumsAPI = createApi({
         getCoverbyId: builder.query<Response, string>({
             query: (id) => `albums/cover?id=${id}` as string,
         }),
-        getInfoById: builder.query<album, string>({
+        getInfoById: builder.query<{ album: Album }, string>({
             query: (id) => `albums/${id}` as string,
         }),
-        getSongsById: builder.query<{ songs: song[] }, string>({
+        getSongsById: builder.query<{ songs: Song[] }, string>({
             query: (id) => `albums/${id}/songs` as string,
         }),
     }),

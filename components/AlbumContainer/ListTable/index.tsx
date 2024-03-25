@@ -3,7 +3,6 @@ import ListItem from "./ListItem";
 import * as Icons from "../Icons";
 
 export interface Song extends song {
-    playlist_song: playlist_song[];
     album: album & {
         artist: artist;
     };
@@ -23,15 +22,13 @@ export default function ListTable({ songs }: ListTableProps) {
                 <div className="text-center w-12">#</div>
                 <div className="w-full flex justify-between">
                     <div className="text-left w-full">Title</div>
-                    <div className="text-left w-2/5">Album</div>
-                    <div className="text-left w-1/4">Date added</div>
                 </div>
                 <div className="flex items-center justify-center w-32">
                         <Icons.Duration className="w-5 h-5 fill-current text-gray-text" />
                     </div>
                 <div className="w-12" />
             </div>
-            <div className="">
+            <div className="overflow-x-auto">
                 {songs.map((song, index) => (
                     <ListItem key={song.song_id} song={song} index={index} />
                 ))}
