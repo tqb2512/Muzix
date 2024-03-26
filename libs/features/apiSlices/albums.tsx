@@ -21,7 +21,7 @@ export const albumsAPI = createApi({
     reducerPath: "albums",
     baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
     endpoints: (builder) => ({
-        getCoverbyId: builder.query<Response, string>({
+        getCoverById: builder.query<Response, string>({
             query: (id) => `albums/cover?id=${id}` as string,
         }),
         getInfoById: builder.query<{ album: Album }, string>({
@@ -33,4 +33,4 @@ export const albumsAPI = createApi({
     }),
 });
 
-export const { useGetCoverbyIdQuery, useGetInfoByIdQuery, useGetSongsByIdQuery } = albumsAPI;
+export const { useGetCoverByIdQuery, useGetInfoByIdQuery, useGetSongsByIdQuery } = albumsAPI;

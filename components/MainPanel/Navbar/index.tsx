@@ -11,7 +11,7 @@ export default function Navbar() {
 
     const router = useRouter();
     const [userId, setUserId] = useState<string | null>(null);
-    const { data: cover } = usersAPI.useGetCoverbyIdQuery(userId || skipToken);
+    const { data: cover } = usersAPI.useGetCoverByIdQuery(userId || skipToken);
 
     useEffect(() => {
         const fetchProfile = async () => {

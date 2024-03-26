@@ -23,7 +23,7 @@ export default function AudioPlayer({className}: {className?: string}) {
     const playerState = useSelector((state: RootState) => state.player);
     const queueState = useSelector((state: RootState) => state.queue);
     const audioRef = useRef<HTMLAudioElement>(null);
-    const { data: songUrl } = songsAPI.useGetFilebyIdQuery(playerState.song.song_id || skipToken);
+    const { data: songUrl } = songsAPI.useGetFileByIdQuery(playerState.song.song_id || skipToken);
 
     useEffect(() => {
         if (songUrl) {

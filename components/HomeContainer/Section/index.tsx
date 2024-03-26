@@ -68,7 +68,7 @@ export default function Section({ section }: { section: Section }) {
         <div
             ref={containerRef}
             className="flex flex-col w-full h-full mt-6">
-            <div className="flex flex-row justify-between">
+            <div className="flex flex-row justify-between items-center">
                 <Link
                     href={`/section/${section.section_id}`}
                     className="text-2xl font-bold hover:underline"

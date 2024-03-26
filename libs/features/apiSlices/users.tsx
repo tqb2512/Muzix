@@ -8,10 +8,10 @@ export const usersAPI = createApi({
     reducerPath: "users",
     baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
     endpoints: (builder) => ({
-        getCoverbyId: builder.query<Response, string>({
+        getCoverById: builder.query<Response, string>({
             query: (id) => `users/cover?id=${id}` as string,
         }),
     }),
 });
 
-export const { useGetCoverbyIdQuery } = usersAPI;
+export const { useGetCoverByIdQuery } = usersAPI;

@@ -14,8 +14,8 @@ export default function PlaylistContainer({ playlist_id }: PlaylistContainerProp
 
     const { data: songs } = playlistsAPI.useGetSongsByIdQuery(playlist_id);
     const { data: playlist } = playlistsAPI.useGetInfoByIdQuery(playlist_id);
-    const { data: coverUrl } = playlistsAPI.useGetCoverbyIdQuery(playlist_id);
-    const { data: profileUrl } = usersAPI.useGetCoverbyIdQuery(playlist?.playlist.user_id || skipToken);
+    const { data: coverUrl } = playlistsAPI.useGetCoverByIdQuery(playlist_id);
+    const { data: profileUrl } = usersAPI.useGetCoverByIdQuery(playlist?.playlist.user_id || skipToken);
 
     return (
         <div>

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function PlaylistBox({ playlist }: { playlist: playlist }) {
-    const { data, error, isLoading } = playlistsAPI.useGetCoverbyIdQuery(playlist.playlist_id)
+    const { data } = playlistsAPI.useGetCoverByIdQuery(playlist.playlist_id)
 
     return (
         <Link

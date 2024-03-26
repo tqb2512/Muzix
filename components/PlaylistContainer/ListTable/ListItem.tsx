@@ -15,7 +15,7 @@ interface ListItemProps {
 export default function ListItem({ song, index }: ListItemProps) {
 
     const dispatch = useDispatch();
-    const { data: coverUrl } = albumsAPI.useGetCoverbyIdQuery(song.album_id);
+    const { data: coverUrl } = albumsAPI.useGetCoverByIdQuery(song.album_id);
     const playerState = useSelector((state: RootState) => state.player);
 
     const handlePlay = () => {

@@ -5,8 +5,6 @@ import * as albumsAPI from "@/libs/features/apiSlices/albums";
 import * as artistsAPI from "@/libs/features/apiSlices/artists";
 import { skipToken } from "@reduxjs/toolkit/query";
 import Image from "next/image";
-import { use, useEffect, useState } from "react";
-import Link from "next/link";
 
 interface SongContainerProps {
     song_id: string;
@@ -22,8 +20,8 @@ export default function SongContainer({ song_id }: SongContainerProps) {
 
     const { data: song } = songsAPI.useGetInfoByIdQuery(song_id);
     const { data: album } = albumsAPI.useGetInfoByIdQuery(song?.songs[0].album_id || skipToken);
-    const { data: coverUrl } = albumsAPI.useGetCoverbyIdQuery(song?.songs[0].album_id || skipToken);
-    const { data: profileUrl } = artistsAPI.useGetCoverbyIdQuery(album?.album.artist_id || skipToken);
+    const { data: coverUrl } = albumsAPI.useGetCoverByIdQuery(song?.songs[0].album_id || skipToken);
+    const { data: profileUrl } = artistsAPI.useGetCoverByIdQuery(album?.album.artist_id || skipToken);
 
     return (
         <div>

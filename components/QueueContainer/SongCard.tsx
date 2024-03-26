@@ -17,7 +17,7 @@ interface Song extends song {
 export default function SongCard({ song, index }: { song: Song, index: number }) {
 
     const dispatch = useDispatch();
-    const { data: albumCoverUrl } = albumsAPI.useGetCoverbyIdQuery(song.album.album_id);
+    const { data: albumCoverUrl } = albumsAPI.useGetCoverByIdQuery(song.album.album_id);
 
     const handleDoubleClick = () => {
         dispatch(queue.playAtIndex(index));

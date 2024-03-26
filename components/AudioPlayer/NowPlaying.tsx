@@ -22,7 +22,7 @@ export default function NowPlaying() {
 
     const dispatch = useDispatch();
     const playerState = useSelector((state: RootState) => state.player);
-    const { data: albumCoverUrl } = albumsAPI.useGetCoverbyIdQuery(playerState.song.album_id || skipToken);
+    const { data: albumCoverUrl } = albumsAPI.useGetCoverByIdQuery(playerState.song.album_id || skipToken);
     const [song, setSong] = useState<Song | null>(null);
 
     useEffect(() => {

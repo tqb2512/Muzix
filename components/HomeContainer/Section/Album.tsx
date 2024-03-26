@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function AlbumBox({ album, artist }: { album: album, artist: artist }) {
-    const { data, error, isLoading } = albumsAPI.useGetCoverbyIdQuery(album.album_id)
+    const { data } = albumsAPI.useGetCoverByIdQuery(album.album_id)
 
     return (
         <Link

@@ -15,7 +15,7 @@ interface ListItemProps {
 export default function ListItem({ song, index }: ListItemProps) {
 
     const dispatch = useDispatch();
-    const { data: coverUrl } = albumsAPI.useGetCoverbyIdQuery(song.album_id);
+    const { data: coverUrl } = albumsAPI.useGetCoverByIdQuery(song.album_id);
     const playerState = useSelector((state: RootState) => state.player);
 
     const handlePlay = () => {
@@ -41,9 +41,9 @@ export default function ListItem({ song, index }: ListItemProps) {
                             </Link>
                         </div>
                         <div className="text-sm truncate overflow-hidden">
-                            <Link href={`app/artist/${song.album.artist.artist_id}`} className="hover:underline">{song.album.artist.name}</Link>
+                            <Link href={`/app/artist/${song.album.artist.artist_id}`} className="hover:underline">{song.album.artist.name}</Link>
                             {song.artist_contribute_song.map((artist) => (
-                                <Link href={`app/artist/${artist.artist.artist_id}`} className="hover:underline" key={artist.artist.artist_id}>, {artist.artist.name}</Link>
+                                <Link href={`/app/artist/${artist.artist.artist_id}`} className="hover:underline" key={artist.artist.artist_id}>, {artist.artist.name}</Link>
                             ))}
                         </div>
                     </div>

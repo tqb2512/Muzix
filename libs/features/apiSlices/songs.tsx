@@ -14,7 +14,7 @@ export const songsAPI = createApi({
     reducerPath: "songs",
     baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
     endpoints: (builder) => ({
-        getFilebyId: builder.query<Response, string>({
+        getFileById: builder.query<Response, string>({
             query: (id) => `songs/getFile?id=${id}` as string,
         }),
         getInfoById: builder.query<{ songs: Song[] }, string>({
@@ -23,4 +23,4 @@ export const songsAPI = createApi({
     }),
 });
 
-export const { useGetFilebyIdQuery, useGetInfoByIdQuery } = songsAPI;
+export const { useGetFileByIdQuery, useGetInfoByIdQuery } = songsAPI;

@@ -14,8 +14,8 @@ export default function AlbumContainer({ album_id }: AlbumContainerProps) {
 
     const { data: songs } = albumsAPI.useGetSongsByIdQuery(album_id);
     const { data: album } = albumsAPI.useGetInfoByIdQuery(album_id);
-    const { data: coverUrl } = albumsAPI.useGetCoverbyIdQuery(album_id);
-    const { data: profileUrl } = artistsAPI.useGetCoverbyIdQuery(album?.album.artist_id || skipToken);
+    const { data: coverUrl } = albumsAPI.useGetCoverByIdQuery(album_id);
+    const { data: profileUrl } = artistsAPI.useGetCoverByIdQuery(album?.album.artist_id || skipToken);
 
     return (
         <div>

@@ -1,4 +1,4 @@
-import { song, album, artist, artist_contribute_song, playlist_song } from "@prisma/client";
+import { song, album, artist, artist_contribute_song } from "@prisma/client";
 import ListItem from "./ListItem";
 import * as Icons from "../Icons";
 
@@ -18,7 +18,7 @@ interface ListTableProps {
 export default function ListTable({ songs }: ListTableProps) {
     return (
         <div className="w-full">
-            <div className="flex items-center sticky justify-between top-0 z-10 bg-gray-background text-gray-text h-14 bg-dark-background border-b border-zinc-700 mb-4">
+            <div className="flex items-center sticky justify-between top-0 z-10 bg-gray-background text-gray-text h-14 bg-dark-background border-b border-zinc-700 mb-2">
                 <div className="text-center w-12">#</div>
                 <div className="w-full flex justify-between">
                     <div className="text-left w-full">Title</div>
@@ -28,7 +28,7 @@ export default function ListTable({ songs }: ListTableProps) {
                     </div>
                 <div className="w-12" />
             </div>
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto space-y-2">
                 {songs.map((song, index) => (
                     <ListItem key={song.song_id} song={song} index={index} />
                 ))}
