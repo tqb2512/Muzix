@@ -1,16 +1,8 @@
 import AudioPlayer from "@/components/AudioPlayer";
 import SideBar from "@/components/SideBar";
 import MainPanel from "@/components/MainPanel";
-import { readUserSession } from "@/utils/supabase/actions";
-import { redirect } from "next/navigation";
 
 export default async function AppLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
-
-    const { data } = await readUserSession();
-
-    if (!data.session) {
-        return redirect("/");
-    }
     
     return (
         <div className="flex h-screen w-screen">
