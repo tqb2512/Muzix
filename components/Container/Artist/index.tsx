@@ -1,5 +1,5 @@
 "use client";
-import * as artistsAPI from "@/libs/features/apiSlices/artists";
+import * as artistsAPI from "@/libs/Redux/features/apiSlices/artists";
 import * as Icons from "./Icons";
 import Image from "next/image";
 import AlbumTable from "./AlbumTable";

@@ -1,6 +1,5 @@
 "use client";
 import * as Icons from "./Icons";
-import {useState} from "react";
 
 const categories = [
     "Playlists",

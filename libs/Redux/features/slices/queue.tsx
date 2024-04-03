@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { song } from "@prisma/client";
-import { setSong } from "../slices/player";
+import { setSong } from "./player";
 
 export interface Queue {
     songs: song[];

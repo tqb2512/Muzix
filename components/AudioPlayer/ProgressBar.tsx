@@ -1,8 +1,8 @@
 "use client"
 import {useRef} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "@/libs/store";
-import * as player from "@/libs/features/slices/player";
+import {RootState} from "@/libs/Redux/store";
+import * as player from "@/libs/Redux/features/slices/player";
 
 export default function ProgressBar({ audioRef }: { audioRef: any }) {
 

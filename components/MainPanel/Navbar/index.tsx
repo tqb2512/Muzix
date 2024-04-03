@@ -1,7 +1,7 @@
 "use client";
 import {useRouter} from "next/navigation";
 import * as Icons from "./Icons";
-import * as usersAPI from "@/libs/features/apiSlices/users";
+import * as usersAPI from "@/libs/Redux/features/apiSlices/users";
 import {readUserSession} from "@/utils/supabase/actions";
 import Image from "next/image";
 import {useEffect, useState} from "react";

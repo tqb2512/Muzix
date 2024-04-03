@@ -1,8 +1,8 @@
 import Image from "next/image";
 import {Song} from "./index";
-import * as albumsAPI from "@/libs/features/apiSlices/albums";
-import * as queue from "@/libs/features/slices/queue";
-import {RootState} from "@/libs/store";
+import * as albumsAPI from "@/libs/Redux/features/apiSlices/albums";
+import * as queue from "@/libs/Redux/features/slices/queue";
+import {RootState} from "@/libs/Redux/store";
 import {useDispatch, useSelector} from "react-redux";
 import * as Icons from "../Icons";
 import Link from "next/link";

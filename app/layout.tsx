@@ -1,6 +1,6 @@
-import StoreProvider from "@/libs/StoreProvider";
+import StoreProvider from "@/libs/Redux/StoreProvider";
 import './globals.css'
-import SupabaseProvider from "@/libs/SupabaseProvider";
+import SupabaseProvider from "@/libs/Supabase/SupabaseProvider";
 
 export default function RootLayout({children,}: Readonly<{ children: React.ReactNode; }>) {
     return (

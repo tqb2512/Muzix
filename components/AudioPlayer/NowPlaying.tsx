@@ -3,9 +3,9 @@ import {album, artist, artist_contribute_song, song} from "@prisma/client";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {skipToken} from "@reduxjs/toolkit/query";
-import {RootState} from "@/libs/store";
-import * as player from "@/libs/features/slices/player";
-import * as albumsAPI from "@/libs/features/apiSlices/albums";
+import {RootState} from "@/libs/Redux/store";
+import * as player from "@/libs/Redux/features/slices/player";
+import * as albumsAPI from "@/libs/Redux/features/apiSlices/albums";
 import Image from "next/image";
 import Link from "next/link";
 

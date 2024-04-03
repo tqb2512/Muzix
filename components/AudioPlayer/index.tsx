@@ -2,10 +2,10 @@
 import {useEffect, useRef} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {skipToken} from "@reduxjs/toolkit/query";
-import {RootState} from "@/libs/store";
-import * as player from "@/libs/features/slices/player";
-import * as queue from "@/libs/features/slices/queue";
-import * as songsAPI from "@/libs/features/apiSlices/songs";
+import {RootState} from "@/libs/Redux/store";
+import * as player from "@/libs/Redux/features/slices/player";
+import * as queue from "@/libs/Redux/features/slices/queue";
+import * as songsAPI from "@/libs/Redux/features/apiSlices/songs";
 import NowPlaying from "./NowPlaying";
 import RightBar from "./RightBar";
 import * as Icons from "./Icons"

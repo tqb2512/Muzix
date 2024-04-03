@@ -1,4 +1,4 @@
-import * as albumsAPI from "@/libs/features/apiSlices/albums";
+import * as albumsAPI from "@/libs/Redux/features/apiSlices/albums";
 import {album, artist} from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";

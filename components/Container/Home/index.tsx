@@ -1,5 +1,5 @@
 "use client";
-import * as sectionsAPI from "@/libs/features/apiSlices/sections";
+import * as sectionsAPI from "@/libs/Redux/features/apiSlices/sections";
 import React, {useEffect} from "react";
 import Section from "./Section";
 import {album, artist, playlist, section, section_albums, section_artists, section_playlists} from "@prisma/client";

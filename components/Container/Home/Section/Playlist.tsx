@@ -1,4 +1,4 @@
-import * as playlistsAPI from "@/libs/features/apiSlices/playlists";
+import * as playlistsAPI from "@/libs/Redux/features/apiSlices/playlists";
 import {playlist} from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";

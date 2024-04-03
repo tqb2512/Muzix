@@ -1,6 +1,6 @@
 "use client";
-import * as playlistsAPI from "@/libs/features/apiSlices/playlists";
-import * as usersAPI from "@/libs/features/apiSlices/users";
+import * as playlistsAPI from "@/libs/Redux/features/apiSlices/playlists";
+import * as usersAPI from "@/libs/Redux/features/apiSlices/users";
 import * as Icons from "./Icons";
 import {skipToken} from "@reduxjs/toolkit/query";
 import Image from "next/image";

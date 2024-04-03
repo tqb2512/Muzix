@@ -1,4 +1,4 @@
-import * as artistsAPI from "@/libs/features/apiSlices/artists";
+import * as artistsAPI from "@/libs/Redux/features/apiSlices/artists";
 import {artist} from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";

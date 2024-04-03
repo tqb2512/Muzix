@@ -1,8 +1,8 @@
 "use client";
 import {album, artist, artist_contribute_song, song} from "@prisma/client";
 import {useSelector} from "react-redux";
-import {RootState} from "@/libs/store";
-import * as songsAPI from "@/libs/features/apiSlices/songs";
+import {RootState} from "@/libs/Redux/store";
+import * as songsAPI from "@/libs/Redux/features/apiSlices/songs";
 import SongCard from "./SongCard";
 
 interface Song extends song {
