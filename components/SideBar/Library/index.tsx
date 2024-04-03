@@ -1,6 +1,6 @@
 "use client";
 import * as Icons from "./Icons";
-import { useState } from "react";
+import {useState} from "react";
 
 const categories = [
     "Playlists",
@@ -9,8 +9,6 @@ const categories = [
 ]
 
 export function LibrarySection({ isExpanded = true }: { isExpanded?: boolean }) {
-
-    const [selected, setSelected] = useState();
 
     return (
         <div className="rounded-lg bg-dark-background h-full">

@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import {useRef} from "react";
 import * as Icons from "./Icons";
 
 export default function VolumeBar({ audioRef}: { audioRef: any }) {
@@ -12,18 +12,17 @@ export default function VolumeBar({ audioRef}: { audioRef: any }) {
             <div
                 ref={barRef}
                 className="bg-gray-500 rounded-full hover:cursor-pointer h-1 w-10/12 flex-shrink-0"
-                onMouseOver={(e) => {
+                onMouseOver={() => {
                     volumeRef.current?.classList.add("bg-green-500");
                 }}
-                onMouseLeave={(e) => {
+                onMouseLeave={() => {
                     volumeRef.current?.classList.remove("bg-green-500");
                 }}
                 onClick={(e) => {
                     const rect = barRef.current?.getBoundingClientRect();
                     const x = e.clientX - rect!.left;
                     const width = barRef.current?.clientWidth;
-                    const volume = x / width!;
-                    audioRef.current.volume = volume;
+                    audioRef.current.volume = x / width!;
                 }}
             >
                 <div

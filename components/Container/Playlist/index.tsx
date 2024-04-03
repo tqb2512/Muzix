@@ -1,21 +1,21 @@
 "use client";
-import * as albumsAPI from "@/libs/features/apiSlices/albums";
-import * as artistsAPI from "@/libs/features/apiSlices/artists";
+import * as playlistsAPI from "@/libs/features/apiSlices/playlists";
+import * as usersAPI from "@/libs/features/apiSlices/users";
 import * as Icons from "./Icons";
-import { skipToken } from "@reduxjs/toolkit/query";
+import {skipToken} from "@reduxjs/toolkit/query";
 import Image from "next/image";
 import ListTable from "./ListTable";
 
-interface AlbumContainerProps {
-    album_id: string;
+interface PlaylistContainerProps {
+    playlist_id: string;
 }
 
-export default function AlbumContainer({ album_id }: AlbumContainerProps) {
+export default function PlaylistContainer({ playlist_id }: PlaylistContainerProps) {
 
-    const { data: songs } = albumsAPI.useGetSongsByIdQuery(album_id);
-    const { data: album } = albumsAPI.useGetInfoByIdQuery(album_id);
-    const { data: coverUrl } = albumsAPI.useGetCoverByIdQuery(album_id);
-    const { data: profileUrl } = artistsAPI.useGetCoverByIdQuery(album?.album.artist_id || skipToken);
+    const { data: songs } = playlistsAPI.useGetSongsByIdQuery(playlist_id);
+    const { data: playlist } = playlistsAPI.useGetInfoByIdQuery(playlist_id);
+    const { data: coverUrl } = playlistsAPI.useGetCoverByIdQuery(playlist_id);
+    const { data: profileUrl } = usersAPI.useGetCoverByIdQuery(playlist?.playlist.user_id || skipToken);
 
     return (
         <div>
@@ -24,13 +24,14 @@ export default function AlbumContainer({ album_id }: AlbumContainerProps) {
                     <Image src={coverUrl?.url || "/next.svg"} alt="Playlist cover" fill sizes="208px" className="object-cover" />
                 </div>
                 <div className="ml-5 flex flex-col justify-end mb-2 space-y-2">
-                    <div className="text-sm">Album</div>
-                    <div className="text-6xl font-bold">{album?.album.name}</div>
+                    <div className="text-sm">Playlist</div>
+                    <div className="text-6xl font-bold">{playlist?.playlist.name}</div>
+                    <div className="text-gray-text">{playlist?.playlist.description}</div>
                     <div className="flex items-center space-x-2 text-sm">
                         <div className="h-6 w-6 overflow-hidden relative rounded-full">
                             <Image src={profileUrl?.url || "/next.svg"} alt="Profile cover" fill sizes="24px" className="object-cover" />
                         </div>
-                        <h4>{album?.album.artist.name}&ensp; &bull; &ensp;{songs?.songs.length} songs, about {songs?.songs.reduce((acc, song) => acc + song.duration_ms, 0)} minutes</h4>
+                        <h4>{playlist?.playlist.user.name}&ensp; &bull; &ensp;{songs?.songs.length} songs, about {songs?.songs.reduce((acc, song) => acc + song.duration_ms, 0)} minutes</h4>
                     </div>
                 </div>
             </div>

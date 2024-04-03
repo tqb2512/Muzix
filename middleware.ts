@@ -7,11 +7,11 @@ export async function middleware(request: NextRequest) {
     const url = request.nextUrl.clone()
     const { data } = await readUserSession();
 
-    if (url.pathname === "/app" && !data.session) {
+    if (url.pathname === "/app" && !data.user) {
         return NextResponse.redirect(url.origin + "/")
     }
 
-    if ((url.pathname === "/login" || url.pathname === "/login") && data.session) {
+    if ((url.pathname === "/login" || url.pathname === "/login") && data.user) {
         return NextResponse.redirect(url.origin + "/app")
     }
 

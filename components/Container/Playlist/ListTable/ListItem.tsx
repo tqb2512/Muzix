@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { Song } from "./index";
+import {Song} from "./index";
 import * as albumsAPI from "@/libs/features/apiSlices/albums";
 import * as queue from "@/libs/features/slices/queue";
-import { RootState } from "@/libs/store";
-import { useDispatch, useSelector } from "react-redux";
+import {RootState} from "@/libs/store";
+import {useDispatch, useSelector} from "react-redux";
 import * as Icons from "../Icons";
 import Link from "next/link";
 
@@ -41,14 +41,15 @@ export default function ListItem({ song, index }: ListItemProps) {
                             </Link>
                         </div>
                         <div className="text-sm truncate overflow-hidden">
-                            <Link href={`/app/artist/${song.album.artist.artist_id}`} className="hover:underline">{song.album.artist.name}</Link>
+                            <Link href={`app/artist/${song.album.artist.artist_id}`} className="hover:underline">{song.album.artist.name}</Link>
                             {song.artist_contribute_song.map((artist) => (
-                                <Link href={`/app/artist/${artist.artist.artist_id}`} className="hover:underline" key={artist.artist.artist_id}>, {artist.artist.name}</Link>
+                                <Link href={`app/artist/${artist.artist.artist_id}`} className="hover:underline" key={artist.artist.artist_id}>, {artist.artist.name}</Link>
                             ))}
                         </div>
                     </div>
-
                 </div>
+                <Link href={`/app/album/${song.album_id}`} className="text-left w-2/5 truncate overflow-hidden hover:underline">{song.album.name}</Link>
+                <div className="text-left w-1/4 truncate overflow-hidden">{new Date(song.playlist_song[0].created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</div>
 
             </div>
             <div className="text-center w-32 truncate overflow-hidden">{song.duration_ms}</div>

@@ -12,7 +12,8 @@ export async function GET(req: Request) {
 
     const url = await getSignedUrl(s3Client, new GetObjectCommand({
         Bucket: process.env.NEXT_PUBLIC_S3_BUCKET || "",
-        Key: `Images/Artists/${id}/cover.jpg`
+        Key: `Images/Artists/${id}/cover.jpg`,
+        ResponseExpires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7)
     }));
 
 

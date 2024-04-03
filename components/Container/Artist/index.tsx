@@ -2,8 +2,8 @@
 import * as artistsAPI from "@/libs/features/apiSlices/artists";
 import * as Icons from "./Icons";
 import Image from "next/image";
-import AlbumTable from "@/components/ArtistContainer/AlbumTable";
-import ListTable from "@/components/AlbumContainer/ListTable";
+import AlbumTable from "./AlbumTable";
+import ListTable from "@/components/Container/Album/ListTable";
 import React from "react";
 
 interface ArtistContainerProps {

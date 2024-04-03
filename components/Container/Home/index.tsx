@@ -1,8 +1,8 @@
 "use client";
 import * as sectionsAPI from "@/libs/features/apiSlices/sections";
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 import Section from "./Section";
-import { section, section_albums, section_artists, section_playlists, album, playlist, artist } from "@prisma/client";
+import {album, artist, playlist, section, section_albums, section_artists, section_playlists} from "@prisma/client";
 
 interface Section extends section {
     section_albums: section_albums & {
@@ -21,7 +21,7 @@ interface Section extends section {
 export default function HomeContainer() {
 
     const [sections, setSections] = React.useState<Section[]>([]);
-    const { data, error, isLoading } = sectionsAPI.useGetSectionsQuery(20);
+    const {data} = sectionsAPI.useGetSectionsQuery(20);
 
     useEffect(() => {
         if (data) {
@@ -33,32 +33,32 @@ export default function HomeContainer() {
         <div>
             <div>
                 {sections.map((section) => (
-                    <Section key={section.section_id} section={section} />
+                    <Section key={section.section_id} section={section}/>
                 ))}
             </div>
             <div>
                 {sections.map((section) => (
-                    <Section key={section.section_id} section={section} />
+                    <Section key={section.section_id} section={section}/>
                 ))}
             </div>
             <div>
                 {sections.map((section) => (
-                    <Section key={section.section_id} section={section} />
+                    <Section key={section.section_id} section={section}/>
                 ))}
             </div>
             <div>
                 {sections.map((section) => (
-                    <Section key={section.section_id} section={section} />
+                    <Section key={section.section_id} section={section}/>
                 ))}
             </div>
             <div>
                 {sections.map((section) => (
-                    <Section key={section.section_id} section={section} />
+                    <Section key={section.section_id} section={section}/>
                 ))}
             </div>
             <div>
                 {sections.map((section) => (
-                    <Section key={section.section_id} section={section} />
+                    <Section key={section.section_id} section={section}/>
                 ))}
             </div>
         </div>

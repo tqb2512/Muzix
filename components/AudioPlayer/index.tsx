@@ -1,8 +1,8 @@
 "use client"
-import { useEffect, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { skipToken } from "@reduxjs/toolkit/query";
-import { RootState } from "@/libs/store";
+import {useEffect, useRef} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {skipToken} from "@reduxjs/toolkit/query";
+import {RootState} from "@/libs/store";
 import * as player from "@/libs/features/slices/player";
 import * as queue from "@/libs/features/slices/queue";
 import * as songsAPI from "@/libs/features/apiSlices/songs";

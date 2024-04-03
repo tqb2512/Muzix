@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useSupabase } from "@/libs/SupabaseProvider";
+import {useSupabase} from "@/libs/SupabaseProvider";
 
 export default function SignupForm() {
 
@@ -11,7 +11,7 @@ export default function SignupForm() {
     const { client } = useSupabase();
 
     const handleSignup = async () => {
-        const { data, error } = await client.auth.signUp({
+        const { error } = await client.auth.signUp({
             email,
             password,
             options: {

@@ -1,4 +1,4 @@
-import SongContainer from "@/components/SongContainer";
+import SongContainer from "@/components/Container/Song";
 
 export default function SongDetailPage({ params }: { params: { song_id: string } }) {
     return (

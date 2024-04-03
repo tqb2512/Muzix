@@ -1,5 +1,4 @@
-import ArtistContainer from "@/components/ArtistContainer";
-
+import ArtistContainer from "@/components/Container/Artist";
 export default function ArtistPage({ params }: { params: { artist_id: string } }) {
     return (
         <div>

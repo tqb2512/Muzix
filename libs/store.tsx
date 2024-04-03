@@ -11,7 +11,6 @@ import { sectionsAPI } from "./features/apiSlices/sections";
 import { artistsAPI } from "./features/apiSlices/artists";
 import { usersAPI } from "./features/apiSlices/users";
 
-
 const rootReducer = combineReducers({
     player,
     queue,
@@ -48,6 +47,7 @@ const storage = typeof window !== "undefined"
 const persist = {
     key: 'root',
     storage: storage,
+    blacklist: [songsAPI.reducerPath, albumsAPI.reducerPath, playlistsAPI.reducerPath, sectionsAPI.reducerPath, artistsAPI.reducerPath, usersAPI.reducerPath]
 }
 
 const persistedReducer = persistReducer(persist, rootReducer);

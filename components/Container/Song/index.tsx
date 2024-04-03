@@ -3,17 +3,11 @@ import * as Icons from "./Icons";
 import * as songsAPI from "@/libs/features/apiSlices/songs";
 import * as albumsAPI from "@/libs/features/apiSlices/albums";
 import * as artistsAPI from "@/libs/features/apiSlices/artists";
-import { skipToken } from "@reduxjs/toolkit/query";
+import {skipToken} from "@reduxjs/toolkit/query";
 import Image from "next/image";
 
 interface SongContainerProps {
     song_id: string;
-}
-
-interface Contributor {
-    id: string;
-    name: string;
-    url: string;
 }
 
 export default function SongContainer({ song_id }: SongContainerProps) {

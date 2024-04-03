@@ -1,5 +1,5 @@
-import { album} from "@prisma/client";
-import TableItem from "@/components/ArtistContainer/AlbumTable/TableItem";
+import {album} from "@prisma/client";
+import TableItem from "./TableItem";
 import Link from "next/link";
 import React from "react";
 

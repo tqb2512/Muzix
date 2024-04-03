@@ -1,4 +1,4 @@
-import { section, section_albums, section_playlists, section_artists, album, artist, playlist } from "@prisma/client";
+import {album, artist, playlist, section, section_albums, section_artists, section_playlists} from "@prisma/client";
 import AlbumBox from "./Album";
 import ArtistBox from "./Artist";
 import PlaylistBox from "./Playlist";

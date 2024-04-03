@@ -1,4 +1,4 @@
-import QueueContainer from "@/components/QueueContainer"
+import QueueContainer from "@/components/Container/Queue"
 
 export default function QueuePage() {
 

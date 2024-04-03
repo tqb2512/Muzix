@@ -1,4 +1,4 @@
-import PlaylistContainer from "@/components/PlaylistContainer"
+import PlaylistContainer from "@/components/Container/Playlist"
 export default function PlaylistDetailPage({ params }: { params: { playlist_id: string } }) {
     return (
         <div>

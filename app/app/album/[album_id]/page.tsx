@@ -1,4 +1,4 @@
-import AlbumContainer from "@/components/AlbumContainer";
+import AlbumContainer from "@/components/Container/Album";
 
 export default function AlbumDetailPage({ params }: { params: { album_id: string } }) {
 

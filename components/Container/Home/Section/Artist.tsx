@@ -1,21 +1,21 @@
-import { album } from "@prisma/client";
-import * as albumsAPI from "@/libs/features/apiSlices/albums";
+import * as artistsAPI from "@/libs/features/apiSlices/artists";
+import {artist} from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function TableItem({ album }: { album: album }) {
-    const { data: coverUrl } = albumsAPI.useGetCoverByIdQuery(album.album_id);
+export default function ArtistBox({ artist }: { artist: artist }) {
+    const { data} = artistsAPI.useGetCoverByIdQuery(artist.artist_id)
 
     return (
         <Link
-            href={`/app/album/${album.album_id}`}
+            href={`/app/artist/${artist.artist_id}`}
             className="w-52 h-[276px] p-3 rounded-md hover:bg-hover-gray-background transition duration-300">
             <div className="w-full h-full">
                 <div className="flex flex-col items-center w-full h-full">
-                    <div className="rounded-md overflow-hidden relative w-[184px] h-[184px]">
+                    <div className="rounded-full overflow-hidden relative w-[184px] h-[184px]">
                         <Image
-                            src={coverUrl?.url || "/next.svg"}
-                            alt="album image"
+                            src={data?.url || "/next.svg"}
+                            alt="artist image"
                             className="object-cover"
                             fill
                             sizes="184px"
@@ -23,7 +23,10 @@ export default function TableItem({ album }: { album: album }) {
                     </div>
                     <div className="mt-2 w-full">
                         <div className="truncate">
-                            {album.name}
+                            {artist.name}
+                        </div>
+                        <div className="text-gray-text text-sm">
+                            Artist
                         </div>
                     </div>
                 </div>

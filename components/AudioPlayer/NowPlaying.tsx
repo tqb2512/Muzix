@@ -1,9 +1,9 @@
 "use client"
-import { song, album, artist_contribute_song, artist } from "@prisma/client";
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { skipToken } from "@reduxjs/toolkit/query";
-import { RootState } from "@/libs/store";
+import {album, artist, artist_contribute_song, song} from "@prisma/client";
+import {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {skipToken} from "@reduxjs/toolkit/query";
+import {RootState} from "@/libs/store";
 import * as player from "@/libs/features/slices/player";
 import * as albumsAPI from "@/libs/features/apiSlices/albums";
 import Image from "next/image";
@@ -55,8 +55,7 @@ export default function NowPlaying() {
                 <div>
                     <Link
                         href={`/app/albums/${song?.album.album_id}`}
-                        className="text-sm font-bold hover:text-white hover:underline"
-                    >
+                        className="text-sm font-bold hover:text-white hover:underline">
                         {song?.name}
                     </Link>
                 </div>

@@ -1,10 +1,10 @@
+import {album} from "@prisma/client";
 import * as albumsAPI from "@/libs/features/apiSlices/albums";
-import { album, artist } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function AlbumBox({ album, artist }: { album: album, artist: artist }) {
-    const { data } = albumsAPI.useGetCoverByIdQuery(album.album_id)
+export default function TableItem({ album }: { album: album }) {
+    const { data: coverUrl } = albumsAPI.useGetCoverByIdQuery(album.album_id);
 
     return (
         <Link
@@ -14,7 +14,7 @@ export default function AlbumBox({ album, artist }: { album: album, artist: arti
                 <div className="flex flex-col items-center w-full h-full">
                     <div className="rounded-md overflow-hidden relative w-[184px] h-[184px]">
                         <Image
-                            src={data?.url || "/next.svg"}
+                            src={coverUrl?.url || "/next.svg"}
                             alt="album image"
                             className="object-cover"
                             fill
@@ -24,9 +24,6 @@ export default function AlbumBox({ album, artist }: { album: album, artist: arti
                     <div className="mt-2 w-full">
                         <div className="truncate">
                             {album.name}
-                        </div>
-                        <div className="text-gray-text text-sm">
-                            {artist.name}
                         </div>
                     </div>
                 </div>

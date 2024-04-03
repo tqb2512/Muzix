@@ -1,4 +1,4 @@
-import { song, album, artist, artist_contribute_song, playlist_song } from "@prisma/client";
+import {album, artist, artist_contribute_song, playlist_song, song} from "@prisma/client";
 import ListItem from "./ListItem";
 import * as Icons from "../Icons";
 

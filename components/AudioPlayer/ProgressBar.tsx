@@ -1,7 +1,7 @@
 "use client"
-import { useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/libs/store";
+import {useRef} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "@/libs/store";
 import * as player from "@/libs/features/slices/player";
 
 export default function ProgressBar({ audioRef }: { audioRef: any }) {
@@ -15,10 +15,10 @@ export default function ProgressBar({ audioRef }: { audioRef: any }) {
         <div
             className="h-1 w-full bg-gray-500 rounded-full hover:cursor-pointer"
             ref={barRef}
-            onMouseOver={(e) => {
+            onMouseOver={() => {
                 progressRef.current?.classList.add("bg-green-500");
             }}
-            onMouseLeave={(e) => {
+            onMouseLeave={() => {
                 progressRef.current?.classList.remove("bg-green-500");
             }}
             onClick={(e) => {
@@ -34,8 +34,8 @@ export default function ProgressBar({ audioRef }: { audioRef: any }) {
             <div
                 id="progress"
                 ref={progressRef}
-                className="h-full bg-gray-50 rounded-full"
-                style={{ width: `${(playerState.time / (audioRef.current?.duration || 1)) * 100}%` }}
+                className="h-full bg-gray-50 rounded-full w-0 transition-all duration-100"
+                style={{ width: `${(playerState.time / (audioRef.current?.duration || 0)) * 100}%` }}
             >
             </div>
 

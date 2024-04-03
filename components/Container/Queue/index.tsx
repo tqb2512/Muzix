@@ -1,7 +1,7 @@
 "use client";
-import { song, album, artist, artist_contribute_song } from "@prisma/client";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/libs/store";
+import {album, artist, artist_contribute_song, song} from "@prisma/client";
+import {useSelector} from "react-redux";
+import {RootState} from "@/libs/store";
 import * as songsAPI from "@/libs/features/apiSlices/songs";
 import SongCard from "./SongCard";
 
@@ -17,7 +17,7 @@ interface Song extends song {
 export default function QueueContainer() {
 
     const queueState = useSelector((state: RootState) => state.queue);
-    const { data: songsData, error: songsError, isLoading: songsIsLoading } = songsAPI.useGetInfoByIdQuery(
+    const { data: songsData, isLoading: songsIsLoading } = songsAPI.useGetInfoByIdQuery(
         queueState.songs.map((song) => song.song_id).join(",")
     );
 
