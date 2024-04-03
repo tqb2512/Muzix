@@ -2,11 +2,11 @@
 import {useRouter} from "next/navigation";
 import * as Icons from "./Icons";
 import * as usersAPI from "@/libs/Redux/features/apiSlices/users";
-import {readUserSession} from "@/utils/supabase/actions";
+import {readUserSession} from "../../../libs/Supabase/actions";
 import Image from "next/image";
 import {useEffect, useState} from "react";
 import {skipToken} from "@reduxjs/toolkit/query";
-import {createClient} from "@/utils/supabase/client";
+import {createClient} from "@/libs/Supabase/client";
 
 export default function Navbar() {
 

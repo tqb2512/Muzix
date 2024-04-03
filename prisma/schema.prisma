@@ -77,9 +77,10 @@ model song {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model user {
-  user_id                                                String                    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_id                                                String                    @id @default(dbgenerated("auth.uid()")) @db.Uuid
   name                                                   String
   playlist                                               playlist[]
+  subscription                                           subscription[]
   user_following_artist                                  user_following_artist[]
   user_following_playlist                                user_following_playlist[]
   user_following_user_user_following_user_user1_idTouser user_following_user[]     @relation("user_following_user_user1_idTouser")
@@ -184,4 +185,20 @@ model section_playlists {
   section     section   @relation(fields: [section_id], references: [section_id], onDelete: NoAction, onUpdate: NoAction, map: "public_section_playlists_section_id_fkey")
 
   @@id([section_id, playlist_id])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model subscription {
+  id                   String
+  user_id              String    @db.Uuid
+  status               String?
+  cancel_at            String?
+  canceled_at          DateTime? @db.Timestamp(6)
+  current_period_start DateTime? @db.Timestamp(6)
+  current_period_end   DateTime? @db.Timestamp(6)
+  ended_at             DateTime? @db.Timestamp(6)
+  stripe_user_id       String
+  user                 user      @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "public_subscription_user_id_fkey")
+
+  @@id([id, user_id, stripe_user_id])
 }
