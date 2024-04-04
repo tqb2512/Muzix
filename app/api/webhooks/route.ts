@@ -5,7 +5,6 @@ import Stripe from "stripe";
 import {NextResponse} from "next/server";
 
 export async function POST(req: Request) {
-    console.log("Webhook received");
     const body = await req.text();
     const sig = headers().get("Stripe-Signature") as string;
 
@@ -23,27 +22,23 @@ export async function POST(req: Request) {
             if (session.mode === "subscription") {
                 const subscription = await stripe.subscriptions.retrieve(session.subscription as string);
 
-                const user = await prisma.subscription.findFirst({
+                let user = await prisma.user.findFirst({
                     where: {
-                        stripe_user_id: subscription.customer as string
+                        stripe_user_id: session.customer as string
                     }
                 });
 
                 if (user) {
-                    await prisma.subscription.update({
-                        where: {
-                            id_user_id_stripe_user_id: {
-                                id: user.id,
-                                user_id: user.user_id,
-                                stripe_user_id: user.stripe_user_id,
-                            }
-                        },
+                    await prisma.subscription.create({
                         data: {
-                            status: subscription.status as string,
-                            cancel_at: subscription.cancel_at?.toString(),
-                            current_period_end: subscription.current_period_end?.toString(),
-                            current_period_start: subscription.current_period_start?.toString(),
-                            ended_at: subscription.ended_at?.toString(),
+                            subscription_id: subscription.id,
+                            user_id: user.user_id,
+                            status: subscription.status,
+                            cancel_at: new Date((subscription.cancel_at || 0) * 1000),
+                            canceled_at: new Date((subscription.canceled_at || 0) * 1000),
+                            current_period_end: new Date(subscription.current_period_end * 1000),
+                            current_period_start: new Date(subscription.current_period_start * 1000),
+                            ended_at: new Date((subscription.ended_at || 0) * 1000),
                         }
                     });
                 }
