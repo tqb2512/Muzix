@@ -1,10 +1,9 @@
 "use client";
 import Image from "next/image";
-import React, {useContext, useEffect} from "react";
+import {useContext} from "react";
 import {usersAPI} from "@/libs/Redux/features/apiSlices/users";
 import {ColorContext} from "@/components/MainPanel/ColorContext";
 import * as Icons from "@/components/Container/User/Icons";
-import AlbumTable from "@/components/Container/Artist/AlbumTable";
 import PlaylistTable from "@/components/Container/User/PlaylistTable";
 
 interface UserContainerProps {
@@ -20,7 +19,7 @@ export default function UserContainer({user_id}: UserContainerProps) {
     return (
         <div className="bg-gradient-to-b from-transparent to-dark-background to-[50dvh]"
              style={{backgroundColor: color}}>
-            <div className="flex pr-6 pl-6 pb-4">
+            <div className="flex px-6 pb-6">
                 <div className="h-52 w-52 rounded-full overflow-hidden relative flex-shrink-0">
                     <Image
                         id="coverImage" src={coverUrl?.url || "/next.svg"} alt="Artist cover" fill sizes="208px"

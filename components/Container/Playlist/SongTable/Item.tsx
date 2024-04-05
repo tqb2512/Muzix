@@ -29,7 +29,7 @@ export default function Item({ song, index }: ListItemProps) {
             key={song.song_id} className="flex items-center justify-between h-14 rounded-md hover:bg-hover-gray-background text-gray-text hover:!text-white">
             <div className={`text-center w-12` + (playerState.song?.song_id === song.song_id ? " text-green-500" : "")}>{index + 1}</div>
             <div className="w-full flex justify-between">
-                <div className="text-left w-full flex space-x-3 h-10">
+                <div className="text-left w-full flex space-x-3 h-full items-center">
                     <div className="rounded-md h-10 w-10 overflow-hidden relative shrink-0">
                         <Image src={coverUrl?.url || "/next.svg"} alt="Album cover" fill sizes="40px" className="object-cover" />
                     </div>

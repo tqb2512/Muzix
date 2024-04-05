@@ -1,5 +1,8 @@
 "use client";
 import * as Icons from "./Icons";
+import {useState} from "react";
+import * as usersAPI from "@/libs/Redux/features/apiSlices/users";
+import {skipToken} from "@reduxjs/toolkit/query";
 
 const categories = [
     "Playlists",
@@ -8,6 +11,9 @@ const categories = [
 ]
 
 export function LibrarySection({ isExpanded = true }: { isExpanded?: boolean }) {
+
+    const [userId, setUserId] = useState<string>("");
+    const { data } = usersAPI.useGetUserByIdQuery(userId || skipToken);
 
     return (
         <div className="rounded-lg bg-dark-background h-full">
@@ -24,17 +30,18 @@ export function LibrarySection({ isExpanded = true }: { isExpanded?: boolean }) 
                 }
             </div>
 
-            {isExpanded &&
-                <div className="flex flex-row space-x-2 ml-4">
-                    {categories.map((category, index) => (
-                        <div
-                            key={index}
-                            className="rounded-3xl text-sm text-white bg-gray-button-2 pr-3 pl-3 pt-2 pb-2 hover:bg-neutral-700 transition-all duration-300 ease-in-out hover: cursor-pointer">
-                            {category}
-                        </div>
-                    ))}
-                </div>
-            }
+            {/*{isExpanded &&*/}
+            {/*    <div className="flex flex-row space-x-2 ml-4">*/}
+            {/*        {categories.map((category, index) => (*/}
+            {/*            <div*/}
+            {/*                onClick={}*/}
+            {/*                key={index}*/}
+            {/*                className="rounded-3xl text-sm text-white bg-gray-button-2 pr-3 pl-3 pt-2 pb-2 hover:bg-neutral-700 transition-all duration-300 ease-in-out hover: cursor-pointer">*/}
+            {/*                {category}*/}
+            {/*            </div>*/}
+            {/*        ))}*/}
+            {/*    </div>*/}
+            {/*}*/}
 
             {isExpanded &&
                 <div className="flex items-center justify-between mt-4">

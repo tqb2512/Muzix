@@ -22,7 +22,7 @@ export default function QueueContainer() {
     );
 
     return (
-        <div className="h-full overflow-y-auto">
+        <div className="px-6 h-full overflow-y-auto">
             <h1 className="text-2xl font-bold text-white">
                 Queue
             </h1>
