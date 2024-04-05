@@ -4,7 +4,9 @@ import * as artistsAPI from "@/libs/Redux/features/apiSlices/artists";
 import * as Icons from "./Icons";
 import {skipToken} from "@reduxjs/toolkit/query";
 import Image from "next/image";
-import ListTable from "./ListTable";
+import SongTable from "./SongTable";
+import {ColorContext} from "@/components/MainPanel/ColorContext";
+import {useContext} from "react";
 
 interface AlbumContainerProps {
     album_id: string;
@@ -16,12 +18,13 @@ export default function AlbumContainer({ album_id }: AlbumContainerProps) {
     const { data: album } = albumsAPI.useGetInfoByIdQuery(album_id);
     const { data: coverUrl } = albumsAPI.useGetCoverByIdQuery(album_id);
     const { data: profileUrl } = artistsAPI.useGetCoverByIdQuery(album?.album.artist_id || skipToken);
+    const {color} = useContext(ColorContext);
 
     return (
-        <div>
-            <div className="flex">
+        <div className="bg-gradient-to-b from-transparent to-dark-background to-[50dvh]" style={{backgroundColor: color}}>
+            <div className="px-6 pb-4 flex">
                 <div className="h-52 w-52 rounded-lg overflow-hidden relative flex-shrink-0">
-                    <Image src={coverUrl?.url || "/next.svg"} alt="Playlist cover" fill sizes="208px" className="object-cover" />
+                    <Image id="coverImage" src={coverUrl?.url || "/next.svg"} alt="Playlist cover" fill sizes="208px" className="object-cover" />
                 </div>
                 <div className="ml-5 flex flex-col justify-end mb-2 space-y-2">
                     <div className="text-sm">Album</div>
@@ -35,7 +38,7 @@ export default function AlbumContainer({ album_id }: AlbumContainerProps) {
                 </div>
             </div>
 
-            <div>
+            <div className="px-6 bg-dark-background bg-opacity-60">
                 <div className="h-24 w-full flex items-center justify-between">
                     <div className="flex items-center space-x-4">
                         <div className="rounded-full bg-green-500 h-12 w-12 flex items-center justify-center">
@@ -47,7 +50,7 @@ export default function AlbumContainer({ album_id }: AlbumContainerProps) {
                     </div>
                 </div>
 
-                <ListTable songs={songs?.songs || []} />
+                <SongTable songs={songs?.songs || []} />
                 
             </div>
 

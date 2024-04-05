@@ -6,7 +6,7 @@ export async function GET(req: Request) {
     const artist_id = req.url.split("/").pop() || "";
 
     if (artist_id === "") {
-        return NextResponse.json({ error: "No album_id provided" }, { status: 400 });
+        return NextResponse.json({ error: "No artist_id provided" }, { status: 400 });
     }
 
     const artist = await prisma.artist.findUnique({

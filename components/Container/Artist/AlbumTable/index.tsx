@@ -1,5 +1,5 @@
 import {album} from "@prisma/client";
-import TableItem from "./TableItem";
+import Item from "./Item";
 import Link from "next/link";
 import React from "react";
 
@@ -15,7 +15,7 @@ export default function AlbumTable({ albums }: AlbumTableProps){
     const renderItems = albums.map((album, index) => {
         if (index >= numOfCols)
             return null
-        return <TableItem key={index} album={album} />
+        return <Item key={index} album={album} />
     })
 
     React.useEffect(() => {

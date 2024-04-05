@@ -3,7 +3,7 @@ import * as albumsAPI from "@/libs/Redux/features/apiSlices/albums";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function TableItem({ album }: { album: album }) {
+export default function Item({ album }: { album: album }) {
     const { data: coverUrl } = albumsAPI.useGetCoverByIdQuery(album.album_id);
 
     return (

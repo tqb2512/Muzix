@@ -2,17 +2,20 @@
 import {useRouter} from "next/navigation";
 import * as Icons from "./Icons";
 import * as usersAPI from "@/libs/Redux/features/apiSlices/users";
-import {readUserSession} from "../../../libs/Supabase/actions";
+import {readUserSession} from "@/libs/Supabase/actions";
 import Image from "next/image";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {skipToken} from "@reduxjs/toolkit/query";
 import {createClient} from "@/libs/Supabase/client";
+import Link from "next/link";
+import {ColorContext} from "@/components/MainPanel/ColorContext";
 
 export default function Navbar() {
 
     const router = useRouter();
     const [userId, setUserId] = useState<string | null>(null);
     const {data: cover} = usersAPI.useGetCoverByIdQuery(userId || skipToken);
+    const { color } = useContext(ColorContext);
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -26,12 +29,13 @@ export default function Navbar() {
         router.back();
     }
 
-    const handleFoward = () => {
+    const handleForward = () => {
         router.forward();
     }
 
     return (
-        <div className="z-50 h-16 sticky top-0 bg-dark-background rounded-t-lg">
+        <div className="z-50 h-16 sticky top-0 bg-dark-background rounded-t-lg"
+             style={{backgroundColor: color}}>
             <div className="flex pl-6 p-4 pr-6 items-center justify-between">
                 <div className="flex space-x-2">
                     <div
@@ -40,7 +44,7 @@ export default function Navbar() {
                         <Icons.Back className="w-4 h-4 fill-current flex-shrink-0"/>
                     </div>
                     <div
-                        onClick={handleFoward}
+                        onClick={handleForward}
                         className="hover:bg-neutral-800 bg-black hover:text-white text-gray-button rounded-full w-9 h-9 flex items-center justify-center transition-all duration-300 ease-in-out">
                         <Icons.Foward className="w-4 h-4 fill-current flex-shrink-0"/>
                     </div>
@@ -68,9 +72,9 @@ export default function Navbar() {
                             <button className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
                                 <h1>Account</h1>
                             </button>
-                            <button className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
-                                <h1>Profile</h1>
-                            </button>
+                            <Link href={`/app/user/${userId}`} className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
+                                Profile
+                            </Link>
                             <hr className="border-neutral-700"/>
                             <button
                                 onClick={() => { createClient().auth.signOut().then(() => {router.push("/login");})}}

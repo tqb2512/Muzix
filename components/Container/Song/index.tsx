@@ -5,6 +5,8 @@ import * as albumsAPI from "@/libs/Redux/features/apiSlices/albums";
 import * as artistsAPI from "@/libs/Redux/features/apiSlices/artists";
 import {skipToken} from "@reduxjs/toolkit/query";
 import Image from "next/image";
+import {useContext} from "react";
+import {ColorContext} from "@/components/MainPanel/ColorContext";
 
 interface SongContainerProps {
     song_id: string;
@@ -16,12 +18,13 @@ export default function SongContainer({ song_id }: SongContainerProps) {
     const { data: album } = albumsAPI.useGetInfoByIdQuery(song?.songs[0].album_id || skipToken);
     const { data: coverUrl } = albumsAPI.useGetCoverByIdQuery(song?.songs[0].album_id || skipToken);
     const { data: profileUrl } = artistsAPI.useGetCoverByIdQuery(album?.album.artist_id || skipToken);
+    const {color} = useContext(ColorContext);
 
     return (
-        <div>
+        <div className="bg-gradient-to-b from-transparent to-dark-background to-[50dvh]" style={{backgroundColor: color}}>
             <div className="flex">
                 <div className="h-52 w-52 rounded-lg overflow-hidden relative flex-shrink-0">
-                    <Image src={coverUrl?.url || "/next.svg"} alt="Playlist cover" fill sizes="208px" className="object-cover" />
+                    <Image id="coverImage" src={coverUrl?.url || "/next.svg"} alt="Playlist cover" fill sizes="208px" className="object-cover" />
                 </div>
                 <div className="ml-5 flex flex-col justify-end mb-2 space-y-2">
                     <div className="text-sm">Song</div>

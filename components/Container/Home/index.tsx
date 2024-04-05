@@ -30,7 +30,7 @@ export default function HomeContainer() {
     }, [data]);
 
     return (
-        <div>
+        <div className="px-6">
             <div>
                 {sections.map((section) => (
                     <Section key={section.section_id} section={section}/>

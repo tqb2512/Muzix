@@ -12,7 +12,7 @@ interface ListItemProps {
     index: number;
 }
 
-export default function ListItem({ song, index }: ListItemProps) {
+export default function Item({ song, index }: ListItemProps) {
 
     const dispatch = useDispatch();
     const { data: coverUrl } = albumsAPI.useGetCoverByIdQuery(song.album_id);
