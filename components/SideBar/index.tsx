@@ -9,7 +9,7 @@ export default function SideBar({ className }: { className?: string }) {
     const sideBarRef = useRef<HTMLDivElement>(null);
 
     return (
-        <div className={`flex h-full pl-2 pb-2 pt-2 pr-1 ${className}`}>
+        <div className={`flex h-full pl-2 py-2 pr-1 ${className}`}>
             <div
                 ref={sideBarRef}
                 className="flex flex-col space-y-2 h-full"

@@ -3,12 +3,12 @@ import * as albumsAPI from "@/libs/Redux/features/apiSlices/albums";
 import * as artistsAPI from "@/libs/Redux/features/apiSlices/artists";
 import * as queue from "@/libs/Redux/features/slices/queue";
 import * as Icons from "./Icons";
-import {skipToken} from "@reduxjs/toolkit/query";
-import Image from "next/image";
-import SongTable from "./SongTable";
 import {ColorContext} from "@/components/MainPanel/ColorContext";
 import {useContext} from "react";
 import {useDispatch} from "react-redux";
+import {skipToken} from "@reduxjs/toolkit/query";
+import Image from "next/image";
+import SongTable from "./SongTable";
 
 interface AlbumContainerProps {
     album_id: string;
