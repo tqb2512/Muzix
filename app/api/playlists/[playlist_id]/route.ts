@@ -17,6 +17,6 @@ export async function GET(req: Request) {
             user: true
         }
     });
-    
+
     return NextResponse.json({ playlist }, { status: 200 });
 }

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import {useSupabase} from "@/libs/Supabase/SupabaseProvider";
+import { useSupabase } from "@/libs/Supabase/SupabaseProvider";
 
 export default function SignupForm() {
 
@@ -26,8 +26,8 @@ export default function SignupForm() {
             return;
         }
     }
-   
-    
+
+
     return (
         <div className="rounded-lg bg-dark-background w-[734px] h-4/5">
             <div className="flex flex-col items-center p-10">

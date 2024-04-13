@@ -1,6 +1,6 @@
 "use client";
-import {readUserSession} from "@/libs/Supabase/actions";
-import {useEffect, useState} from "react";
+import { readUserSession } from "@/libs/Supabase/actions";
+import { useEffect, useState } from "react";
 // import {stripeClient} from "@/libs/Stripe/stripeClient";
 
 export default function AccountContainer() {
@@ -9,7 +9,7 @@ export default function AccountContainer() {
 
     useEffect(() => {
         const fetchProfile = async () => {
-            const {data} = await readUserSession();
+            const { data } = await readUserSession();
             setUserId(data?.user?.id || null);
         }
         fetchProfile();

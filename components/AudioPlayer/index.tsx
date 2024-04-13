@@ -1,8 +1,8 @@
 "use client"
-import {useEffect, useRef} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {skipToken} from "@reduxjs/toolkit/query";
-import {RootState} from "@/libs/Redux/store";
+import { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { skipToken } from "@reduxjs/toolkit/query";
+import { RootState } from "@/libs/Redux/store";
 import * as player from "@/libs/Redux/features/slices/player";
 import * as queue from "@/libs/Redux/features/slices/queue";
 import * as songsAPI from "@/libs/Redux/features/apiSlices/songs";
@@ -17,7 +17,7 @@ function toMMSS(seconds: number) {
     return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
 }
 
-export default function AudioPlayer({className}: {className?: string}) {
+export default function AudioPlayer({ className }: { className?: string }) {
 
     const dispatch = useDispatch();
     const playerState = useSelector((state: RootState) => state.player);
@@ -119,7 +119,7 @@ export default function AudioPlayer({className}: {className?: string}) {
                         </div>
                     </div>
                 </div>
-                        
+
                 <RightBar audioRef={audioRef} />
 
             </div>

@@ -1,5 +1,5 @@
 import * as playlistsAPI from "@/libs/Redux/features/apiSlices/playlists";
-import {playlist} from "@prisma/client";
+import { playlist } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -13,13 +13,13 @@ export default function PlaylistBox({ playlist }: { playlist: playlist }) {
             <div className="w-full h-full">
                 <div className="flex flex-col items-center w-full h-full">
                     <div className="rounded-md overflow-hidden relative w-[184px] h-[184px]">
-                        <Image 
-                            src={data?.url || "/next.svg"} 
-                            alt="playlist image" 
-                            className="object-cover" 
+                        <Image
+                            src={data?.url || "/next.svg"}
+                            alt="playlist image"
+                            className="object-cover"
                             fill
                             sizes="184px"
-                            />
+                        />
                     </div>
                     <div className="mt-2 w-full">
                         <div className="truncate">

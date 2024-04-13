@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import {artist, album, song, artist_contribute_song} from "@prisma/client";
+import { artist, album, song, artist_contribute_song } from "@prisma/client";
 interface Response {
     url: string;
 }

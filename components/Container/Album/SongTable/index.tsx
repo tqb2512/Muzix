@@ -1,4 +1,4 @@
-import {album, artist, artist_contribute_song, song} from "@prisma/client";
+import { album, artist, artist_contribute_song, song } from "@prisma/client";
 import Item from "./Item";
 import * as Icons from "../Icons";
 
@@ -24,8 +24,8 @@ export default function ListTable({ songs }: ListTableProps) {
                     <div className="text-left w-full">Title</div>
                 </div>
                 <div className="flex items-center justify-center w-32">
-                        <Icons.Duration className="w-5 h-5 fill-current text-gray-text" />
-                    </div>
+                    <Icons.Duration className="w-5 h-5 fill-current text-gray-text" />
+                </div>
                 <div className="w-12" />
             </div>
             <div className="overflow-x-auto space-y-2">

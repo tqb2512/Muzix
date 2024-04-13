@@ -1,9 +1,9 @@
-import {album, artist, artist_contribute_song, song} from "@prisma/client";
+import { album, artist, artist_contribute_song, song } from "@prisma/client";
 import * as albumsAPI from "@/libs/Redux/features/apiSlices/albums";
 import Image from "next/image";
 import Link from "next/link";
 import * as queue from "@/libs/Redux/features/slices/queue";
-import {useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 
 interface Song extends song {
     album: album & {

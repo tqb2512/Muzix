@@ -1,8 +1,8 @@
-import {stripe} from "@/libs/Stripe/stripe";
-import {prisma} from "@/app/api/base";
-import {headers} from 'next/headers';
+import { stripe } from "@/libs/Stripe/stripe";
+import { prisma } from "@/app/api/base";
+import { headers } from 'next/headers';
 import Stripe from "stripe";
-import {NextResponse} from "next/server";
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
     const body = await req.text();
@@ -14,7 +14,7 @@ export async function POST(req: Request) {
     try {
         event = stripe.webhooks.constructEvent(body, sig, webhookSecret);
     } catch (err: any) {
-        return new NextResponse(err.message, {status: 400});
+        return new NextResponse(err.message, { status: 400 });
     }
     const session = event.data.object as Stripe.Checkout.Session;
     switch (event.type) {
@@ -45,8 +45,8 @@ export async function POST(req: Request) {
                 break;
             }
         default:
-            return new NextResponse("Does not handle this event", {status: 500});
+            return new NextResponse("Does not handle this event", { status: 500 });
     }
 
-    return new NextResponse("Webhook received", {status: 200});
+    return new NextResponse("Webhook received", { status: 200 });
 }

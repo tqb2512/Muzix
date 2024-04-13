@@ -1,12 +1,15 @@
 "use client";
+import * as usersAPI from "@/libs/Redux/features/apiSlices/users";
 import * as albumsAPI from "@/libs/Redux/features/apiSlices/albums";
 import * as artistsAPI from "@/libs/Redux/features/apiSlices/artists";
-import * as queue from "@/libs/Redux/features/slices/queue";
+import * as queueState from "@/libs/Redux/features/slices/queue";
+import * as userState from "@/libs/Redux/features/slices/user";
 import * as Icons from "./Icons";
-import {ColorContext} from "@/components/MainPanel/ColorContext";
-import {useContext} from "react";
-import {useDispatch} from "react-redux";
-import {skipToken} from "@reduxjs/toolkit/query";
+import { ColorContext } from "@/components/MainPanel/ColorContext";
+import { useContext, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/libs/Redux/store";
+import { skipToken } from "@reduxjs/toolkit/query";
 import Image from "next/image";
 import SongTable from "./SongTable";
 
@@ -17,21 +20,52 @@ interface AlbumContainerProps {
 export default function AlbumContainer({ album_id }: AlbumContainerProps) {
 
     const dispatch = useDispatch();
+    const { color } = useContext(ColorContext);
+    const user = useSelector((state: RootState) => state.user);
     const { data: songs } = albumsAPI.useGetSongsByIdQuery(album_id);
     const { data: album } = albumsAPI.useGetInfoByIdQuery(album_id);
     const { data: coverUrl } = albumsAPI.useGetCoverByIdQuery(album_id);
     const { data: profileUrl } = artistsAPI.useGetCoverByIdQuery(album?.album.artist_id || skipToken);
-    const {color} = useContext(ColorContext);
+    const [action, setAction] = useState<"Like" | "Unlike">("Like");
+    const [sendAction] = usersAPI.useSendActionMutation();
 
     const handlePlay = () => {
-        dispatch(queue.clear());
+        dispatch(queueState.clear());
         songs?.songs.forEach((song) => {
-            dispatch(queue.push(song));
+            dispatch(queueState.push(song));
+        })
+    }
+
+    useEffect(() => {
+        if (user.user_like_album?.find((likedAlbum: any) => likedAlbum.album.album_id === album_id)) {
+            setAction("Unlike");
+        } else {
+            setAction("Like");
+        }
+    }, [user, album_id])
+
+
+    const handleFollow = () => {
+        sendAction({
+            user_id: user.user_id,
+            action: action === "Like" ? "like" : "unlike",
+            type: "album",
+            id: album_id
+        }).then(() => {
+            if (action === "Like") {
+                dispatch(userState.likeAlbum({
+                    album: { album_id: album_id, name: album?.album.name as string, artist_id: album?.album.artist_id as string },
+                    artist: { artist_id: album?.album.artist_id as string, name: album?.album.artist.name as string },
+                    user_id: user.user_id
+                }))
+            } else {
+                dispatch(userState.unlikeAlbum(album_id));
+            }
         })
     }
 
     return (
-        <div className="bg-gradient-to-b from-transparent to-dark-background to-[50dvh]" style={{backgroundColor: color}}>
+        <div className="bg-gradient-to-b from-transparent to-dark-background to-[50dvh]" style={{ backgroundColor: color }}>
             <div className="px-6 pb-6 flex">
                 <div className="h-52 w-52 rounded-lg overflow-hidden relative flex-shrink-0">
                     <Image id="coverImage" src={coverUrl?.url || "/next.svg"} alt="Playlist cover" fill sizes="208px" className="object-cover" />
@@ -67,8 +101,10 @@ export default function AlbumContainer({ album_id }: AlbumContainerProps) {
                             id="album-dropdown"
                             className="z-50 hidden bg-neutral-800 rounded-md w-48 relative top-16 right-14 p-1">
                             <div className="flex flex-col justify-between w-full">
-                                <button className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
-                                    <h1>Follow</h1>
+                                <button
+                                    onClick={handleFollow}
+                                    className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
+                                    <h1>{action}</h1>
                                 </button>
                                 <button className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
                                     <h1>Share</h1>
@@ -78,7 +114,7 @@ export default function AlbumContainer({ album_id }: AlbumContainerProps) {
                     </div>
                 </div>
 
-                <SongTable songs={songs?.songs || []}/>
+                <SongTable songs={songs?.songs || []} />
 
             </div>
 

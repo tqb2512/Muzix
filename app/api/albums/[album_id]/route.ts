@@ -18,6 +18,6 @@ export async function GET(req: Request) {
         }
     });
 
-    
+
     return NextResponse.json({ album }, { status: 200 });
 }

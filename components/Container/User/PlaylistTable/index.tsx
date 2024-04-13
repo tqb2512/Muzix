@@ -1,10 +1,10 @@
-import {playlist} from "@prisma/client";
+import { playlist } from "@prisma/client";
 import PlaylistBox from "@/components/Container/Home/Section/Playlist";
 interface PlaylistTableProps {
     playlists: playlist[];
 }
 
-export default function PlaylistTable({ playlists }: PlaylistTableProps){
+export default function PlaylistTable({ playlists }: PlaylistTableProps) {
     return (
         <div className="flex flex-col w-full h-full">
             <div className="flex flex-row justify-between items-center">

@@ -3,7 +3,7 @@ import SideBar from "@/components/SideBar";
 import MainPanel from "@/components/MainPanel";
 
 export default async function AppLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
-    
+
     return (
         <div className="flex h-screen w-screen">
             <div className="h-[calc(100vh-75px)] flex w-full">

@@ -1,7 +1,7 @@
-import {useRef} from "react";
+import { useRef } from "react";
 import * as Icons from "./Icons";
 
-export default function VolumeBar({ audioRef}: { audioRef: any }) {
+export default function VolumeBar({ audioRef }: { audioRef: any }) {
 
     const volumeRef = useRef<HTMLDivElement>(null);
     const barRef = useRef<HTMLDivElement>(null);

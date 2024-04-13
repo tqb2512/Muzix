@@ -6,7 +6,7 @@ import { PersistGate } from "redux-persist/integration/react";
 export default function StoreProvider({ children, }: Readonly<{ children: React.ReactNode; }>) {
     return (
         <Provider store={store}>
-            <PersistGate loading={<div/>} persistor={persistor}>
+            <PersistGate loading={<div />} persistor={persistor}>
                 {children}
             </PersistGate>
         </Provider>

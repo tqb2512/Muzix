@@ -1,14 +1,17 @@
 "use client";
 import * as playlistsAPI from "@/libs/Redux/features/apiSlices/playlists";
 import * as usersAPI from "@/libs/Redux/features/apiSlices/users";
+import * as usersState from "@/libs/Redux/features/slices/user";
 import * as Icons from "./Icons";
-import {skipToken} from "@reduxjs/toolkit/query";
+import { skipToken } from "@reduxjs/toolkit/query";
 import Image from "next/image";
 import SongTable from "./SongTable";
-import {ColorContext} from "@/components/MainPanel/ColorContext";
-import {useContext} from "react";
+import { ColorContext } from "@/components/MainPanel/ColorContext";
+import { useContext, useEffect, useState } from "react";
 import * as queue from "@/libs/Redux/features/slices/queue";
-import {useDispatch} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/libs/Redux/store";
+import { playlist, user } from "@prisma/client";
 
 interface PlaylistContainerProps {
     playlist_id: string;
@@ -17,11 +20,22 @@ interface PlaylistContainerProps {
 export default function PlaylistContainer({ playlist_id }: PlaylistContainerProps) {
 
     const dispatch = useDispatch();
+    const { color } = useContext(ColorContext);
+    const user = useSelector((state: RootState) => state.user);
     const { data: songs } = playlistsAPI.useGetSongsByIdQuery(playlist_id);
     const { data: playlist } = playlistsAPI.useGetInfoByIdQuery(playlist_id);
     const { data: coverUrl } = playlistsAPI.useGetCoverByIdQuery(playlist_id);
     const { data: profileUrl } = usersAPI.useGetCoverByIdQuery(playlist?.playlist.user_id || skipToken);
-    const {color} = useContext(ColorContext);
+    const [action, setAction] = useState<"Follow" | "Unfollow">("Follow");
+    const [sendAction] = usersAPI.useSendActionMutation();
+
+    useEffect(() => {
+        if (user.user_following_playlist?.find((followedPlaylist: any) => followedPlaylist.playlist.playlist_id === playlist_id)) {
+            setAction("Unfollow");
+        } else {
+            setAction("Follow");
+        }
+    }, [user, playlist_id])
 
     const handlePlay = () => {
         dispatch(queue.clear());
@@ -30,8 +44,27 @@ export default function PlaylistContainer({ playlist_id }: PlaylistContainerProp
         })
     }
 
+    const handleFollow = () => {
+        sendAction({
+            user_id: user.user_id,
+            action: action === "Follow" ? "follow" : "unfollow",
+            type: "playlist",
+            id: playlist_id
+        }).then(() => {
+            if (action === "Follow") {
+                dispatch(usersState.followPlaylist({
+                    playlist: playlist?.playlist as playlist,
+                    user: playlist?.playlist.user as user,
+                    user_id: user.user_id,
+                }))
+            } else {
+                dispatch(usersState.unfollowPlaylist(playlist_id));
+            }
+        })
+    }
+
     return (
-        <div className="bg-gradient-to-b from-transparent to-dark-background to-[50dvh]" style={{backgroundColor: color}}>
+        <div className="bg-gradient-to-b from-transparent to-dark-background to-[50dvh]" style={{ backgroundColor: color }}>
             <div className="px-6 pb-6 flex">
                 <div className="h-52 w-52 rounded-lg overflow-hidden relative flex-shrink-0">
                     <Image id="coverImage" src={coverUrl?.url || "/next.svg"} alt="Playlist cover" fill sizes="208px" className="object-cover" />
@@ -55,21 +88,23 @@ export default function PlaylistContainer({ playlist_id }: PlaylistContainerProp
                         <button
                             onClick={handlePlay}
                             className="rounded-full bg-green-500 h-12 w-12 flex items-center justify-center">
-                            <Icons.Play className="w-5 h-5 fill-current text-black"/>
+                            <Icons.Play className="w-5 h-5 fill-current text-black" />
                         </button>
                         <button
                             onClick={() => {
                                 document.getElementById("album-dropdown")?.classList.toggle("hidden");
                             }}
                             className="rounded-full bg-transparent h-12 w-12 flex items-center justify-center">
-                            <Icons.ThreeDots className="w-7 h-7 fill-current text-gray-button"/>
+                            <Icons.ThreeDots className="w-7 h-7 fill-current text-gray-button" />
                         </button>
                         <div
                             id="album-dropdown"
                             className="z-50 hidden bg-neutral-800 rounded-md w-48 relative top-16 right-14 p-1">
                             <div className="flex flex-col justify-between w-full">
-                                <button className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
-                                    <h1>Follow</h1>
+                                <button
+                                    onClick={handleFollow}
+                                    className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
+                                    <h1>{action}</h1>
                                 </button>
                                 <button className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
                                     <h1>Share</h1>
@@ -79,7 +114,7 @@ export default function PlaylistContainer({ playlist_id }: PlaylistContainerProp
                     </div>
                 </div>
 
-                <SongTable songs={songs?.songs || []}/>
+                <SongTable songs={songs?.songs || []} />
 
             </div>
 

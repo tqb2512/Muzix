@@ -1,4 +1,4 @@
-import {album} from "@prisma/client";
+import { album } from "@prisma/client";
 import Item from "./Item";
 import Link from "next/link";
 import React from "react";
@@ -7,7 +7,7 @@ interface AlbumTableProps {
     albums: album[];
 }
 
-export default function AlbumTable({ albums }: AlbumTableProps){
+export default function AlbumTable({ albums }: AlbumTableProps) {
 
     const [numOfCols, setNumOfCols] = React.useState(6);
     const containerRef = React.useRef<HTMLDivElement>(null);

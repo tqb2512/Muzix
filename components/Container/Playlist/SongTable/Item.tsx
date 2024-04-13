@@ -1,9 +1,9 @@
 import Image from "next/image";
-import {Song} from "./index";
+import { Song } from "./index";
 import * as albumsAPI from "@/libs/Redux/features/apiSlices/albums";
 import * as queue from "@/libs/Redux/features/slices/queue";
-import {RootState} from "@/libs/Redux/store";
-import {useDispatch, useSelector} from "react-redux";
+import { RootState } from "@/libs/Redux/store";
+import { useDispatch, useSelector } from "react-redux";
 import * as Icons from "../Icons";
 import Link from "next/link";
 
@@ -12,10 +12,10 @@ interface ListItemProps {
     index: number;
 }
 
-export default function Item({song, index}: ListItemProps) {
+export default function Item({ song, index }: ListItemProps) {
 
     const dispatch = useDispatch();
-    const {data: coverUrl} = albumsAPI.useGetCoverByIdQuery(song.album_id);
+    const { data: coverUrl } = albumsAPI.useGetCoverByIdQuery(song.album_id);
     const playerState = useSelector((state: RootState) => state.player);
 
     const handlePlay = () => {
@@ -34,29 +34,29 @@ export default function Item({song, index}: ListItemProps) {
                 <div className="text-left w-full flex space-x-3 h-full items-center">
                     <div className="rounded-md h-10 w-10 overflow-hidden relative shrink-0">
                         <Image src={coverUrl?.url || "/next.svg"} alt="Album cover" fill sizes="40px"
-                               className="object-cover"/>
+                            className="object-cover" />
                     </div>
 
                     <div className="flex flex-col justify-center w-4/5">
                         <div>
                             <Link href={`/app/song/${song.song_id}`}
-                                  className={`truncate overflow-hidden hover:underline` + (playerState.song?.song_id === song.song_id ? " text-green-500" : "")}>
+                                className={`truncate overflow-hidden hover:underline` + (playerState.song?.song_id === song.song_id ? " text-green-500" : "")}>
                                 {song.name}
                             </Link>
                         </div>
                         <div className="text-sm truncate overflow-hidden">
                             <Link href={`app/artist/${song.album.artist.artist_id}`}
-                                  className="hover:underline">{song.album.artist.name}</Link>
+                                className="hover:underline">{song.album.artist.name}</Link>
                             {song.artist_contribute_song.map((artist) => (
                                 <Link href={`app/artist/${artist.artist.artist_id}`} className="hover:underline"
-                                      key={artist.artist.artist_id}>, {artist.artist.name}</Link>
+                                    key={artist.artist.artist_id}>, {artist.artist.name}</Link>
                             ))}
                         </div>
                     </div>
                 </div>
                 <div className="flex flex-col overflow-hidden w-2/5 justify-center">
                     <Link href={`/app/album/${song.album_id}`}
-                          className="text-left truncate hover:underline">{song.album.name}</Link>
+                        className="text-left truncate hover:underline">{song.album.name}</Link>
                 </div>
                 <div className="flex flex-col overflow-hidden w-1/4 justify-center">
                     <h1 className="text-left truncate">{new Date(song.playlist_song[0].created_at).toLocaleDateString('en-US', {
@@ -69,7 +69,7 @@ export default function Item({song, index}: ListItemProps) {
 
             <div className="text-center w-32 truncate overflow-hidden ">{song.duration_ms}</div>
             <div className="w-12">
-                <Icons.ThreeDots className="w-6 h-6 fill-current"/>
+                <Icons.ThreeDots className="w-6 h-6 fill-current" />
             </div>
         </div>
     )

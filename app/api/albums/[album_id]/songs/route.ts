@@ -8,7 +8,7 @@ export async function GET(req: Request) {
     if (album_id === "") {
         return NextResponse.json({ error: "No album_id provided" }, { status: 400 });
     }
-    
+
     const songs = await prisma.song.findMany({
         where: {
             album_id: album_id
