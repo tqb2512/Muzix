@@ -1,16 +1,16 @@
 "use client";
-import * as playlistsAPI from "@/libs/Redux/features/apiSlices/playlists";
-import * as usersAPI from "@/libs/Redux/features/apiSlices/users";
-import * as usersState from "@/libs/Redux/features/slices/user";
 import * as Icons from "./Icons";
-import { skipToken } from "@reduxjs/toolkit/query";
 import Image from "next/image";
 import SongTable from "./SongTable";
-import { ColorContext } from "@/components/MainPanel/ColorContext";
+import * as playlistsAPI from "@/libs/Redux/features/apiSlices/playlists";
+import * as usersAPI from "@/libs/Redux/features/apiSlices/users";
+import * as userSlice from "@/libs/Redux/features/slices/user";
+import * as queueSlice from "@/libs/Redux/features/slices/queue";
 import { useContext, useEffect, useState } from "react";
-import * as queue from "@/libs/Redux/features/slices/queue";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/libs/Redux/store";
+import { skipToken } from "@reduxjs/toolkit/query";
+import { ColorContext } from "@/components/MainPanel/ColorContext";
 import { playlist, user } from "@prisma/client";
 
 interface PlaylistContainerProps {
@@ -20,8 +20,8 @@ interface PlaylistContainerProps {
 export default function PlaylistContainer({ playlist_id }: PlaylistContainerProps) {
 
     const dispatch = useDispatch();
-    const { color } = useContext(ColorContext);
     const user = useSelector((state: RootState) => state.user);
+    const { color } = useContext(ColorContext);
     const { data: songs } = playlistsAPI.useGetSongsByIdQuery(playlist_id);
     const { data: playlist } = playlistsAPI.useGetInfoByIdQuery(playlist_id);
     const { data: coverUrl } = playlistsAPI.useGetCoverByIdQuery(playlist_id);
@@ -38,9 +38,9 @@ export default function PlaylistContainer({ playlist_id }: PlaylistContainerProp
     }, [user, playlist_id])
 
     const handlePlay = () => {
-        dispatch(queue.clear());
+        dispatch(queueSlice.clear());
         songs?.songs.forEach((song) => {
-            dispatch(queue.push(song));
+            dispatch(queueSlice.push(song));
         })
     }
 
@@ -52,13 +52,13 @@ export default function PlaylistContainer({ playlist_id }: PlaylistContainerProp
             id: playlist_id
         }).then(() => {
             if (action === "Follow") {
-                dispatch(usersState.followPlaylist({
+                dispatch(userSlice.followPlaylist({
                     playlist: playlist?.playlist as playlist,
                     user: playlist?.playlist.user as user,
                     user_id: user.user_id,
                 }))
             } else {
-                dispatch(usersState.unfollowPlaylist(playlist_id));
+                dispatch(userSlice.unfollowPlaylist(playlist_id));
             }
         })
     }

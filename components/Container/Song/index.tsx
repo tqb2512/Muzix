@@ -4,8 +4,8 @@ import * as songsAPI from "@/libs/Redux/features/apiSlices/songs";
 import * as albumsAPI from "@/libs/Redux/features/apiSlices/albums";
 import * as artistsAPI from "@/libs/Redux/features/apiSlices/artists";
 import * as usersAPI from "@/libs/Redux/features/apiSlices/users";
-import * as userState from "@/libs/Redux/features/slices/user";
-import * as queue from "@/libs/Redux/features/slices/queue";
+import * as userSlice from "@/libs/Redux/features/slices/user";
+import * as queueSlice from "@/libs/Redux/features/slices/queue";
 import { skipToken } from "@reduxjs/toolkit/query";
 import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
@@ -39,8 +39,8 @@ export default function SongContainer({ song_id }: SongContainerProps) {
     }, [user, song_id])
 
     const handlePlay = () => {
-        dispatch(queue.clear());
-        dispatch(queue.play(song?.songs[0] as song));
+        dispatch(queueSlice.clear());
+        dispatch(queueSlice.play(song?.songs[0] as song));
     }
 
     const handleFollow = () => {
@@ -51,14 +51,14 @@ export default function SongContainer({ song_id }: SongContainerProps) {
             id: song_id
         }).then(() => {
             if (action === "Like") {
-                dispatch(userState.likeSong({
+                dispatch(userSlice.likeSong({
                     song: song?.songs[0] as song,
                     album: album?.album as album,
                     artist: album?.album.artist as artist,
                     user_id: user.user_id
                 }))
             } else {
-                dispatch(userState.unlikeSong(song_id));
+                dispatch(userSlice.unlikeSong(song_id));
             }
         })
     }

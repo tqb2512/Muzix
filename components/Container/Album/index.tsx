@@ -1,17 +1,18 @@
 "use client";
+import * as Icons from "./Icons";
+import SongTable from "./SongTable";
 import * as usersAPI from "@/libs/Redux/features/apiSlices/users";
 import * as albumsAPI from "@/libs/Redux/features/apiSlices/albums";
 import * as artistsAPI from "@/libs/Redux/features/apiSlices/artists";
-import * as queueState from "@/libs/Redux/features/slices/queue";
-import * as userState from "@/libs/Redux/features/slices/user";
-import * as Icons from "./Icons";
+import * as queueSlice from "@/libs/Redux/features/slices/queue";
+import * as userSlice from "@/libs/Redux/features/slices/user";
 import { ColorContext } from "@/components/MainPanel/ColorContext";
+import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/libs/Redux/store";
 import { skipToken } from "@reduxjs/toolkit/query";
-import Image from "next/image";
-import SongTable from "./SongTable";
+import { album, artist } from "@prisma/client";
 
 interface AlbumContainerProps {
     album_id: string;
@@ -30,9 +31,9 @@ export default function AlbumContainer({ album_id }: AlbumContainerProps) {
     const [sendAction] = usersAPI.useSendActionMutation();
 
     const handlePlay = () => {
-        dispatch(queueState.clear());
+        dispatch(queueSlice.clear());
         songs?.songs.forEach((song) => {
-            dispatch(queueState.push(song));
+            dispatch(queueSlice.push(song));
         })
     }
 
@@ -53,13 +54,13 @@ export default function AlbumContainer({ album_id }: AlbumContainerProps) {
             id: album_id
         }).then(() => {
             if (action === "Like") {
-                dispatch(userState.likeAlbum({
-                    album: { album_id: album_id, name: album?.album.name as string, artist_id: album?.album.artist_id as string },
-                    artist: { artist_id: album?.album.artist_id as string, name: album?.album.artist.name as string },
+                dispatch(userSlice.likeAlbum({
+                    album: album?.album as album,
+                    artist: album?.album.artist as artist,
                     user_id: user.user_id
                 }))
             } else {
-                dispatch(userState.unlikeAlbum(album_id));
+                dispatch(userSlice.unlikeAlbum(album_id));
             }
         })
     }

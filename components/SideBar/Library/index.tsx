@@ -1,23 +1,25 @@
 "use client";
-import * as Icons from "./Icons";
-import { useEffect, useState } from "react";
-import * as usersAPI from "@/libs/Redux/features/apiSlices/users";
-import { skipToken } from "@reduxjs/toolkit/query";
-import { readUserSession } from "@/libs/Supabase/actions";
 import ArtistBox from "@/components/SideBar/Library/Artist";
 import AlbumBox from "@/components/SideBar/Library/Album";
 import PlaylistBox from "@/components/SideBar/Library/Playlist";
-import * as user from "@/libs/Redux/features/slices/user";
+import * as Icons from "./Icons";
+import * as usersAPI from "@/libs/Redux/features/apiSlices/users";
+import * as userSlice from "@/libs/Redux/features/slices/user";
+import { useEffect, useState } from "react";
+import { skipToken } from "@reduxjs/toolkit/query";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/libs/Redux/store";
+import { readUserSession } from "@/libs/Supabase/actions";
+
 
 export function LibrarySection({ isExpanded = true }: { isExpanded?: boolean }) {
     const dispatch = useDispatch();
 
+    const user = useSelector((state: RootState) => state.user);
     const [userId, setUserId] = useState<string>("");
-    const { data } = usersAPI.useGetUserByIdQuery(userId || skipToken);
-    const userState = useSelector((state: RootState) => state.user);
     const [visualData, setVisualData] = useState<any[]>([]);
+    const { data } = usersAPI.useGetUserByIdQuery(userId || skipToken);
+
 
     useEffect(() => {
         readUserSession().then((session) => {
@@ -26,21 +28,21 @@ export function LibrarySection({ isExpanded = true }: { isExpanded?: boolean }) 
     }, [])
 
     useEffect(() => {
-        dispatch(user.setUser(data?.user || {} as any));
+        dispatch(userSlice.setUser(data?.user || {} as any));
     }, [data, dispatch])
 
     useEffect(() => {
         const combinedData = [
-            ...(userState?.playlist || []),
-            ...(userState?.user_following_playlist || []),
-            ...(userState?.user_following_artist || []),
-            ...(userState?.user_like_album || []),
+            ...(user?.playlist || []),
+            ...(user?.user_following_playlist || []),
+            ...(user?.user_following_artist || []),
+            ...(user?.user_like_album || []),
         ]
         combinedData.sort((a: any, b: any) => {
             return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
         })
         setVisualData(combinedData);
-    }, [userState])
+    }, [user])
 
     const renderItem = (item: any, index: number) => {
         if (item.album) {

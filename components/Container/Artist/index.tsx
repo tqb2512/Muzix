@@ -1,16 +1,17 @@
 "use client";
-import * as artistsAPI from "@/libs/Redux/features/apiSlices/artists";
-import * as usersAPI from "@/libs/Redux/features/apiSlices/users";
-import * as userState from "@/libs/Redux/features/slices/user";
 import * as Icons from "./Icons";
-import Image from "next/image";
 import AlbumTable from "./AlbumTable";
 import ListTable from "../Album/SongTable";
+import * as artistsAPI from "@/libs/Redux/features/apiSlices/artists";
+import * as usersAPI from "@/libs/Redux/features/apiSlices/users";
+import * as userSlice from "@/libs/Redux/features/slices/user";
+import * as queueSlice from "@/libs/Redux/features/slices/queue";
+import Image from "next/image";
 import React, { useContext, useEffect } from "react";
-import { ColorContext } from "@/components/MainPanel/ColorContext";
-import * as queue from "@/libs/Redux/features/slices/queue";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/libs/Redux/store";
+import { ColorContext } from "@/components/MainPanel/ColorContext";
+import { artist } from "@prisma/client";
 
 interface ArtistContainerProps {
     artist_id: string;
@@ -36,9 +37,9 @@ export default function ArtistContainer({ artist_id }: ArtistContainerProps) {
     }, [user, artist_id])
 
     const handlePlay = () => {
-        dispatch(queue.clear());
+        dispatch(queueSlice.clear());
         songs?.songs.forEach((song) => {
-            dispatch(queue.push(song));
+            dispatch(queueSlice.push(song));
         })
     }
 
@@ -50,12 +51,12 @@ export default function ArtistContainer({ artist_id }: ArtistContainerProps) {
             id: artist_id
         }).then(() => {
             if (action === "Follow") {
-                dispatch(userState.followArtist({
-                    artist: { artist_id: artist_id, name: artist?.artist.name as string },
+                dispatch(userSlice.followArtist({
+                    artist: artist?.artist as artist,
                     user_id: user.user_id
                 }))
             } else {
-                dispatch(userState.unfollowArtist(artist_id));
+                dispatch(userSlice.unfollowArtist(artist_id));
             }
         })
     }
