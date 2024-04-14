@@ -8,7 +8,9 @@ export default function RightBar({ audioRef }: { audioRef: any }) {
             <div className="flex justify-end w-1/2 flex-grow">
                 <div className="flex items-center space-x-4">
                     <Icons.Info className="w-4 h-4 fill-current text-gray-300 hover:text-white flex-shrink-0" />
-                    <Icons.Lyrics className="w-4 h-4 fill-current text-gray-300 hover:text-white flex-shrink-0" />
+                    <Link href="/app/lyrics">
+                        <Icons.Lyrics className="w-4 h-4 fill-current text-gray-300 hover:text-white flex-shrink-0" />
+                    </Link>
                     <Link href="/app/queue">
                         <Icons.Queue className="w-4 h-4 fill-current text-gray-300 hover:text-white flex-shrink-0" />
                     </Link>

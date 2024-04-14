@@ -70,11 +70,11 @@ export default function Section({ section }: { section: Section }) {
             className="flex flex-col w-full h-full mt-6">
             <div className="flex flex-row justify-between items-center">
                 <Link
-                    href={`/section/${section.section_id}`}
+                    href={`/app/section/${section.section_id}`}
                     className="text-2xl font-bold hover:underline"
                 >{section.name}</Link>
                 <Link
-                    href={`/section/${section.section_id}`}
+                    href={`/app/section/${section.section_id}`}
                     className="text-gray-text hover:underline font-bold"
                 >Show all</Link>
             </div>

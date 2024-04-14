@@ -44,6 +44,7 @@ export default function NowPlaying() {
         <div className="flex items-center space-x-4 w-3/12">
 
             <Image
+                id="playerSongCover"
                 src={playerState.urlImage || "/next.svg"}
                 alt="Album cover"
                 width={58}
@@ -54,7 +55,7 @@ export default function NowPlaying() {
 
                 <div>
                     <Link
-                        href={`/app/albums/${song?.album.album_id}`}
+                        href={`/app/song/${song?.song_id}`}
                         className="text-sm font-bold hover:text-white hover:underline">
                         {song?.name}
                     </Link>
@@ -62,7 +63,7 @@ export default function NowPlaying() {
 
                 <div className="text-xs text-gray-500">
                     <Link
-                        href={`/app/artists/${song?.album.artist.artist_id}`}
+                        href={`/app/artist/${song?.album.artist.artist_id}`}
                         className="hover:text-white hover:underline"
                     >
                         {song?.album.artist.name}

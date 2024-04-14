@@ -22,7 +22,10 @@ export const sectionsAPI = createApi({
         getSections: builder.query<{ sections: Section[] }, number>({
             query: (limit) => `sections?limit=${limit}` as string,
         }),
+        getSectionById: builder.query<{ section: Section }, string>({
+            query: (section_id) => `sections/${section_id}` as string,
+        }),
     }),
 });
 
-export const { useGetSectionsQuery } = sectionsAPI;
+export const { useGetSectionsQuery, useGetSectionByIdQuery } = sectionsAPI;

@@ -62,8 +62,6 @@ export async function POST(req: Request) {
     const { action, type, id } = await req.json();
     const user_id = req.url.split("/").pop() || "";
 
-    console.log(action, type, id, user_id);
-
     if (user_id === "") {
         return NextResponse.json({ error: "No user_id provided" }, { status: 400 });
     }

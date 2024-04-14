@@ -1,8 +1,8 @@
-"use client"
-import Navbar from "./Navbar";
-import { useEffect, useState } from "react";
+"use client";
 import { ColorContext } from "@/components/MainPanel/ColorContext";
-import { usePathname } from "next/navigation";
+import { RootState } from "@/libs/Redux/store";
+import { useContext, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 function rgbToHex(uint8ClampedArrayElement: number, uint8ClampedArrayElement2: number, uint8ClampedArrayElement3: number) {
     return ((uint8ClampedArrayElement << 16) + (uint8ClampedArrayElement2 << 8) + uint8ClampedArrayElement3).toString(16).padStart(6, '0');
@@ -16,13 +16,15 @@ function darkenColor(color: string, amount: number) {
     return `#${((r << 16) + (g << 8) + b).toString(16).padStart(6, '0')}`;
 }
 
-export default function MainPanel({ children, }: Readonly<{ children: React.ReactNode; }>) {
-    const pathName = usePathname();
-    const [color, setColor] = useState("#121212");
+
+export default function LyricsContainer() {
+
+    const { color, setColor } = useContext(ColorContext);
+    const player = useSelector((state: RootState) => state.player);
 
     useEffect(() => {
         setColor("#121212");
-        const cover = document.getElementById("coverImage") as HTMLImageElement;
+        const cover = document.getElementById("playerSongCover") as HTMLImageElement;
         if (cover) {
             const loadImage = () => {
                 const canvas = document.createElement("canvas");
@@ -42,18 +44,13 @@ export default function MainPanel({ children, }: Readonly<{ children: React.Reac
                 cover.addEventListener("load", loadImage);
             }
         }
-    }, [pathName]);
+    }, [setColor]);
 
     return (
-        <ColorContext.Provider value={{ color, setColor }}>
-            <div className="rounded-lg bg-dark-background h-full w-full overflow-hidden">
-                <div className="flex flex-col h-full">
-                    <Navbar />
-                    <div className="h-full overflow-y-auto">
-                        {children}
-                    </div>
-                </div>
-            </div>
-        </ColorContext.Provider>
+        <div className="px-6 flex justify-center" style={{ backgroundColor: color }}>
+            <pre className="whitespace-pre-wrap text-3xl leading-10">
+                {player.song.lyrics}
+            </pre>
+        </div>
     )
 }

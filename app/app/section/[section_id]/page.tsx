@@ -1,7 +1,9 @@
-export default function SectionDetailPage() {
+import SectionContainer from "@/components/Container/Section";
+
+export default function SectionDetailPage({ params }: { params: { section_id: string } }) {
     return (
         <div>
-            <h1>SectionPage</h1>
+            <SectionContainer section_id={params.section_id} />
         </div>
     )
 }
