@@ -37,7 +37,7 @@ export default function TopResultBox({ searchResults }: TopResultBoxProps) {
             case "album":
                 return (
                     <div className="h-full w-full p-6 flex flex-col justify-between">
-                        <div className="size-32 bg-white rounded-md overflow-hidden relative shrink-0">
+                        <div className="size-32 rounded-md overflow-hidden relative shrink-0">
                             <Image src={coverUrl || "/next.svg"} alt="Album cover" fill sizes="128px"
                                 className="object-cover" />
                         </div>
@@ -51,7 +51,7 @@ export default function TopResultBox({ searchResults }: TopResultBoxProps) {
                 return (
                     <div className="h-full w-full p-6 flex flex-col justify-between">
 
-                        <div className="size-32 bg-white rounded-full overflow-hidden relative shrink-0">
+                        <div className="size-32 rounded-full overflow-hidden relative shrink-0">
                             <Image src={coverUrl || "/next.svg"} alt="Artist cover" fill sizes="128px"
                                 className="object-cover" />
                         </div>
@@ -65,7 +65,7 @@ export default function TopResultBox({ searchResults }: TopResultBoxProps) {
                 return (
                     <div className="h-full w-full p-6 flex flex-col justify-between">
 
-                        <div className="size-32 bg-white rounded-md overflow-hidden relative shrink-0">
+                        <div className="size-32 rounded-md overflow-hidden relative shrink-0">
                             <Image src={coverUrl || "/next.svg"} alt="Playlist cover" fill sizes="128px"
                                 className="object-cover" />
                         </div>
@@ -79,7 +79,7 @@ export default function TopResultBox({ searchResults }: TopResultBoxProps) {
                 return (
                     <div className="h-full w-full p-6 flex flex-col justify-between">
 
-                        <div className="size-32 bg-white rounded-md overflow-hidden relative shrink-0">
+                        <div className="size-32 rounded-md overflow-hidden relative shrink-0">
                             <Image src={coverUrl || "/next.svg"} alt="Song cover" fill sizes="128px"
                                 className="object-cover" />
                         </div>

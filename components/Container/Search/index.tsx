@@ -19,7 +19,7 @@ export default function SearchContainer() {
     useEffect(() => {
         const handler = setTimeout(() => {
             setDebouncedSearch(search);
-        }, 500);
+        }, 700);
 
         return () => {
             clearTimeout(handler);

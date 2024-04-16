@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { user, playlist, artist, album, song, user_following_artist, user_following_playlist, user_like_album, user_like_song } from "@prisma/client";
+import { user, playlist, artist, album, song, user_following_artist, user_following_playlist, user_like_album, user_like_song, subscription } from "@prisma/client";
 
 interface Response {
     url: string;
@@ -53,7 +53,10 @@ export const usersAPI = createApi({
                 body: body,
             }),
         }),
+        getSubscription: builder.query<{subscription: subscription}, string>({
+            query: (id) => `users/${id}/subscription` as string,
+        }),
     }),
 });
 
-export const { useGetCoverByIdQuery, useGetUserByIdQuery, useSendActionMutation } = usersAPI;
+export const { useGetCoverByIdQuery, useGetUserByIdQuery, useSendActionMutation, useGetSubscriptionQuery } = usersAPI;

@@ -13,7 +13,7 @@ export default function SongBox({ song }: SongBoxProps) {
     return (
         <div className="h-[3.5rem] w-full rounded-md hover:bg-hover-gray-background p-2 flex justify-between items-center">
             <div className="h-full w-full flex flex-row space-x-2 items-center">
-                <div className="size-[2.5rem] bg-white rounded-md overflow-hidden relative shrink-0">
+                <div className="size-[2.5rem] rounded-md overflow-hidden relative shrink-0">
                     <Image src={coverUrl?.url || "/next.svg"} alt="Album cover" fill sizes="40px"
                         className="object-cover" />
                 </div>

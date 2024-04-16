@@ -16,5 +16,11 @@ export async function GET(req: Request) {
         ResponseExpires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7)
     }));
 
-    return NextResponse.json({ url }, { status: 200 });
+    fetch(url).then((response) => {
+        if (response.status === 200) {
+            return NextResponse.json({ url }, { status: 200 });
+        }
+    });
+
+    return NextResponse.json({ error: "No image found" }, { status: 404 });
 }
