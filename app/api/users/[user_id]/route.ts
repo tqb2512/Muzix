@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/app/api/base";
+import { prisma, s3Client } from "@/app/api/base";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
+import { readFile, readFileSync } from "fs";
 
 export async function GET(req: Request) {
 
@@ -179,6 +181,25 @@ export async function POST(req: Request) {
                     break;
                 default:
                     return NextResponse.json({ error: "Invalid type" }, { status: 400 });
+            }
+            break;
+        case "create":
+            switch (type) {
+                case "playlist":
+                    const playlist = await prisma.playlist.create({
+                        data: {
+                            user_id: user_id,
+                            name: "New Playlist",
+                        }
+                    })
+                    s3Client.send(new PutObjectCommand({
+                        Bucket: process.env.NEXT_PUBLIC_S3_BUCKET || "",
+                        Key: `Images/Playlists/${playlist.playlist_id}/cover.jpg`,
+                        Body: await readFileSync("public/next.svg"),
+                        ContentType: "image/jpeg"
+                    }));
+
+                    break;
             }
             break;
         default:

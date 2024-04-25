@@ -30,7 +30,7 @@ export default function PlaylistBox({ playlist, isExpanded = true }: PlaylistBox
                             {playlist.name}
                         </h1>
                         <h1 className="text-gray-text text-sm">
-                            Album
+                            Playlist
                         </h1>
                     </div>}
             </div>

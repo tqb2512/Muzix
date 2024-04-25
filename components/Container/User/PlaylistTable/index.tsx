@@ -10,7 +10,7 @@ export default function PlaylistTable({ playlists }: PlaylistTableProps) {
             <div className="flex flex-row justify-between items-center">
                 <div className="text-2xl font-bold">Playlists</div>
             </div>
-            <div className="grid gap-4 mt-2">
+            <div className="grid gap-4 mt-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 {playlists.map((playlist, index) => (
                     <PlaylistBox key={index} playlist={playlist} />
                 ))}

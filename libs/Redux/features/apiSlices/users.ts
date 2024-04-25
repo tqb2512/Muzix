@@ -31,7 +31,7 @@ interface User extends user {
 
 interface UserAction {
     user_id: string;
-    action: "follow" | "unfollow" | "like" | "unlike";
+    action: "follow" | "unfollow" | "like" | "unlike" | "create";
     type: "artist" | "playlist" | "user" | "song" | "album";
     id: string;
 }

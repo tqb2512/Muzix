@@ -18,7 +18,8 @@ export function LibrarySection({ isExpanded = true }: { isExpanded?: boolean }) 
     const user = useSelector((state: RootState) => state.user);
     const [userId, setUserId] = useState<string>("");
     const [visualData, setVisualData] = useState<any[]>([]);
-    const { data } = usersAPI.useGetUserByIdQuery(userId || skipToken);
+    const { data, refetch: userRefetch } = usersAPI.useGetUserByIdQuery(userId || skipToken);
+    const [sendAction] = usersAPI.useSendActionMutation();
 
 
     useEffect(() => {
@@ -38,6 +39,7 @@ export function LibrarySection({ isExpanded = true }: { isExpanded?: boolean }) 
             ...(user?.user_following_artist || []),
             ...(user?.user_like_album || []),
         ]
+        console.log(combinedData);
         combinedData.sort((a: any, b: any) => {
             return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
         })
@@ -63,7 +65,24 @@ export function LibrarySection({ isExpanded = true }: { isExpanded?: boolean }) 
                     <PlaylistBox playlist={item.playlist} isExpanded={isExpanded} />
                 </div>
             )
+        } else if (item.playlist_id) {
+            return (
+                <div key={index}>
+                    <PlaylistBox playlist={item} isExpanded={isExpanded} />
+                </div>
+            )
         }
+    }
+
+    const handleCreatePlaylist = () => {
+        sendAction({
+            action: "create",
+            type: "playlist",
+            user_id: user.user_id,
+            id: ""
+        }).then(() => {
+            userRefetch();
+        })
     }
 
     return (
@@ -75,10 +94,11 @@ export function LibrarySection({ isExpanded = true }: { isExpanded?: boolean }) 
                     {isExpanded && "Library"}
                 </div>
                 {isExpanded &&
-                    <div
+                    <button
+                        onClick={handleCreatePlaylist}
                         className="hover:bg-neutral-800 hover:text-white text-gray-button rounded-full w-8 h-8 flex items-center justify-center mx-4 transition-all duration-300 ease-in-out">
                         <Icons.Add className="w-4 h-4 fill-current flex-shrink-0" />
-                    </div>
+                    </button>
                 }
             </div>
 
