@@ -32,6 +32,12 @@ export default function PlaylistContainer({ playlist_id }: PlaylistContainerProp
     const [sendAction] = usersAPI.useSendActionMutation();
 
     useEffect(() => {
+        refetchCover();
+        refetchPlaylist();
+        refetchSongs();
+    }, [playlist_id, refetchCover, refetchPlaylist, refetchSongs])
+
+    useEffect(() => {
         if (user.user_id === playlist?.playlist.user_id) {
             setAction("Edit");
         } else if (user.user_following_playlist?.find((followedPlaylist: any) => followedPlaylist.playlist.playlist_id === playlist_id)) {

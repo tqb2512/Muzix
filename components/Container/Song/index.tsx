@@ -99,8 +99,30 @@ export default function SongContainer({ song_id }: SongContainerProps) {
                         </button>
                         <div
                             id="song-dropdown"
-                            className="z-50 hidden bg-neutral-800 rounded-md w-48 relative top-16 right-14 p-1">
+                            className="z-50 hidden bg-neutral-800 rounded-md w-48 relative top-[5rem] right-14 p-1 shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
                             <div className="flex flex-col justify-between w-full">
+                                <div className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2 group">
+                                    <h1>Add to playlist</h1>
+                                    <div id="combo box" className="hidden group-hover:block">
+                                        <div className="absolute z-50 bg-neutral-800 rounded-md w-48 top-1 left-[11.5rem] p-1 shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
+                                            {user.playlist?.map((playlist, index) => (
+                                                <button
+                                                    onClick={() => {
+                                                    sendAction({
+                                                        user_id: user.user_id,
+                                                        action: "add",
+                                                        type: "song",
+                                                        id: song_id,
+                                                        query_playlist_id: playlist.playlist_id
+                                                    })}}
+                                                    key={index}
+                                                    className="w-full h-10 hover:bg-neutral-700 rounded-sm flex items-center p-2">
+                                                    <h1>{playlist.name}</h1>
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
                                 <button
                                     onClick={handleFollow}
                                     className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">

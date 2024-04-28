@@ -63,6 +63,7 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
     const { action, type, id } = await req.json();
     const user_id = req.url.split("/").pop() || "";
+    const playlist_id = new URL(req.url).searchParams.get("playlist_id") || ""
 
     if (user_id === "") {
         return NextResponse.json({ error: "No user_id provided" }, { status: 400 });
@@ -208,6 +209,18 @@ export async function POST(req: Request) {
                     await prisma.playlist.delete({
                         where: {
                             playlist_id: id
+                        }
+                    });
+                    break;
+            }
+            break;
+        case "add":
+            switch (type) {
+                case "song":
+                    await prisma.playlist_song.create({
+                        data: {
+                            playlist_id: playlist_id,
+                            song_id: id
                         }
                     });
                     break;

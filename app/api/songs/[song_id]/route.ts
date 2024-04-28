@@ -23,15 +23,5 @@ export async function GET(req: Request) {
         }
     });
 
-    // const result = songs.map((song) => {
-    //     return {
-    //         id: song.song_id,
-    //         name: song.name,
-    //         duration: song.duration_ms,
-    //         album: song.album.name,
-    //         artist: song.album.artist.name
-    //     }
-    // });
-
     return NextResponse.json({ song }, { status: 200 });
 }

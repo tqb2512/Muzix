@@ -31,9 +31,10 @@ interface User extends user {
 
 interface UserAction {
     user_id: string;
-    action: "follow" | "unfollow" | "like" | "unlike" | "create";
+    action: "follow" | "unfollow" | "like" | "unlike" | "create" | "add";
     type: "artist" | "playlist" | "user" | "song" | "album";
     id: string;
+    query_playlist_id?: string;
 }
 
 export const usersAPI = createApi({
@@ -48,7 +49,7 @@ export const usersAPI = createApi({
         }),
         sendAction: builder.mutation<void, UserAction>({
             query: (body) => ({
-                url: `users/${body.user_id}`,
+                url: `users/${body.user_id}?playlist_id=${body.query_playlist_id}`,
                 method: "POST",
                 body: body,
             }),
