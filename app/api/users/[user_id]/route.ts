@@ -202,6 +202,17 @@ export async function POST(req: Request) {
                     break;
             }
             break;
+        case "remove":
+            switch (type) {
+                case "playlist":
+                    await prisma.playlist.delete({
+                        where: {
+                            playlist_id: id
+                        }
+                    });
+                    break;
+            }
+            break;
         default:
             return NextResponse.json({ error: "Invalid action" }, { status: 400 });
     }

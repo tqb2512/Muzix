@@ -22,20 +22,24 @@ export default function PlaylistContainer({ playlist_id }: PlaylistContainerProp
     const dispatch = useDispatch();
     const user = useSelector((state: RootState) => state.user);
     const { color } = useContext(ColorContext);
-    const { data: songs } = playlistsAPI.useGetSongsByIdQuery(playlist_id);
-    const { data: playlist } = playlistsAPI.useGetInfoByIdQuery(playlist_id);
-    const { data: coverUrl } = playlistsAPI.useGetCoverByIdQuery(playlist_id);
+    const { data: songs, refetch: refetchSongs } = playlistsAPI.useGetSongsByIdQuery(playlist_id);
+    const { data: playlist, refetch: refetchPlaylist } = playlistsAPI.useGetInfoByIdQuery(playlist_id);
+    const { data: coverUrl, refetch: refetchCover } = playlistsAPI.useGetCoverByIdQuery(playlist_id);
     const { data: profileUrl } = usersAPI.useGetCoverByIdQuery(playlist?.playlist.user_id || skipToken);
-    const [action, setAction] = useState<"Follow" | "Unfollow">("Follow");
+    const [action, setAction] = useState<"Follow" | "Unfollow" | "Edit">("Follow");
+    const [editData, setEditData] = useState({ name: "", description: "" });
+    const [editImage, setEditImage] = useState<File | null>(null);
     const [sendAction] = usersAPI.useSendActionMutation();
 
     useEffect(() => {
-        if (user.user_following_playlist?.find((followedPlaylist: any) => followedPlaylist.playlist.playlist_id === playlist_id)) {
+        if (user.user_id === playlist?.playlist.user_id) {
+            setAction("Edit");
+        } else if (user.user_following_playlist?.find((followedPlaylist: any) => followedPlaylist.playlist.playlist_id === playlist_id)) {
             setAction("Unfollow");
         } else {
             setAction("Follow");
         }
-    }, [user, playlist_id])
+    }, [user, playlist_id, playlist?.playlist.user_id])
 
     const handlePlay = () => {
         dispatch(queueSlice.clear());
@@ -45,6 +49,11 @@ export default function PlaylistContainer({ playlist_id }: PlaylistContainerProp
     }
 
     const handleFollow = () => {
+        if (action === "Edit") {
+            setEditData({ name: playlist?.playlist.name || "", description: playlist?.playlist.description || ""});
+            document.getElementById("modal")?.classList.remove("hidden");
+            return;
+        }
         sendAction({
             user_id: user.user_id,
             action: action === "Follow" ? "follow" : "unfollow",
@@ -63,11 +72,21 @@ export default function PlaylistContainer({ playlist_id }: PlaylistContainerProp
         })
     }
 
+    const imageToBase64 = (file: File) => {
+        return new Promise<string>((resolve) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+                resolve(reader.result as string);
+            }
+            reader.readAsDataURL(file);
+        })
+    }
+
     return (
         <div className="bg-gradient-to-b from-transparent to-dark-background to-[50dvh]" style={{ backgroundColor: color }}>
             <div className="px-6 pb-6 flex">
                 <div className="h-52 w-52 rounded-lg overflow-hidden relative flex-shrink-0">
-                    <Image id="coverImage" src={coverUrl?.url || "/next.svg"} alt="Playlist cover" fill sizes="208px" className="object-cover" />
+                    <Image id="coverImage" src={coverUrl?.url || "/next.svg"} alt="Playlist cover" fill sizes="700px" className="object-cover" />
                 </div>
                 <div className="ml-5 flex flex-col justify-end mb-2 space-y-2">
                     <div className="text-sm">Playlist</div>
@@ -113,11 +132,81 @@ export default function PlaylistContainer({ playlist_id }: PlaylistContainerProp
                         </div>
                     </div>
                 </div>
-
                 <SongTable songs={songs?.songs || []} />
-
             </div>
 
+
+            <div id="modal" className="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50 flex items-center justify-center">
+                <div className="bg-neutral-800 rounded-lg p-6 w-[32rem]">
+                    <div className="relative flex items-center justify-between">
+                        <h1 className="text-2xl font-bold">Edit details</h1>
+                        <button
+                            onClick={() => {
+                                document.getElementById("modal")?.classList.add("hidden");
+                            }}
+                            className="rounded-full bg-transparent h-8 w-8 flex items-center justify-center hover:bg-hover-gray-background">
+                            <Icons.Close className="w-4 h-4 fill-current text-white" />
+                        </button>
+                    </div>
+                    <div className="flex w-full flex-row space-x-4 mt-4">
+                        <div className="size-[10rem] rounded-md shrink-0 relative overflow-hidden">
+                            <Image src={editImage ? URL.createObjectURL(editImage) : (coverUrl?.url || "next.svg")} alt="Playlist cover" fill sizes="160px" className="object-cover" />
+                            <input type="file" accept="image/*" className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+                                onChange={(e) => setEditImage(e.target.files?.[0] || null)}
+                            />
+                        </div>
+                        <div className="flex flex-col space-y-4 w-full">
+                            <input type="text" placeholder="Playlist name" className="w-full h-10 bg-neutral-700 rounded-md p-2"
+                                value={editData.name}
+                                onChange={(e) => setEditData({ ...editData, name: e.target.value })}
+                            />
+                            <textarea placeholder="Description" className="w-full h-full bg-neutral-700 rounded-md p-2 resize-none"
+                                value={editData.description}
+                                onChange={(e) => setEditData({ ...editData, description: e.target.value })}
+                            ></textarea>
+                        </div>
+                    </div>
+                    <div className="flex justify-end mt-4">
+                        <button onClick={() => {
+                            if (editImage) {
+                                imageToBase64(editImage).then((base64) => {
+                                    fetch(`/api/playlists/${playlist_id}`, {
+                                        method: "POST",
+                                        headers: {
+                                            "Content-Type": "application/json"
+                                        },
+                                        body: JSON.stringify({
+                                            name: editData.name,
+                                            description: editData.description,
+                                            cover: base64.split(",")[1]
+                                        })
+                                    }).then(() => {
+                                        refetchCover();
+                                        refetchPlaylist();
+                                        document.getElementById("modal")?.classList.add("hidden");
+                                    })
+                                })
+                            } else {
+                                fetch(`/api/playlists/${playlist_id}`, {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json"
+                                    },
+                                    body: JSON.stringify({
+                                        name: editData.name,
+                                        description: editData.description,
+                                        cover: ""
+                                    })
+                                }).then(() => {
+                                    refetchPlaylist();
+                                    document.getElementById("modal")?.classList.add("hidden");
+                                })
+                            }
+                        }}
+                        className="bg-white text-black rounded-full w-24 p-2">Save</button>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }
