@@ -39,7 +39,6 @@ export function LibrarySection({ isExpanded = true }: { isExpanded?: boolean }) 
             ...(user?.user_following_artist || []),
             ...(user?.user_like_album || []),
         ]
-        console.log(combinedData);
         combinedData.sort((a: any, b: any) => {
             return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
         })

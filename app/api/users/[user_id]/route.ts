@@ -62,7 +62,7 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
     const { action, type, id } = await req.json();
-    const user_id = req.url.split("/").pop() || "";
+    const user_id = req.url.split("/").pop()?.split("?")[0] || "";
     const playlist_id = new URL(req.url).searchParams.get("playlist_id") || ""
 
     if (user_id === "") {
@@ -209,6 +209,16 @@ export async function POST(req: Request) {
                     await prisma.playlist.delete({
                         where: {
                             playlist_id: id
+                        }
+                    });
+                    break;
+                case "song":
+                    await prisma.playlist_song.delete({
+                        where: {
+                            playlist_id_song_id: {
+                                playlist_id: playlist_id,
+                                song_id: id
+                            }
                         }
                     });
                     break;

@@ -13,10 +13,11 @@ export interface Song extends song {
 }
 
 interface ListTableProps {
+    playlist_id: string;
     songs: Song[];
 }
 
-export default function ListTable({ songs }: ListTableProps) {
+export default function ListTable({ songs, playlist_id }: ListTableProps) {
     return (
         <div className="w-full">
             <div className="flex items-center sticky justify-between top-0 z-10 text-gray-text h-14 border-b border-zinc-700 mb-2">
@@ -33,7 +34,7 @@ export default function ListTable({ songs }: ListTableProps) {
             </div>
             <div className="space-y-2">
                 {songs.map((song, index) => (
-                    <Item key={song.song_id} song={song} index={index} />
+                    <Item playlist_id={playlist_id} key={song.song_id} song={song} index={index} />
                 ))}
             </div>
         </div>

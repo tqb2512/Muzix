@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { Song } from "./index";
 import * as albumsAPI from "@/libs/Redux/features/apiSlices/albums";
+import * as playlistsAPI from "@/libs/Redux/features/apiSlices/playlists";
+import * as usersAPI from "@/libs/Redux/features/apiSlices/users";
 import * as queue from "@/libs/Redux/features/slices/queue";
 import { RootState } from "@/libs/Redux/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,15 +10,20 @@ import * as Icons from "../Icons";
 import Link from "next/link";
 
 interface ListItemProps {
+    playlist_id: string;
     song: Song;
     index: number;
 }
 
-export default function Item({ song, index }: ListItemProps) {
+export default function Item({ song, index, playlist_id }: ListItemProps) {
 
     const dispatch = useDispatch();
     const { data: coverUrl } = albumsAPI.useGetCoverByIdQuery(song.album_id);
+    const { refetch: refetchSongs } = playlistsAPI.useGetSongsByIdQuery(playlist_id);
     const playerState = useSelector((state: RootState) => state.player);
+    const user = useSelector((state: RootState) => state.user);
+    const { refetch: refetchUser } = usersAPI.useGetUserByIdQuery(user.user_id);
+    const [sendAction] = usersAPI.useSendActionMutation();
 
     const handlePlay = () => {
         dispatch(queue.shift());
@@ -69,8 +76,47 @@ export default function Item({ song, index }: ListItemProps) {
 
             <div className="text-center w-32 truncate overflow-hidden ">{song.duration_ms}</div>
             <div className="w-12">
-                <Icons.ThreeDots className="w-6 h-6 fill-current" />
+                <div onClick={() => {
+                    document.getElementById(`song-dropdown-${index}`)?.classList.toggle("hidden");
+                }}>
+                    <Icons.ThreeDots className="w-6 h-6 fill-current" />
+                </div>
+                <div
+                    id={`song-dropdown-${index}`}
+                    className="z-50 hidden bg-neutral-800 rounded-md w-48 absolute right-12 p-1">
+                    <div className="flex flex-col justify-between w-full">
+                        {user?.playlist?.find((playlist) => playlist.playlist_id === playlist_id) &&
+                        <button
+                            onClick={() => {
+                                sendAction({
+                                    user_id: user.user_id,
+                                    action: "remove",
+                                    type: "song",
+                                    id: song.song_id,
+                                    query_playlist_id: playlist_id
+                                });
+                                refetchSongs();
+                            }}
+                            className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
+                            <h1>Remove</h1>
+                        </button>}
+                        <button 
+                            onClick={() => {
+                                sendAction({
+                                    user_id: user.user_id,
+                                    action: user?.user_like_song?.find((like) => like.song.song_id === song.song_id) ? "unlike" : "like",
+                                    type: "song",
+                                    id: song.song_id,
+                                });
+                                refetchUser();
+                            }}
+                            className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
+                            <h1>{user?.user_like_song?.find((like) => like.song.song_id === song.song_id) ? "Unlike" : "Like"}</h1>
+                        </button>
+                    </div>
+                </div>
             </div>
+            
         </div>
     )
 }

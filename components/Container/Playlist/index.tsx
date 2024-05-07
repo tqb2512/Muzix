@@ -138,7 +138,7 @@ export default function PlaylistContainer({ playlist_id }: PlaylistContainerProp
                         </div>
                     </div>
                 </div>
-                <SongTable songs={songs?.songs || []} />
+                <SongTable playlist_id={playlist_id} songs={songs?.songs || []} />
             </div>
 
 
