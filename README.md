@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Muzix - A Modern Music Streaming Platform
+Muzix is an innovative music streaming application built to deliver a seamless and enjoyable music experience to users. With its modern, intuitive, and user-centric interface, Muzix allows you to discover, enjoy, and share your passion for music effortlessly.
 
-## Getting Started
+------------
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Key Features:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Stream Music:** Access a vast music library with millions of songs across various genres and artists.
+- **Create and Manage Playlists:** Personalize your listening experience by creating your own playlists or exploring curated ones.
+- **Smart Music Search:** Quickly and easily find your favorite songs, albums, or artists.
+- **Personal Music Library Management:** Store and organize your favorite songs for quick access.
+- **Premium Subscription:** Upgrade to Premium for an ad-free experience, higher audio quality, and exclusive features.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+------------
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+### Cutting-Edge Technology:
+Muzix is built using the latest web technologies, including:
 
-To learn more about Next.js, take a look at the following resources:
+- **Next.js:** Powerful React framework for performance and scalability.
+- **Supabase:** Backend-as-a-service platform providing database, authentication, and other services quickly and easily.
+- **Tailwind CSS**: Utility-first CSS framework for creating beautiful and customizable interfaces.
+- **Elasticsearch:** Powerful search engine for fast and accurate music search.
+- **Stripe:** Integrated payment platform for secure and convenient payment processing.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+------------
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+[![Home](https://media.discordapp.net/attachments/946076828399984653/1250691499818221718/image.png?ex=6673c5ba&is=6672743a&hm=b9a2afd314f4d2d05cb2a08efddc46d2a60c322f9d5ef2a1740aa0107ab31949&=&format=webp&quality=lossless&width=1655&height=987 "Home")](https://media.discordapp.net/attachments/946076828399984653/1250691499818221718/image.png?ex=6673c5ba&is=6672743a&hm=b9a2afd314f4d2d05cb2a08efddc46d2a60c322f9d5ef2a1740aa0107ab31949&=&format=webp&quality=lossless&width=1655&height=987 "Home")
 
-## Deploy on Vercel
+[![Playlist](https://media.discordapp.net/attachments/946076828399984653/1250691573524467832/image.png?ex=6673c5cb&is=6672744b&hm=2ea83fc91530d073d069d1e3dcd42ee57386be0ddadbb098086386b39bcca737&=&format=webp&quality=lossless&width=962&height=574 "Playlist")](https://media.discordapp.net/attachments/946076828399984653/1250691573524467832/image.png?ex=6673c5cb&is=6672744b&hm=2ea83fc91530d073d069d1e3dcd42ee57386be0ddadbb098086386b39bcca737&=&format=webp&quality=lossless&width=962&height=574 "Playlist")
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+[![Song](https://media.discordapp.net/attachments/946076828399984653/1250691655594545212/image.png?ex=6673c5df&is=6672745f&hm=6f0d69bff75424b49e4a8b040bee82f6623ae42b537e04915271566f96014941&=&format=webp&quality=lossless&width=962&height=574 "Song")](https://media.discordapp.net/attachments/946076828399984653/1250691655594545212/image.png?ex=6673c5df&is=6672745f&hm=6f0d69bff75424b49e4a8b040bee82f6623ae42b537e04915271566f96014941&=&format=webp&quality=lossless&width=962&height=574 "Song")
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+[![Artist](https://media.discordapp.net/attachments/946076828399984653/1250691917734350920/image.png?ex=6673c61d&is=6672749d&hm=9f0065bc9c25ef9a19f4dcc39fe1004011468f6a17cebc1865dcf47ca3766cbe&=&format=webp&quality=lossless&width=962&height=574 "Artist")](https://media.discordapp.net/attachments/946076828399984653/1250691917734350920/image.png?ex=6673c61d&is=6672749d&hm=9f0065bc9c25ef9a19f4dcc39fe1004011468f6a17cebc1865dcf47ca3766cbe&=&format=webp&quality=lossless&width=962&height=574 "Artist")
+
+![Search](https://media.discordapp.net/attachments/946076828399984653/1250698200038248498/image.png?ex=6673cbf7&is=66727a77&hm=f5723deecc17ad28dd5e8c70a8e65d4b9e7e2f0e2b00a77ee854267d2978a38c&=&format=webp&quality=lossless&width=962&height=574 "Search")
