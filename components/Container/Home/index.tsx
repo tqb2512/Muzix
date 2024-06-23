@@ -36,31 +36,6 @@ export default function HomeContainer() {
                     <Section key={section.section_id} section={section} />
                 ))}
             </div>
-            <div>
-                {sections.map((section) => (
-                    <Section key={section.section_id} section={section} />
-                ))}
-            </div>
-            <div>
-                {sections.map((section) => (
-                    <Section key={section.section_id} section={section} />
-                ))}
-            </div>
-            <div>
-                {sections.map((section) => (
-                    <Section key={section.section_id} section={section} />
-                ))}
-            </div>
-            <div>
-                {sections.map((section) => (
-                    <Section key={section.section_id} section={section} />
-                ))}
-            </div>
-            <div>
-                {sections.map((section) => (
-                    <Section key={section.section_id} section={section} />
-                ))}
-            </div>
         </div>
     )
 }

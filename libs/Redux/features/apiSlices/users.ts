@@ -54,7 +54,7 @@ export const usersAPI = createApi({
                 body: body,
             }),
         }),
-        getSubscription: builder.query<{subscription: subscription}, string>({
+        getSubscription: builder.query<{result: subscription}, string>({
             query: (id) => `users/${id}/subscription` as string,
         }),
     }),

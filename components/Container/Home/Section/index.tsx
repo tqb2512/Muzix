@@ -2,7 +2,7 @@ import { album, artist, playlist, section, section_albums, section_artists, sect
 import AlbumBox from "./Album";
 import ArtistBox from "./Artist";
 import PlaylistBox from "./Playlist";
-import React from "react";
+import {useEffect, useRef, useState} from "react";
 import Link from "next/link";
 
 interface Section extends section {
@@ -26,8 +26,8 @@ function sortByCreatedAt(a: any, b: any) {
 export default function Section({ section }: { section: Section }) {
 
     const items = [...section.section_albums, ...section.section_artists, ...section.section_playlists]
-    const [numOfCols, setNumOfCols] = React.useState(6);
-    const containerRef = React.useRef<HTMLDivElement>(null);
+    const [numOfCols, setNumOfCols] = useState(6);
+    const containerRef = useRef<HTMLDivElement>(null);
     items.sort(sortByCreatedAt)
 
     const renderItems = items.map((item, index) => {
@@ -43,7 +43,7 @@ export default function Section({ section }: { section: Section }) {
         }
     })
 
-    React.useEffect(() => {
+    useEffect(() => {
         const handleResize = (entries: any) => {
             for (let entry of entries) {
                 setNumOfCols(Math.floor(entry.contentRect.width / 208));

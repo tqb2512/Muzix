@@ -69,9 +69,9 @@ export default function Navbar() {
                         id="dropdown"
                         className="z-50 bg-neutral-800 rounded-md w-48 h-max right-6 top-14 absolute p-1 hidden">
                         <div className="flex flex-col justify-between w-full">
-                            <button className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
-                                <h1>Account</h1>
-                            </button>
+                            <Link href="/account" className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
+                                Account
+                            </Link>
                             <Link href={`/app/user/${userId}`} className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
                                 Profile
                             </Link>

@@ -12,20 +12,22 @@ import { RootState } from "@/libs/Redux/store";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { ColorContext } from "@/components/MainPanel/ColorContext";
 import { playlist, user } from "@prisma/client";
+import {useRouter} from "next/navigation";
 
 interface PlaylistContainerProps {
     playlist_id: string;
 }
 
 export default function PlaylistContainer({ playlist_id }: PlaylistContainerProps) {
-
+    const router = useRouter();
     const dispatch = useDispatch();
     const user = useSelector((state: RootState) => state.user);
     const { color } = useContext(ColorContext);
     const { data: songs, refetch: refetchSongs } = playlistsAPI.useGetSongsByIdQuery(playlist_id);
     const { data: playlist, refetch: refetchPlaylist } = playlistsAPI.useGetInfoByIdQuery(playlist_id);
     const { data: coverUrl, refetch: refetchCover } = playlistsAPI.useGetCoverByIdQuery(playlist_id);
-    const { data: profileUrl } = usersAPI.useGetCoverByIdQuery(playlist?.playlist.user_id || skipToken);
+    const { data, refetch: refetchUser } = usersAPI.useGetUserByIdQuery(user.user_id || skipToken);
+    const { data: profileUrl } = usersAPI.useGetCoverByIdQuery(playlist?.playlist?.user_id || skipToken);
     const [action, setAction] = useState<"Follow" | "Unfollow" | "Edit">("Follow");
     const [editData, setEditData] = useState({ name: "", description: "" });
     const [editImage, setEditImage] = useState<File | null>(null);
@@ -38,14 +40,14 @@ export default function PlaylistContainer({ playlist_id }: PlaylistContainerProp
     }, [playlist_id, refetchCover, refetchPlaylist, refetchSongs])
 
     useEffect(() => {
-        if (user.user_id === playlist?.playlist.user_id) {
+        if (user.user_id === playlist?.playlist?.user_id) {
             setAction("Edit");
         } else if (user.user_following_playlist?.find((followedPlaylist: any) => followedPlaylist.playlist.playlist_id === playlist_id)) {
             setAction("Unfollow");
         } else {
             setAction("Follow");
         }
-    }, [user, playlist_id, playlist?.playlist.user_id])
+    }, [user, playlist_id, playlist?.playlist?.user_id])
 
     const handlePlay = () => {
         dispatch(queueSlice.clear());
@@ -56,7 +58,7 @@ export default function PlaylistContainer({ playlist_id }: PlaylistContainerProp
 
     const handleFollow = () => {
         if (action === "Edit") {
-            setEditData({ name: playlist?.playlist.name || "", description: playlist?.playlist.description || ""});
+            setEditData({ name: playlist?.playlist?.name || "", description: playlist?.playlist?.description || ""});
             document.getElementById("modal")?.classList.remove("hidden");
             return;
         }
@@ -78,6 +80,19 @@ export default function PlaylistContainer({ playlist_id }: PlaylistContainerProp
         })
     }
 
+    const handleDelete = () => {
+        sendAction({
+            user_id: user.user_id,
+            action: "remove",
+            type: "playlist",
+            id: playlist_id,
+        }).then(() => {
+            dispatch(userSlice.unfollowPlaylist(playlist_id));
+            refetchUser();
+            router.push("/app");
+        })
+    }
+
     const imageToBase64 = (file: File) => {
         return new Promise<string>((resolve) => {
             const reader = new FileReader();
@@ -86,6 +101,13 @@ export default function PlaylistContainer({ playlist_id }: PlaylistContainerProp
             }
             reader.readAsDataURL(file);
         })
+    }
+
+    if (!playlist || !songs || !coverUrl || !profileUrl) {
+        return <div
+            className="w-full flex items-center justify-center">
+            <h1>NOT FOUND</h1>
+        </div>
     }
 
     return (
@@ -131,6 +153,13 @@ export default function PlaylistContainer({ playlist_id }: PlaylistContainerProp
                                     className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
                                     <h1>{action}</h1>
                                 </button>
+                                {user?.user_id === playlist?.playlist?.user_id && (
+                                    <button
+                                        onClick={handleDelete}
+                                        className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
+                                        <h1>Delete</h1>
+                                    </button>
+                                )}
                                 <button className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
                                     <h1>Share</h1>
                                 </button>

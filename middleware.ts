@@ -7,11 +7,11 @@ export async function middleware(request: NextRequest) {
     const url = request.nextUrl.clone()
     const { data } = await readUserSession();
 
-    if (url.pathname === "/app" && !data.user) {
-        return NextResponse.redirect(url.origin + "/")
+    if ((url.pathname === "/app" || url.pathname === "/account" ) && !data.user) {
+        return NextResponse.redirect(url.origin + "/login")
     }
 
-    if ((url.pathname === "/login" || url.pathname === "/login") && data.user) {
+    if ((url.pathname === "/login" || url.pathname === "/signup") && data.user) {
         return NextResponse.redirect(url.origin + "/app")
     }
 
@@ -27,5 +27,6 @@ export const config = {
         '/app/:path*',
         '/login',
         '/signup',
+        '/account',
     ]
 }
