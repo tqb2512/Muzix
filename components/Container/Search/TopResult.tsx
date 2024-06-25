@@ -1,6 +1,7 @@
 import {Result} from "@/app/api/search/route";
 import {useEffect, useState} from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface TopResultBoxProps {
     searchResults: Result;
@@ -36,7 +37,9 @@ export default function TopResultBox({searchResults}: TopResultBoxProps) {
         switch (searchResults?.topResult?.type) {
             case "album":
                 return (
-                    <div className="h-full w-full p-6 flex flex-col justify-between">
+                    <Link
+                        href={`/app/album/${searchResults.topResult.album_id}`}
+                        className="h-full w-full p-6 flex flex-col justify-between">
                         <div className="size-32 rounded-md overflow-hidden relative shrink-0">
                             <Image src={coverUrl || "/next.svg"} alt="Album cover" fill sizes="128px"
                                    className="object-cover"/>
@@ -45,12 +48,13 @@ export default function TopResultBox({searchResults}: TopResultBoxProps) {
                             <h1 className="text-2xl font-bold truncate">{searchResults.topResult?.name}</h1>
                             <h2 className="text-lg">Album&ensp; &bull; &ensp;{searchResults.topResult?.artist.name}</h2>
                         </div>
-                    </div>
+                    </Link>
                 )
             case "artist":
                 return (
-                    <div className="h-full w-full p-6 flex flex-col justify-between">
-
+                    <Link
+                        href={`/app/artist/${searchResults.topResult.artist_id}`}
+                        className="h-full w-full p-6 flex flex-col justify-between">
                         <div className="size-32 rounded-full overflow-hidden relative shrink-0">
                             <Image src={coverUrl || "/next.svg"} alt="Artist cover" fill sizes="128px"
                                    className="object-cover"/>
@@ -59,12 +63,13 @@ export default function TopResultBox({searchResults}: TopResultBoxProps) {
                             <h1 className="text-2xl font-bold truncate">{searchResults.topResult?.name}</h1>
                             <h2 className="text-lg">Artist</h2>
                         </div>
-                    </div>
+                    </Link>
                 )
             case "playlist":
                 return (
-                    <div className="h-full w-full p-6 flex flex-col justify-between">
-
+                    <Link
+                        href={`/app/playlist/${searchResults.topResult.playlist_id}`}
+                        className="h-full w-full p-6 flex flex-col justify-between">
                         <div className="size-32 rounded-md overflow-hidden relative shrink-0">
                             <Image src={coverUrl || "/next.svg"} alt="Playlist cover" fill sizes="128px"
                                    className="object-cover"/>
@@ -73,12 +78,13 @@ export default function TopResultBox({searchResults}: TopResultBoxProps) {
                             <h1 className="text-2xl font-bold truncate">{searchResults.topResult?.name}</h1>
                             <h2 className="text-lg">Playlist&ensp; &bull; &ensp;{searchResults.topResult?.user.username}</h2>
                         </div>
-                    </div>
+                    </Link>
                 )
             case "song":
                 return (
-                    <div className="h-full w-full p-6 flex flex-col justify-between">
-
+                    <Link
+                        href={`/app/song/${searchResults.topResult?.song_id}`}
+                        className="h-full w-full p-6 flex flex-col justify-between">
                         <div className="size-32 rounded-md overflow-hidden relative shrink-0">
                             <Image src={coverUrl || "/next.svg"} alt="Song cover" fill sizes="128px"
                                    className="object-cover"/>
@@ -93,7 +99,7 @@ export default function TopResultBox({searchResults}: TopResultBoxProps) {
                                 ))}
                             </div>
                         </div>
-                    </div>
+                    </Link>
                 )
         }
     }

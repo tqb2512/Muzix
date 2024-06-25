@@ -13,6 +13,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@/libs/Redux/store";
 import {skipToken} from "@reduxjs/toolkit/query";
 import {album, artist} from "@prisma/client";
+import {toMMSS} from "@/components/AudioPlayer";
 
 interface AlbumContainerProps {
     album_id: string;
@@ -82,7 +83,7 @@ export default function AlbumContainer({album_id}: AlbumContainerProps) {
                                    className="object-cover"/>
                         </div>
                         <h4>{album?.album.artist.name}&ensp; &bull; &ensp;{songs?.songs.length} songs,
-                            about {songs?.songs.reduce((acc, song) => acc + song.duration_ms, 0)} minutes</h4>
+                            about {toMMSS(songs?.songs.reduce((acc, song) => acc + song.duration_ms, 0) || 0)} minutes</h4>
                     </div>
                 </div>
             </div>
@@ -111,7 +112,11 @@ export default function AlbumContainer({album_id}: AlbumContainerProps) {
                                     className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
                                     <h1>{action}</h1>
                                 </button>
-                                <button className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
+                                <button
+                                    onClick={() => {
+                                        navigator.clipboard.writeText(window.location.href);
+                                    }}
+                                    className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
                                     <h1>Share</h1>
                                 </button>
                             </div>

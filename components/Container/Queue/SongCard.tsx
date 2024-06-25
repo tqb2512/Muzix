@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import * as queue from "@/libs/Redux/features/slices/queue";
 import {useDispatch} from "react-redux";
+import {toMMSS} from "@/components/AudioPlayer";
 
 interface Song extends song {
     album: album & {
@@ -47,13 +48,14 @@ export default function SongCard({song, index}: { song: Song, index: number }) {
                         </div>
 
                         <div className="flex flex-col justify-between">
-                            <div
-                                className={`${index === 0 ? "text-green-500" : "text-white"} overflow-hidden truncate`}>
+                            <Link
+                                href={`/app/song/${song.song_id}`}
+                                className={`${index === 0 ? "text-green-500" : "text-white"} overflow-hidden truncate hover:underline`}>
                                 {song?.name}
-                            </div>
+                            </Link>
                             <div className="text-xs">
                                 <Link
-                                    href={`/artists/${song?.album.artist.artist_id}`}
+                                    href={`/app/artist/${song?.album.artist.artist_id}`}
                                     className="hover:text-white hover:underline"
                                 >
                                     {song?.album.artist.name}
@@ -71,11 +73,12 @@ export default function SongCard({song, index}: { song: Song, index: number }) {
 
                     </div>
                 </div>
-                <Link href="" className="w-1/4 overflow-hidden truncate hover:underline">
+                <Link href={`/app/album/${song.album.album_id}`}
+                      className="w-1/4 overflow-hidden truncate hover:underline">
                     {song.album.name}
                 </Link>
                 <div className="w-1/12 ">
-                    {song.duration_ms}
+                    {toMMSS(song.duration_ms)}
                 </div>
             </div>
         </div>

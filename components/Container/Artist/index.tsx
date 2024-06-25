@@ -105,7 +105,11 @@ export default function ArtistContainer({artist_id}: ArtistContainerProps) {
                                     className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
                                     <h1>{action}</h1>
                                 </button>
-                                <button className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
+                                <button
+                                    onClick={() => {
+                                        navigator.clipboard.writeText(window.location.href);
+                                    }}
+                                    className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
                                     <h1>Share</h1>
                                 </button>
                             </div>

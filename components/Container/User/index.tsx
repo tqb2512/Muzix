@@ -37,7 +37,7 @@ export default function UserContainer({user_id}: UserContainerProps) {
             <div className="flex px-6 pb-6">
                 <div className="h-52 w-52 rounded-full overflow-hidden relative flex-shrink-0">
                     <Image
-                        id="coverImage" src={coverUrl?.url || "/next.svg"} alt="Artist cover" fill sizes="208px"
+                        id="coverImage" src={coverUrl?.url || "/next.svg"} alt="Artist cover" fill sizes="400px"
                         className="object-cover"/>
                 </div>
                 <div className="ml-5 flex flex-col justify-end mb-2 space-y-2">
@@ -72,6 +72,9 @@ export default function UserContainer({user_id}: UserContainerProps) {
                                     </button>
                                 )}
                                 <button
+                                    onClick={() => {
+                                        navigator.clipboard.writeText(window.location.href);
+                                    }}
                                     className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
                                     <h1>Share</h1>
                                 </button>

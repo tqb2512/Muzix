@@ -5,6 +5,7 @@ import * as queue from "@/libs/Redux/features/slices/queue";
 import {RootState} from "@/libs/Redux/store";
 import {useDispatch, useSelector} from "react-redux";
 import * as Icons from "../Icons";
+import toMMS, {toMMSS} from "@/components/AudioPlayer"
 import Link from "next/link";
 
 interface ListItemProps {
@@ -55,10 +56,29 @@ export default function ListItem({song, index}: ListItemProps) {
                     </div>
                 </div>
             </div>
-            <div className="text-center w-32 truncate overflow-hidden">{song.duration_ms}</div>
-            <div className="w-12">
+            <div className="text-center w-32 truncate overflow-hidden">{toMMSS(song.duration_ms)}</div>
+            <button
+                onClick={() => {
+                    const dropbox = document.getElementById(`song-${song.song_id}-dropbox`);
+                    if (dropbox) {
+                        dropbox.classList.toggle("hidden");
+                    }
+                }}
+                className="w-12 relative">
                 <Icons.ThreeDots className="w-6 h-6 fill-current"/>
-            </div>
+                <div
+                    id={`song-${song.song_id}-dropbox`}
+                    className="z-50 hidden bg-neutral-800 rounded-md w-48 absolute right-4 p-1">
+                    <button
+                        onClick={() => {
+                            dispatch(queue.push(song));
+                        }}
+                        className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
+                        <h1>Add to queue</h1>
+                    </button>
+                </div>
+            </button>
+
         </div>
     )
 }

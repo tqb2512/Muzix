@@ -103,8 +103,7 @@ export default function SignupForm() {
                     </div>}
                     <button
                         onClick={handleSignup}
-                        className="rounded-md p-3 bg-green-500 font-bold text-dark-background transform transition-transform duration-200 hover:scale-105"
-                    >
+                        className="rounded-md p-3 bg-green-500 font-bold text-dark-background transform transition-transform duration-200 hover:scale-105">
                         Sign up
                     </button>
                     <hr className="border-gray-500"/>

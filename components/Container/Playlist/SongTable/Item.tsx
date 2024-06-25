@@ -8,6 +8,7 @@ import {RootState} from "@/libs/Redux/store";
 import {useDispatch, useSelector} from "react-redux";
 import * as Icons from "../Icons";
 import Link from "next/link";
+import {toMMSS} from "@/components/AudioPlayer";
 
 interface ListItemProps {
     playlist_id: string;
@@ -74,7 +75,7 @@ export default function Item({song, index, playlist_id}: ListItemProps) {
                 </div>
             </div>
 
-            <div className="text-center w-32 truncate overflow-hidden ">{song.duration_ms}</div>
+            <div className="text-center w-32 truncate overflow-hidden ">{toMMSS(song.duration_ms)}</div>
             <div className="w-12">
                 <div onClick={() => {
                     document.getElementById(`song-dropdown-${index}`)?.classList.toggle("hidden");
@@ -85,6 +86,13 @@ export default function Item({song, index, playlist_id}: ListItemProps) {
                     id={`song-dropdown-${index}`}
                     className="z-50 hidden bg-neutral-800 rounded-md w-48 absolute right-12 p-1">
                     <div className="flex flex-col justify-between w-full">
+                        <button
+                            onClick={() => {
+                                dispatch(queue.push(song));
+                            }}
+                            className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
+                            <h1>Add to queue</h1>
+                        </button>
                         {user?.playlist?.find((playlist) => playlist.playlist_id === playlist_id) &&
                             <button
                                 onClick={() => {

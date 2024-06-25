@@ -15,6 +15,7 @@ export default function SearchContainer() {
     const [search, setSearch] = useState<string>("");
     const [debouncedSearch, setDebouncedSearch] = useState<string>("");
     const [searchResults, setSearchResults] = useState<Result>({} as Result);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         const handler = setTimeout(() => {
@@ -31,7 +32,12 @@ export default function SearchContainer() {
             fetch(`/api/search?query=${debouncedSearch}&userId=${user.user_id}`)
                 .then((res) => res.json())
                 .then((data) => {
-                    setSearchResults(data.Result);
+                    if (!data.error) {
+                        setSearchResults(data.Result);
+                        setError(null);
+                    }
+                    else
+                        setError(data.error);
                 });
         }
     }, [debouncedSearch, user.user_id]);
@@ -43,12 +49,8 @@ export default function SearchContainer() {
                 onChange={(e) => setSearch(e.target.value)}
                 type="text" placeholder="What do you want to play?"
                 className="w-1/4 h-9 p-2 rounded-md absolute top-6 ml-24 z-50 bg-hover-gray-background"/>
-            {!search ? (
-                <div className="mt-4">
-                    <h1 className="text-2xl font-bold">Recent searches</h1>
-                </div>
-            ) : (
-                <div className="mt-4">
+            {
+                search && searchResults && !error && (<div className="mt-4">
                     <div className="flex sm:flex-col lg:flex-row lg:space-x-4">
                         <div className="">
                             <h1 className="text-2xl font-bold">Top result</h1>
@@ -96,8 +98,8 @@ export default function SearchContainer() {
                             </div>
                         )}
                     </div>
-                </div>
-            )}
+                </div>)
+            }
         </div>
     )
 }

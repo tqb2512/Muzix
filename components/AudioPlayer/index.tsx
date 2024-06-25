@@ -12,7 +12,7 @@ import RightBar from "./RightBar";
 import * as Icons from "./Icons"
 import ProgressBar from "./ProgressBar";
 
-function toMMSS(seconds: number) {
+export function toMMSS(seconds: number) {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = Math.floor(seconds % 60);
     return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
@@ -28,6 +28,8 @@ export default function AudioPlayer({className}: { className?: string }) {
     const {data: songUrl} = songsAPI.useGetFileByIdQuery(playerState.song.song_id || skipToken);
     const {data: subscription} = usersAPI.useGetSubscriptionQuery(user?.user_id || skipToken);
     const [isSubscribed, setIsSubscribed] = useState(true);
+    const [isRepeat, setIsRepeat] = useState(false);
+    const [isShuffle, setIsShuffle] = useState(false);
 
     useEffect(() => {
         if (songUrl) {
@@ -64,6 +66,17 @@ export default function AudioPlayer({className}: { className?: string }) {
         }
     }
 
+    const handleAudioEnd = () => {
+        if (isRepeat) {
+            audioRef.current?.play();
+        } else if (isShuffle) {
+            const randomIndex = Math.floor(Math.random() * queueState.songs.length);
+            dispatch(queue.playAtIndex(randomIndex));
+        } else {
+            dispatch(queue.shift());
+        }
+    }
+
     return (
         <div className={className}>
             <audio
@@ -74,7 +87,7 @@ export default function AudioPlayer({className}: { className?: string }) {
                 onTimeUpdate={(e) => dispatch(player.setTime(e.currentTarget.currentTime))}
                 onPlay={() => dispatch(player.setStatus("playing"))}
                 onPause={() => dispatch(player.setStatus("paused"))}
-                onEnded={() => dispatch(queue.shift())}
+                onEnded={handleAudioEnd}
             ></audio>
 
             <div className="flex items-center justify-between">
@@ -85,8 +98,9 @@ export default function AudioPlayer({className}: { className?: string }) {
                     isSubscribed ?
                         <div className="flex flex-col items-center justify-center flex-grow space-y-2">
                             <div className="flex space-x-8">
-                                <button>
-                                    <Icons.Shuffle className="w-4 h-4 fill-current text-gray-300 hover:text-white"/>
+                                <button
+                                    onClick={() => setIsShuffle(!isShuffle)}>
+                                    <Icons.Shuffle className={`w-4 h-4 fill-current text-gray-300 hover:text-white ${isShuffle ? "text-green-500 hover:text-green-700" : ""}`}/>
                                 </button>
 
                                 <button onClick={() => {
@@ -119,8 +133,10 @@ export default function AudioPlayer({className}: { className?: string }) {
                                     <Icons.Next className="w-4 h-4 fill-current text-gray-300 hover:text-white"/>
                                 </button>
 
-                                <button>
-                                    <Icons.Repeat className="w-4 h-4 fill-current text-gray-300 hover:text-white"/>
+                                <button
+                                    onClick={() => setIsRepeat(!isRepeat)}>
+                                    <Icons.Repeat
+                                        className={`w-4 h-4 fill-current text-gray-300 hover:text-white ${isRepeat ? "text-green-500 hover:text-green-700" : ""}`}/>
                                 </button>
                             </div>
 

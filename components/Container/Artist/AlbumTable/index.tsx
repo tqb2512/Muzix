@@ -1,6 +1,5 @@
 import {album} from "@prisma/client";
 import Item from "./Item";
-import Link from "next/link";
 import React from "react";
 
 interface AlbumTableProps {
@@ -45,10 +44,10 @@ export default function AlbumTable({albums}: AlbumTableProps) {
             className="flex flex-col w-full h-full mt-6">
             <div className="flex flex-row justify-between items-center">
                 <div className="text-2xl font-bold">Albums</div>
-                <Link
-                    href={``}
-                    className="text-gray-text hover:underline font-bold"
-                >Show all</Link>
+                {/*<Link*/}
+                {/*    href={``}*/}
+                {/*    className="text-gray-text hover:underline font-bold"*/}
+                {/*>Show all</Link>*/}
             </div>
 
             <div

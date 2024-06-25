@@ -11,7 +11,7 @@ export async function POST(req: Request) {
         s3Client.send(new PutObjectCommand({
             Bucket: process.env.NEXT_PUBLIC_S3_BUCKET || "",
             Key: `Images/Users/${id}/cover.jpg`,
-            Body: await readFileSync("public/next.svg"),
+            Body: await readFileSync("public/placeholder.jpg"),
             ContentType: "image/jpeg"
         }));
         return NextResponse.json({message: "Success"}, {status: 200});

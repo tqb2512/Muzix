@@ -20,7 +20,7 @@ export default function PlaylistBox({playlist, isExpanded = true}: PlaylistBoxPr
             <div className={`flex space-x-3 h-full items-center ${isExpanded ? 'justify-center' : ''}`}>
                 <div
                     className={`rounded-md h-10 w-10 overflow-hidden relative shrink-0 ${isExpanded ? 'flex items-center justify-center' : ''}`}>
-                    <Image src={coverUrl?.url || "/next.svg"} alt="Playlist cover" fill sizes="40px"
+                    <Image src={coverUrl?.url || "/next.svg"} alt="Playlist cover" fill sizes="100px"
                            className="object-cover"/>
                 </div>
 

@@ -140,9 +140,8 @@ export default function AccountContainer() {
                         </div>
                     )}
                 </div>
-                <div className="w-full h-full bg-dark-background rounded-lg p-4">
-                    <h1>Your profile</h1>
-                    <div className="flex flex-col space-y-2 mt-4">
+                <div className="w-full h-full bg-dark-background rounded-lg p-4 flex flex-col items-center">
+                    <div className="flex flex-col space-y-2 w-1/2">
                         <input
                             disabled={true}
                             className="rounded-md p-3 bg-dark-background text-white border-2 border-gray-500"
@@ -178,7 +177,8 @@ export default function AccountContainer() {
                         />
                         <button
                             onClick={handleSave}
-                            className="bg-green-400 text-white rounded-lg p-2">Save
+                            className="rounded-md p-3 bg-green-500 font-bold text-dark-background transform transition-transform duration-200 hover:scale-105">
+                            Save changes
                         </button>
                     </div>
                 </div>

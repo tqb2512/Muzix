@@ -13,6 +13,7 @@ import {skipToken} from "@reduxjs/toolkit/query";
 import {ColorContext} from "@/components/MainPanel/ColorContext";
 import {playlist, user} from "@prisma/client";
 import {useRouter} from "next/navigation";
+import {toMMSS} from "@/components/AudioPlayer";
 
 interface PlaylistContainerProps {
     playlist_id: string;
@@ -26,7 +27,7 @@ export default function PlaylistContainer({playlist_id}: PlaylistContainerProps)
     const {data: songs, refetch: refetchSongs} = playlistsAPI.useGetSongsByIdQuery(playlist_id);
     const {data: playlist, refetch: refetchPlaylist} = playlistsAPI.useGetInfoByIdQuery(playlist_id);
     const {data: coverUrl, refetch: refetchCover} = playlistsAPI.useGetCoverByIdQuery(playlist_id);
-    const {data, refetch: refetchUser} = usersAPI.useGetUserByIdQuery(user.user_id || skipToken);
+    const {refetch: refetchUser} = usersAPI.useGetUserByIdQuery(user.user_id || skipToken);
     const {data: profileUrl} = usersAPI.useGetCoverByIdQuery(playlist?.playlist?.user_id || skipToken);
     const [action, setAction] = useState<"Follow" | "Unfollow" | "Edit">("Follow");
     const [editData, setEditData] = useState({name: "", description: ""});
@@ -128,7 +129,7 @@ export default function PlaylistContainer({playlist_id}: PlaylistContainerProps)
                                    className="object-cover"/>
                         </div>
                         <h4>{playlist?.playlist.user.username}&ensp; &bull; &ensp;{songs?.songs.length} songs,
-                            about {songs?.songs.reduce((acc, song) => acc + song.duration_ms, 0)} minutes</h4>
+                            about {toMMSS(songs?.songs.reduce((acc, song) => acc + song.duration_ms, 0) || 0)} minutes</h4>
                     </div>
                 </div>
             </div>
@@ -164,7 +165,11 @@ export default function PlaylistContainer({playlist_id}: PlaylistContainerProps)
                                         <h1>Delete</h1>
                                     </button>
                                 )}
-                                <button className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
+                                <button
+                                    onClick={() => {
+                                        navigator.clipboard.writeText(window.location.href);
+                                    }}
+                                    className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
                                     <h1>Share</h1>
                                 </button>
                             </div>
@@ -225,9 +230,9 @@ export default function PlaylistContainer({playlist_id}: PlaylistContainerProps)
                                             cover: base64.split(",")[1]
                                         })
                                     }).then(() => {
-                                        refetchCover();
+                                        refetchUser();
                                         refetchPlaylist();
-                                        document.getElementById("modal")?.classList.add("hidden");
+                                        refetchCover();
                                     })
                                 })
                             } else {
@@ -242,10 +247,11 @@ export default function PlaylistContainer({playlist_id}: PlaylistContainerProps)
                                         cover: ""
                                     })
                                 }).then(() => {
+                                    refetchUser();
                                     refetchPlaylist();
-                                    document.getElementById("modal")?.classList.add("hidden");
                                 })
                             }
+                            document.getElementById("modal")?.classList.add("hidden");
                         }}
                                 className="bg-white text-black rounded-full w-24 p-2">Save
                         </button>

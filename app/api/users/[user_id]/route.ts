@@ -196,7 +196,7 @@ export async function POST(req: Request) {
                     s3Client.send(new PutObjectCommand({
                         Bucket: process.env.NEXT_PUBLIC_S3_BUCKET || "",
                         Key: `Images/Playlists/${playlist.playlist_id}/cover.jpg`,
-                        Body: await readFileSync("public/next.svg"),
+                        Body: await readFileSync("public/placeholder.jpg"),
                         ContentType: "image/jpeg"
                     }));
                     break;
