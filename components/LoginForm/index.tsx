@@ -55,9 +55,10 @@ export default function LoginForm() {
                     >
                         Log In
                     </button>
+                    <Link href={"/forget-password"} className="text-white underline hover:text-green-500 text-center">Forgot your password?</Link>
                     <hr className="border-gray-500"/>
-                    <div className="text-white text-center">
-                        Don&apos;t have an account? <Link href="/signup" className="text-green-500 hover:underline">Sign
+                    <div className="text-gray-text text-center">
+                        Don&apos;t have an account? <Link href="/signup" className="hover:text-green-500 text-white underline">Sign
                         up</Link>
                     </div>
                 </div>

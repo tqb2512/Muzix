@@ -1,15 +1,14 @@
 "use client";
-import React, {useEffect} from "react";
+import React from "react";
 import {useSupabase} from "@/libs/Supabase/SupabaseProvider";
 import {useRouter} from "next/navigation";
-import Link from "next/link";
 
 export default function UpdatePasswordForm() {
 
     const router = useRouter();
-    const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [error, setError] = React.useState<string | null>(null);
+    const [success, setSuccess] = React.useState<string | null>(null);
 
     const {client} = useSupabase();
 
@@ -23,8 +22,10 @@ export default function UpdatePasswordForm() {
         }
         client.auth.updateUser({password}).then((res) => {
             if (res.error) {
+                setSuccess(null)
                 setError(res.error.message);
             } else {
+                setSuccess("Password updated successfully");
                 setError(null);
                 router.push("/login");
             }
@@ -46,6 +47,9 @@ export default function UpdatePasswordForm() {
                     />
                     {error && <div className="text-red-500 rounded-md p-3 bg-dark-background border-2 border-red-500">
                         {error}
+                    </div>}
+                    {success && <div className="text-green-500 rounded-md p-3 bg-dark-background border-2 border-green-500">
+                        {success}
                     </div>}
                     <button
                         onClick={handleUpdatePassword}

@@ -1,19 +1,16 @@
 "use client";
 import React from "react";
 import {useSupabase} from "@/libs/Supabase/SupabaseProvider";
-import {useRouter} from "next/navigation";
 import Link from "next/link";
-import {readFileSync} from "fs";
-import Image from "next/image";
 
 export default function SignupForm() {
 
-    const router = useRouter();
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [username, setUsermame] = React.useState("");
     const [gender, setGender] = React.useState<string>("Male");
     const [birthday, setBirthday] = React.useState<Date>(new Date());
+    const [success, setSuccess] = React.useState<string | null>(null);
     const [error, setError] = React.useState<string | null>(null);
 
     const {client} = useSupabase();
@@ -45,14 +42,15 @@ export default function SignupForm() {
                     });
 
                     if (error) {
+                        setSuccess(null)
                         setError(error.message);
                     } else {
                         fetch(`/api/users/cover/update?id=${user.user?.id}`, {
                             method: "POST",
                             body: JSON.stringify({cover: ""})
                         });
+                        setSuccess("Email sent. Please check your inbox.");
                         setError(null);
-                        router.push("/login");
                     }
                 }
             })
@@ -100,6 +98,9 @@ export default function SignupForm() {
                     {error && <div className="text-red-500 rounded-md p-3 bg-dark-background border-2 border-red-500">
                         {error}
                     </div>}
+                    {success && <div className="text-green-500 rounded-md p-3 bg-dark-background border-2 border-green-500">
+                        {success}
+                    </div>}
                     <button
                         onClick={handleSignup}
                         className="rounded-md p-3 bg-green-500 font-bold text-dark-background transform transition-transform duration-200 hover:scale-105"
@@ -107,9 +108,9 @@ export default function SignupForm() {
                         Sign up
                     </button>
                     <hr className="border-gray-500"/>
-                    <div className="text-white text-center">
-                        Already have an account? <Link href="/login" className="text-green-500 hover:underline">Log
-                        in</Link>
+                    <div className="text-gray-text text-center">
+                        Already have an account? <Link href="/login" className="hover:text-green-500 text-white underline">Log
+                        in here</Link>
                     </div>
                 </div>
             </div>

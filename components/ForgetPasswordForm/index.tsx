@@ -1,24 +1,25 @@
 "use client";
 import React from "react";
 import {useSupabase} from "@/libs/Supabase/SupabaseProvider";
-import {useRouter} from "next/navigation";
-import Link from "next/link";
 
 export default function ForgetPasswordForm() {
 
-    const router = useRouter();
     const [email, setEmail] = React.useState("");
     const [error, setError] = React.useState<string | null>(null);
+    const [success, setSuccess] = React.useState<string | null>(null);
     const {client} = useSupabase();
 
     const handleForgetPassword = async () => {
+        const hostname = window.location.hostname;
         const {error} = await client.auth.resetPasswordForEmail(email, {
-            redirectTo: "http://localhost:3000/update-password",
+            redirectTo: `https://${hostname}/update-password`
         });
 
         if (error) {
+            setSuccess(null)
             setError(error.message);
         } else {
+            setSuccess("Email sent. Please check your inbox.");
             setError(null);
         }
     }
@@ -38,6 +39,9 @@ export default function ForgetPasswordForm() {
                     />
                     {error && <div className="text-red-500 rounded-md p-3 bg-dark-background border-2 border-red-500">
                         {error}
+                    </div>}
+                    {success && <div className="text-green-500 rounded-md p-3 bg-dark-background border-2 border-green-500">
+                        {success}
                     </div>}
                     <button
                         onClick={handleForgetPassword}
