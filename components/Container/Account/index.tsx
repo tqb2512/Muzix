@@ -1,5 +1,4 @@
 "use client";
-import {readUserSession} from "@/libs/Supabase/actions";
 import {useEffect, useState} from "react";
 import * as usersAPI from "@/libs/Redux/features/apiSlices/users";
 import {skipToken} from "@reduxjs/toolkit/query";

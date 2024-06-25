@@ -21,10 +21,10 @@ export default function SignupForm() {
         await fetch(`/api/auth/checkexist?email=${email}&username=${username}`)
             .then(response => response.json())
             .then(async data => {
-                if (data.email) {
+                if (data.email != 0) {
                     setError("Email already exists");
                     return;
-                } else if (data.username) {
+                } else if (data.username != 0) {
                     setError("Username already exists");
                     return;
                 } else {
