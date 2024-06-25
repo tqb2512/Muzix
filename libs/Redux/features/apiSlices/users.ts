@@ -57,7 +57,14 @@ export const usersAPI = createApi({
         getSubscription: builder.query<{result: subscription}, string>({
             query: (id) => `users/${id}/subscription` as string,
         }),
+        updateCover: builder.mutation<void, { id: string, cover: string }>({
+            query: ({ id, cover }) => ({
+                url: `users/cover/update?id=${id}`,
+                method: "POST",
+                body: { cover },
+            }),
+        }),
     }),
 });
 
-export const { useGetCoverByIdQuery, useGetUserByIdQuery, useSendActionMutation, useGetSubscriptionQuery } = usersAPI;
+export const { useGetCoverByIdQuery, useGetUserByIdQuery, useSendActionMutation, useGetSubscriptionQuery, useUpdateCoverMutation } = usersAPI;

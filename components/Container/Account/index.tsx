@@ -19,7 +19,7 @@ export default function AccountContainer() {
     const [userClone, setUserClone] = useState(user);
     const [password, setPassword] = useState<string>("");
     const [userId, setUserId] = useState<string | null>(null);
-    const { data: subscription } = usersAPI.useGetSubscriptionQuery(userId || skipToken);
+    const { data: subscription } = usersAPI.useGetSubscriptionQuery(user?.user_id  || skipToken);
     const { data: profileUrl } = usersAPI.useGetCoverByIdQuery(user?.user_id || skipToken);
 
     useEffect(() => {
@@ -57,8 +57,6 @@ export default function AccountContainer() {
                     subscription_id: subscription?.result?.subscription_id,
                     user_id: userId
                 })
-            }).then((res) => res.json()).then((data) => {
-                console.log(data);
             })
         })
     }
@@ -129,16 +127,16 @@ export default function AccountContainer() {
                     <h1>Your subscription</h1>
                     {subscription?.result?.status === "active" ? (
                         <div className="flex flex-col justify-between h-full pb-4">
-                            <h1 className="text-4xl text-green-400">Muzix Premium</h1>
-                            {subscription?.result?.cancel_at ? (
+                            <h1 className="text-4xl text-green-400 font-semibold">Muzix Premium</h1>
+                            {subscription?.result?.cancel_at?.toLocaleString().search("1970") ? (
                                 <h1>Canceling on {subscription?.result?.cancel_at?.toLocaleString()}</h1>
                             ) : (
-                                <h1>Next payment on {subscription?.result?.current_period_end?.toLocaleString()}</h1>
+                                <h1>Next payment on {new Date(subscription?.result?.current_period_end?.toLocaleString() || "").toLocaleDateString()}</h1>
                             )}
                         </div>
                     ) : (
                         <div>
-                            <h1 className="text-4xl text-green-400">Muzix Free</h1>
+                            <h1 className="text-4xl text-green-400 font-semibold">Muzix Free</h1>
                         </div>
                     )}
                 </div>

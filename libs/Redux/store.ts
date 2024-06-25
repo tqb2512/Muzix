@@ -57,7 +57,14 @@ export const store = configureStore({
     middleware: (
         getDefaultMiddleware => getDefaultMiddleware({
             serializableCheck: false,
-        }).concat(songsAPI.middleware, albumsAPI.middleware, playlistsAPI.middleware, sectionsAPI.middleware, artistsAPI.middleware, usersAPI.middleware)
+        }).concat(
+            songsAPI.middleware,
+            albumsAPI.middleware,
+            playlistsAPI.middleware,
+            sectionsAPI.middleware,
+            artistsAPI.middleware,
+            usersAPI.middleware,
+        )
     ),
 });
 

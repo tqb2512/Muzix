@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/app/api/base";
 import { stripe } from "@/libs/Stripe/stripe";
 
-
 export async function GET(req: Request) {
         const user_id = req.url.split("/")[5] || "";
 
@@ -13,6 +12,9 @@ export async function GET(req: Request) {
         const subscription = await prisma.subscription.findFirst({
             where: {
                 user_id: user_id
+            },
+            orderBy: {
+                current_period_end: "desc"
             }
         });
 

@@ -1,11 +1,12 @@
 "use client"
-import { useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { skipToken } from "@reduxjs/toolkit/query";
-import { RootState } from "@/libs/Redux/store";
+import {useEffect, useRef, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {skipToken} from "@reduxjs/toolkit/query";
+import {RootState} from "@/libs/Redux/store";
 import * as player from "@/libs/Redux/features/slices/player";
 import * as queue from "@/libs/Redux/features/slices/queue";
 import * as songsAPI from "@/libs/Redux/features/apiSlices/songs";
+import * as usersAPI from "@/libs/Redux/features/apiSlices/users";
 import NowPlaying from "./NowPlaying";
 import RightBar from "./RightBar";
 import * as Icons from "./Icons"
@@ -17,19 +18,32 @@ function toMMSS(seconds: number) {
     return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
 }
 
-export default function AudioPlayer({ className }: { className?: string }) {
+export default function AudioPlayer({className}: { className?: string }) {
 
     const dispatch = useDispatch();
     const playerState = useSelector((state: RootState) => state.player);
     const queueState = useSelector((state: RootState) => state.queue);
     const audioRef = useRef<HTMLAudioElement>(null);
-    const { data: songUrl } = songsAPI.useGetFileByIdQuery(playerState.song.song_id || skipToken);
+    const user = useSelector((state: RootState) => state.user);
+    const {data: songUrl} = songsAPI.useGetFileByIdQuery(playerState.song.song_id || skipToken);
+    const {data: subscription} = usersAPI.useGetSubscriptionQuery(user?.user_id || skipToken);
+    const [isSubscribed, setIsSubscribed] = useState(true);
 
     useEffect(() => {
         if (songUrl) {
             dispatch(player.setUrlSource(songUrl.url));
         }
     }, [songUrl, dispatch]);
+
+    useEffect(() => {
+        if (playerState.status === "playing") {
+            if (subscription?.result?.status != "active") {
+                audioRef.current?.pause();
+                dispatch(player.setStatus("paused"));
+                setIsSubscribed(false);
+            }
+        }
+    }, [playerState.status, subscription?.result?.status]);
 
     useEffect(() => {
         if (queueState.songs.length > 0) {
@@ -56,7 +70,7 @@ export default function AudioPlayer({ className }: { className?: string }) {
                 ref={audioRef}
                 id="audioPlayer"
                 src={playerState.urlSource}
-                //autoPlay
+                autoPlay
                 onTimeUpdate={(e) => dispatch(player.setTime(e.currentTarget.currentTime))}
                 onPlay={() => dispatch(player.setStatus("playing"))}
                 onPause={() => dispatch(player.setStatus("paused"))}
@@ -65,62 +79,70 @@ export default function AudioPlayer({ className }: { className?: string }) {
 
             <div className="flex items-center justify-between">
 
-                <NowPlaying />
+                <NowPlaying/>
 
-                <div className="flex flex-col items-center justify-center flex-grow space-y-2">
-                    <div className="flex space-x-8">
-                        <button>
-                            <Icons.Shuffle className="w-4 h-4 fill-current text-gray-300 hover:text-white" />
-                        </button>
+                {
+                    isSubscribed ?
+                        <div className="flex flex-col items-center justify-center flex-grow space-y-2">
+                            <div className="flex space-x-8">
+                                <button>
+                                    <Icons.Shuffle className="w-4 h-4 fill-current text-gray-300 hover:text-white"/>
+                                </button>
 
-                        <button onClick={() => {
-                            if (audioRef.current)
-                                if (audioRef.current.currentTime > 5) {
-                                    audioRef.current.currentTime = 0;
-                                } else {
+                                <button onClick={() => {
+                                    if (audioRef.current)
+                                        if (audioRef.current.currentTime > 5) {
+                                            audioRef.current.currentTime = 0;
+                                        } else {
 
-                                }
-                        }}>
-                            <Icons.Previous className="w-4 h-4 fill-current text-gray-300 hover:text-white" />
-                        </button>
+                                        }
+                                }}>
+                                    <Icons.Previous className="w-4 h-4 fill-current text-gray-300 hover:text-white"/>
+                                </button>
 
-                        <button onClick={handlePlayBtn} className="flex items-center justify-center w-8 h-8 bg-white rounded-full">
-                            {
-                                playerState.status !== "playing" ?
-                                    <Icons.Play className="w-4 h-4 fill-current text-black" /> :
-                                    <Icons.Pause className="w-4 h-4 fill-current text-black" />
-                            }
-                        </button>
+                                <button onClick={handlePlayBtn}
+                                        className="flex items-center justify-center w-8 h-8 bg-white rounded-full">
+                                    {
+                                        playerState.status !== "playing" ?
+                                            <Icons.Play className="w-4 h-4 fill-current text-black"/> :
+                                            <Icons.Pause className="w-4 h-4 fill-current text-black"/>
+                                    }
+                                </button>
 
-                        <button onClick={() => {
-                            if (queueState.songs.length > 1) {
-                                dispatch(queue.shift());
-                            } else {
+                                <button onClick={() => {
+                                    if (queueState.songs.length > 1) {
+                                        dispatch(queue.shift());
+                                    } else {
 
-                            }
-                        }}>
-                            <Icons.Next className="w-4 h-4 fill-current text-gray-300 hover:text-white" />
-                        </button>
+                                    }
+                                }}>
+                                    <Icons.Next className="w-4 h-4 fill-current text-gray-300 hover:text-white"/>
+                                </button>
 
-                        <button>
-                            <Icons.Repeat className="w-4 h-4 fill-current text-gray-300 hover:text-white" />
-                        </button>
-                    </div>
+                                <button>
+                                    <Icons.Repeat className="w-4 h-4 fill-current text-gray-300 hover:text-white"/>
+                                </button>
+                            </div>
 
-                    <div className="flex items-center justify-between w-10/12 space-x-2">
-                        <div className="whitespace-nowrap text-sm">
-                            {toMMSS(playerState.time)}
+                            <div className="flex items-center justify-between w-10/12 space-x-2">
+                                <div className="whitespace-nowrap text-sm">
+                                    {toMMSS(playerState.time)}
+                                </div>
+
+                                <ProgressBar audioRef={audioRef}/>
+
+                                <div className="whitespace-nowrap text-sm">
+                                    {playerState.song.song_id ? toMMSS(audioRef.current?.duration || 0) : "--:--"}
+                                </div>
+                            </div>
                         </div>
-
-                        <ProgressBar audioRef={audioRef} />
-
-                        <div className="whitespace-nowrap text-sm">
-                            {playerState.song.song_id ? toMMSS(audioRef.current?.duration || 0) : "--:--"}
+                        :
+                        <div>
+                            <h1>You need an active subscription to play music</h1>
                         </div>
-                    </div>
-                </div>
+                }
 
-                <RightBar audioRef={audioRef} />
+                <RightBar audioRef={audioRef}/>
 
             </div>
         </div>

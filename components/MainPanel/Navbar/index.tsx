@@ -9,21 +9,24 @@ import { skipToken } from "@reduxjs/toolkit/query";
 import { createClient } from "@/libs/Supabase/client";
 import Link from "next/link";
 import { ColorContext } from "@/components/MainPanel/ColorContext";
+import {useSelector} from "react-redux";
+import {RootState} from "@/libs/Redux/store";
 
 export default function Navbar() {
 
+    const user = useSelector((state: RootState) => state.user);
     const router = useRouter();
-    const [userId, setUserId] = useState<string | null>(null);
-    const { data: cover } = usersAPI.useGetCoverByIdQuery(userId || skipToken);
+    //const [userId, setUserId] = useState<string | null>(null);
+    const { data: cover } = usersAPI.useGetCoverByIdQuery(user.user_id || skipToken);
     const { color } = useContext(ColorContext);
 
-    useEffect(() => {
-        const fetchProfile = async () => {
-            const { data } = await readUserSession();
-            setUserId(data?.user?.id || null);
-        }
-        fetchProfile();
-    }, []);
+    // useEffect(() => {
+    //     const fetchProfile = async () => {
+    //         const { data } = await readUserSession();
+    //         setUserId(data?.user?.id || null);
+    //     }
+    //     fetchProfile();
+    // }, []);
 
     const handleBack = () => {
         router.back();
@@ -72,7 +75,7 @@ export default function Navbar() {
                             <Link href="/account" className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
                                 Account
                             </Link>
-                            <Link href={`/app/user/${userId}`} className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
+                            <Link href={`/app/user/${user.user_id}`} className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
                                 Profile
                             </Link>
                             <hr className="border-neutral-700" />

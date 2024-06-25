@@ -2,6 +2,9 @@
 import React from "react";
 import { useSupabase } from "@/libs/Supabase/SupabaseProvider";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import {readFileSync} from "fs";
+import Image from "next/image";
 
 export default function SignupForm() {
 
@@ -17,35 +20,52 @@ export default function SignupForm() {
 
     const handleSignup = async () => {
         const birthdayDate = `${birthday.getFullYear()}-${String(birthday.getMonth() + 1).padStart(2, '0')}-${String(birthday.getDate()).padStart(2, '0')}`;
-        const { error } = await client.auth.signUp({
-            email,
-            password,
-            options: {
-                data: {
+
+        await fetch(`/api/auth/checkexist?email=${email}&username=${username}`)
+        .then(response => response.json())
+        .then(async data => {
+            if (data.email) {
+                setError("Email already exists");
+                return;
+            } else if (data.username) {
+                setError("Username already exists");
+                return;
+            } else {
+                const {error: error, data: user} = await client.auth.signUp({
                     email,
-                    username,
-                    gender,
-                    birthday: birthdayDate
+                    password,
+                    options: {
+                        data: {
+                            email,
+                            username,
+                            gender,
+                            birthday: birthdayDate
+                        }
+                    }
+                });
+
+                if (error) {
+                    setError(error.message);
+                } else {
+                    fetch(`/api/users/cover/update?id=${user.user?.id}`, {
+                        method: "POST",
+                        body: JSON.stringify({cover: ""})
+                    });
+                    setError(null);
+                    router.push("/login");
                 }
             }
-        });
-
-        if (error) {
-            setError(error.message);
-        } else {
-            setError(null);
-            router.push("/login");
-        }
+        })
     }
 
 
     return (
         <div className="rounded-lg bg-dark-background w-[734px] h-4/5">
-            <div className="flex flex-col items-center p-10">
+            <div className="flex h-full flex-col items-center p-10 justify-center">
                 <div className="text-3xl font-bold text-white mb-10">
-                    Signup
+                    Sign up to start listening
                 </div>
-                <div className="flex flex-col space-y-4 w-full">
+                <div className="flex flex-col space-y-4 w-1/2">
                     <input
                         onChange={(e) => setUsermame(e.target.value)}
                         type="text"
@@ -82,10 +102,15 @@ export default function SignupForm() {
                     </div>}
                     <button
                         onClick={handleSignup}
-                        className="rounded-md p-3 bg-green-500 text-white"
+                        className="rounded-md p-3 bg-green-500 font-bold text-dark-background transform transition-transform duration-200 hover:scale-105"
                     >
-                        Signup
+                        Sign up
                     </button>
+                    <hr className="border-gray-500"/>
+                    <div className="text-white text-center">
+                        Already have an account? <Link href="/login" className="text-green-500 hover:underline">Log
+                        in</Link>
+                    </div>
                 </div>
             </div>
         </div>

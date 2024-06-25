@@ -3,10 +3,13 @@ import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/libs/Redux/store";
 import * as player from "@/libs/Redux/features/slices/player";
+import * as usersAPI from "@/libs/Redux/features/apiSlices/users";
+import {skipToken} from "@reduxjs/toolkit/query";
 
 export default function ProgressBar({ audioRef }: { audioRef: any }) {
 
     const dispatch = useDispatch();
+    const user = useSelector((state: RootState) => state.user);
     const playerState = useSelector((state: RootState) => state.player);
     const progressRef = useRef<HTMLDivElement>(null);
     const barRef = useRef<HTMLDivElement>(null);

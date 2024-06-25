@@ -199,7 +199,6 @@ export async function POST(req: Request) {
                         Body: await readFileSync("public/next.svg"),
                         ContentType: "image/jpeg"
                     }));
-
                     break;
             }
             break;
