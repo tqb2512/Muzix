@@ -1,21 +1,24 @@
 ## Muzix - A Modern Music Streaming Platform
-Muzix is an innovative music streaming application built to deliver a seamless and enjoyable music experience to users. With its modern, intuitive, and user-centric interface, Muzix allows you to discover, enjoy, and share your passion for music effortlessly.
+
+Muzix is an innovative music streaming application built to deliver a seamless and enjoyable music experience to users.
+With its modern, intuitive, and user-centric interface, Muzix allows you to discover, enjoy, and share your passion for
+music effortlessly.
 
 ------------
-
 
 ### Key Features:
 
 - **Stream Music:** Access a vast music library with millions of songs across various genres and artists.
-- **Create and Manage Playlists:** Personalize your listening experience by creating your own playlists or exploring curated ones.
+- **Create and Manage Playlists:** Personalize your listening experience by creating your own playlists or exploring
+  curated ones.
 - **Smart Music Search:** Quickly and easily find your favorite songs, albums, or artists.
 - **Personal Music Library Management:** Store and organize your favorite songs for quick access.
 - **Premium Subscription:** Upgrade to Premium for an ad-free experience, higher audio quality, and exclusive features.
 
 ------------
 
-
 ### Cutting-Edge Technology:
+
 Muzix is built using the latest web technologies, including:
 
 - **Next.js:** Powerful React framework for performance and scalability.

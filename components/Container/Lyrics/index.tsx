@@ -1,8 +1,8 @@
 "use client";
-import { ColorContext } from "@/components/MainPanel/ColorContext";
-import { RootState } from "@/libs/Redux/store";
-import { useContext, useEffect } from "react";
-import { useSelector } from "react-redux";
+import {ColorContext} from "@/components/MainPanel/ColorContext";
+import {RootState} from "@/libs/Redux/store";
+import {useContext, useEffect} from "react";
+import {useSelector} from "react-redux";
 
 function rgbToHex(uint8ClampedArrayElement: number, uint8ClampedArrayElement2: number, uint8ClampedArrayElement3: number) {
     return ((uint8ClampedArrayElement << 16) + (uint8ClampedArrayElement2 << 8) + uint8ClampedArrayElement3).toString(16).padStart(6, '0');
@@ -19,7 +19,7 @@ function darkenColor(color: string, amount: number) {
 
 export default function LyricsContainer() {
 
-    const { color, setColor } = useContext(ColorContext);
+    const {color, setColor} = useContext(ColorContext);
     const player = useSelector((state: RootState) => state.player);
 
     useEffect(() => {
@@ -47,7 +47,7 @@ export default function LyricsContainer() {
     }, [setColor]);
 
     return (
-        <div className="px-6 flex justify-center" style={{ backgroundColor: color }}>
+        <div className="px-6 flex justify-center" style={{backgroundColor: color}}>
             <pre className="whitespace-pre-wrap text-3xl leading-10">
                 {player.song.lyrics}
             </pre>

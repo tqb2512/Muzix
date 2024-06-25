@@ -6,30 +6,30 @@ import * as playlistsAPI from "@/libs/Redux/features/apiSlices/playlists";
 import * as usersAPI from "@/libs/Redux/features/apiSlices/users";
 import * as userSlice from "@/libs/Redux/features/slices/user";
 import * as queueSlice from "@/libs/Redux/features/slices/queue";
-import { useContext, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/libs/Redux/store";
-import { skipToken } from "@reduxjs/toolkit/query";
-import { ColorContext } from "@/components/MainPanel/ColorContext";
-import { playlist, user } from "@prisma/client";
+import {useContext, useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "@/libs/Redux/store";
+import {skipToken} from "@reduxjs/toolkit/query";
+import {ColorContext} from "@/components/MainPanel/ColorContext";
+import {playlist, user} from "@prisma/client";
 import {useRouter} from "next/navigation";
 
 interface PlaylistContainerProps {
     playlist_id: string;
 }
 
-export default function PlaylistContainer({ playlist_id }: PlaylistContainerProps) {
+export default function PlaylistContainer({playlist_id}: PlaylistContainerProps) {
     const router = useRouter();
     const dispatch = useDispatch();
     const user = useSelector((state: RootState) => state.user);
-    const { color } = useContext(ColorContext);
-    const { data: songs, refetch: refetchSongs } = playlistsAPI.useGetSongsByIdQuery(playlist_id);
-    const { data: playlist, refetch: refetchPlaylist } = playlistsAPI.useGetInfoByIdQuery(playlist_id);
-    const { data: coverUrl, refetch: refetchCover } = playlistsAPI.useGetCoverByIdQuery(playlist_id);
-    const { data, refetch: refetchUser } = usersAPI.useGetUserByIdQuery(user.user_id || skipToken);
-    const { data: profileUrl } = usersAPI.useGetCoverByIdQuery(playlist?.playlist?.user_id || skipToken);
+    const {color} = useContext(ColorContext);
+    const {data: songs, refetch: refetchSongs} = playlistsAPI.useGetSongsByIdQuery(playlist_id);
+    const {data: playlist, refetch: refetchPlaylist} = playlistsAPI.useGetInfoByIdQuery(playlist_id);
+    const {data: coverUrl, refetch: refetchCover} = playlistsAPI.useGetCoverByIdQuery(playlist_id);
+    const {data, refetch: refetchUser} = usersAPI.useGetUserByIdQuery(user.user_id || skipToken);
+    const {data: profileUrl} = usersAPI.useGetCoverByIdQuery(playlist?.playlist?.user_id || skipToken);
     const [action, setAction] = useState<"Follow" | "Unfollow" | "Edit">("Follow");
-    const [editData, setEditData] = useState({ name: "", description: "" });
+    const [editData, setEditData] = useState({name: "", description: ""});
     const [editImage, setEditImage] = useState<File | null>(null);
     const [sendAction] = usersAPI.useSendActionMutation();
 
@@ -58,7 +58,7 @@ export default function PlaylistContainer({ playlist_id }: PlaylistContainerProp
 
     const handleFollow = () => {
         if (action === "Edit") {
-            setEditData({ name: playlist?.playlist?.name || "", description: playlist?.playlist?.description || ""});
+            setEditData({name: playlist?.playlist?.name || "", description: playlist?.playlist?.description || ""});
             document.getElementById("modal")?.classList.remove("hidden");
             return;
         }
@@ -111,10 +111,12 @@ export default function PlaylistContainer({ playlist_id }: PlaylistContainerProp
     }
 
     return (
-        <div className="bg-gradient-to-b from-transparent to-dark-background to-[50dvh]" style={{ backgroundColor: color }}>
+        <div className="bg-gradient-to-b from-transparent to-dark-background to-[50dvh]"
+             style={{backgroundColor: color}}>
             <div className="px-6 pb-6 flex">
                 <div className="h-52 w-52 rounded-lg overflow-hidden relative flex-shrink-0">
-                    <Image id="coverImage" src={coverUrl?.url || "/next.svg"} alt="Playlist cover" fill sizes="700px" className="object-cover" />
+                    <Image id="coverImage" src={coverUrl?.url || "/next.svg"} alt="Playlist cover" fill sizes="700px"
+                           className="object-cover"/>
                 </div>
                 <div className="ml-5 flex flex-col justify-end mb-2 space-y-2">
                     <div className="text-sm">Playlist</div>
@@ -122,9 +124,11 @@ export default function PlaylistContainer({ playlist_id }: PlaylistContainerProp
                     <div className="text-gray-text">{playlist?.playlist.description}</div>
                     <div className="flex items-center space-x-2 text-sm">
                         <div className="h-6 w-6 overflow-hidden relative rounded-full">
-                            <Image src={profileUrl?.url || "/next.svg"} alt="Profile cover" fill sizes="24px" className="object-cover" />
+                            <Image src={profileUrl?.url || "/next.svg"} alt="Profile cover" fill sizes="24px"
+                                   className="object-cover"/>
                         </div>
-                        <h4>{playlist?.playlist.user.username}&ensp; &bull; &ensp;{songs?.songs.length} songs, about {songs?.songs.reduce((acc, song) => acc + song.duration_ms, 0)} minutes</h4>
+                        <h4>{playlist?.playlist.user.username}&ensp; &bull; &ensp;{songs?.songs.length} songs,
+                            about {songs?.songs.reduce((acc, song) => acc + song.duration_ms, 0)} minutes</h4>
                     </div>
                 </div>
             </div>
@@ -135,14 +139,14 @@ export default function PlaylistContainer({ playlist_id }: PlaylistContainerProp
                         <button
                             onClick={handlePlay}
                             className="rounded-full bg-green-500 h-12 w-12 flex items-center justify-center">
-                            <Icons.Play className="w-5 h-5 fill-current text-black" />
+                            <Icons.Play className="w-5 h-5 fill-current text-black"/>
                         </button>
                         <button
                             onClick={() => {
                                 document.getElementById("album-dropdown")?.classList.toggle("hidden");
                             }}
                             className="rounded-full bg-transparent h-12 w-12 flex items-center justify-center">
-                            <Icons.ThreeDots className="w-7 h-7 fill-current text-gray-button" />
+                            <Icons.ThreeDots className="w-7 h-7 fill-current text-gray-button"/>
                         </button>
                         <div
                             id="album-dropdown"
@@ -167,11 +171,12 @@ export default function PlaylistContainer({ playlist_id }: PlaylistContainerProp
                         </div>
                     </div>
                 </div>
-                <SongTable playlist_id={playlist_id} songs={songs?.songs || []} />
+                <SongTable playlist_id={playlist_id} songs={songs?.songs || []}/>
             </div>
 
 
-            <div id="modal" className="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50 flex items-center justify-center">
+            <div id="modal"
+                 className="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50 flex items-center justify-center">
                 <div className="bg-neutral-800 rounded-lg p-6 w-[32rem]">
                     <div className="relative flex items-center justify-between">
                         <h1 className="text-2xl font-bold">Edit details</h1>
@@ -180,24 +185,28 @@ export default function PlaylistContainer({ playlist_id }: PlaylistContainerProp
                                 document.getElementById("modal")?.classList.add("hidden");
                             }}
                             className="rounded-full bg-transparent h-8 w-8 flex items-center justify-center hover:bg-hover-gray-background">
-                            <Icons.Close className="w-4 h-4 fill-current text-white" />
+                            <Icons.Close className="w-4 h-4 fill-current text-white"/>
                         </button>
                     </div>
                     <div className="flex w-full flex-row space-x-4 mt-4">
                         <div className="size-[10rem] rounded-md shrink-0 relative overflow-hidden">
-                            <Image src={editImage ? URL.createObjectURL(editImage) : (coverUrl?.url || "next.svg")} alt="Playlist cover" fill sizes="160px" className="object-cover" />
-                            <input type="file" accept="image/*" className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
-                                onChange={(e) => setEditImage(e.target.files?.[0] || null)}
+                            <Image src={editImage ? URL.createObjectURL(editImage) : (coverUrl?.url || "next.svg")}
+                                   alt="Playlist cover" fill sizes="160px" className="object-cover"/>
+                            <input type="file" accept="image/*"
+                                   className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+                                   onChange={(e) => setEditImage(e.target.files?.[0] || null)}
                             />
                         </div>
                         <div className="flex flex-col space-y-4 w-full">
-                            <input type="text" placeholder="Playlist name" className="w-full h-10 bg-neutral-700 rounded-md p-2"
-                                value={editData.name}
-                                onChange={(e) => setEditData({ ...editData, name: e.target.value })}
+                            <input type="text" placeholder="Playlist name"
+                                   className="w-full h-10 bg-neutral-700 rounded-md p-2"
+                                   value={editData.name}
+                                   onChange={(e) => setEditData({...editData, name: e.target.value})}
                             />
-                            <textarea placeholder="Description" className="w-full h-full bg-neutral-700 rounded-md p-2 resize-none"
-                                value={editData.description}
-                                onChange={(e) => setEditData({ ...editData, description: e.target.value })}
+                            <textarea placeholder="Description"
+                                      className="w-full h-full bg-neutral-700 rounded-md p-2 resize-none"
+                                      value={editData.description}
+                                      onChange={(e) => setEditData({...editData, description: e.target.value})}
                             ></textarea>
                         </div>
                     </div>
@@ -238,7 +247,8 @@ export default function PlaylistContainer({ playlist_id }: PlaylistContainerProp
                                 })
                             }
                         }}
-                        className="bg-white text-black rounded-full w-24 p-2">Save</button>
+                                className="bg-white text-black rounded-full w-24 p-2">Save
+                        </button>
                     </div>
                 </div>
             </div>

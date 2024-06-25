@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { song } from "@prisma/client";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {song} from "@prisma/client";
 
 export interface Player {
     song: song;
@@ -39,5 +39,5 @@ const playerSlice = createSlice({
     },
 });
 
-export const { setUrlSource, setUrlImage, setSong, setTime, setStatus } = playerSlice.actions;
+export const {setUrlSource, setUrlImage, setSong, setTime, setStatus} = playerSlice.actions;
 export default playerSlice.reducer;

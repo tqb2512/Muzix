@@ -1,9 +1,9 @@
 "use client"
-import { album, artist, artist_contribute_song, song } from "@prisma/client";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { skipToken } from "@reduxjs/toolkit/query";
-import { RootState } from "@/libs/Redux/store";
+import {album, artist, artist_contribute_song, song} from "@prisma/client";
+import {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {skipToken} from "@reduxjs/toolkit/query";
+import {RootState} from "@/libs/Redux/store";
 import * as player from "@/libs/Redux/features/slices/player";
 import * as albumsAPI from "@/libs/Redux/features/apiSlices/albums";
 import Image from "next/image";
@@ -22,7 +22,7 @@ export default function NowPlaying() {
 
     const dispatch = useDispatch();
     const playerState = useSelector((state: RootState) => state.player);
-    const { data: albumCoverUrl } = albumsAPI.useGetCoverByIdQuery(playerState.song.album_id || skipToken);
+    const {data: albumCoverUrl} = albumsAPI.useGetCoverByIdQuery(playerState.song.album_id || skipToken);
     const [song, setSong] = useState<Song | null>(null);
 
     useEffect(() => {
@@ -49,7 +49,7 @@ export default function NowPlaying() {
                 alt="Album cover"
                 width={58}
                 height={58}
-                className="rounded-md flex-shrink-0" />
+                className="rounded-md flex-shrink-0"/>
 
             <div className="flex flex-col space-y-1">
 

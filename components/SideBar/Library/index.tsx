@@ -5,20 +5,20 @@ import PlaylistBox from "@/components/SideBar/Library/Playlist";
 import * as Icons from "./Icons";
 import * as usersAPI from "@/libs/Redux/features/apiSlices/users";
 import * as userSlice from "@/libs/Redux/features/slices/user";
-import { useEffect, useState } from "react";
-import { skipToken } from "@reduxjs/toolkit/query";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/libs/Redux/store";
-import { readUserSession } from "@/libs/Supabase/actions";
+import {useEffect, useState} from "react";
+import {skipToken} from "@reduxjs/toolkit/query";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "@/libs/Redux/store";
+import {readUserSession} from "@/libs/Supabase/actions";
 
 
-export function LibrarySection({ isExpanded = true }: { isExpanded?: boolean }) {
+export function LibrarySection({isExpanded = true}: { isExpanded?: boolean }) {
     const dispatch = useDispatch();
 
     const user = useSelector((state: RootState) => state.user);
     const [userId, setUserId] = useState<string>("");
     const [visualData, setVisualData] = useState<any[]>([]);
-    const { data, refetch: userRefetch } = usersAPI.useGetUserByIdQuery(userId || skipToken);
+    const {data, refetch: userRefetch} = usersAPI.useGetUserByIdQuery(userId || skipToken);
     const [sendAction] = usersAPI.useSendActionMutation();
 
 
@@ -49,25 +49,25 @@ export function LibrarySection({ isExpanded = true }: { isExpanded?: boolean }) 
         if (item.album) {
             return (
                 <div key={index}>
-                    <AlbumBox album={item.album} isExpanded={isExpanded} />
+                    <AlbumBox album={item.album} isExpanded={isExpanded}/>
                 </div>
             )
         } else if (item.artist) {
             return (
                 <div key={index}>
-                    <ArtistBox artist={item.artist} isExpanded={isExpanded} />
+                    <ArtistBox artist={item.artist} isExpanded={isExpanded}/>
                 </div>
             )
         } else if (item.playlist) {
             return (
                 <div key={index}>
-                    <PlaylistBox playlist={item.playlist} isExpanded={isExpanded} />
+                    <PlaylistBox playlist={item.playlist} isExpanded={isExpanded}/>
                 </div>
             )
         } else if (item.playlist_id) {
             return (
                 <div key={index}>
-                    <PlaylistBox playlist={item} isExpanded={isExpanded} />
+                    <PlaylistBox playlist={item} isExpanded={isExpanded}/>
                 </div>
             )
         }
@@ -89,14 +89,14 @@ export function LibrarySection({ isExpanded = true }: { isExpanded?: boolean }) 
             <div className="flex items-center justify-between ml-2">
                 <div
                     className="font-bold flex items-center p-4 text-gray-button hover:text-white transition-all duration-300 ease-in-out">
-                    <Icons.Library className="w-7 h-7 mr-4 fill-current flex-shrink-0" />
+                    <Icons.Library className="w-7 h-7 mr-4 fill-current flex-shrink-0"/>
                     {isExpanded && "Library"}
                 </div>
                 {isExpanded &&
                     <button
                         onClick={handleCreatePlaylist}
                         className="hover:bg-neutral-800 hover:text-white text-gray-button rounded-full w-8 h-8 flex items-center justify-center mx-4 transition-all duration-300 ease-in-out">
-                        <Icons.Add className="w-4 h-4 fill-current flex-shrink-0" />
+                        <Icons.Add className="w-4 h-4 fill-current flex-shrink-0"/>
                     </button>
                 }
             </div>

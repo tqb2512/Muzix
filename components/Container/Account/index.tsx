@@ -1,10 +1,10 @@
 "use client";
-import { readUserSession } from "@/libs/Supabase/actions";
-import { useEffect, useState } from "react";
+import {readUserSession} from "@/libs/Supabase/actions";
+import {useEffect, useState} from "react";
 import * as usersAPI from "@/libs/Redux/features/apiSlices/users";
-import { skipToken } from "@reduxjs/toolkit/query";
-import { stripeClient } from "@/libs/Stripe/stripeClient";
-import { useSelector} from "react-redux";
+import {skipToken} from "@reduxjs/toolkit/query";
+import {stripeClient} from "@/libs/Stripe/stripeClient";
+import {useSelector} from "react-redux";
 import {useSupabase} from "@/libs/Supabase/SupabaseProvider";
 import Link from "next/link";
 import Image from "next/image";
@@ -19,8 +19,8 @@ export default function AccountContainer() {
     const [userClone, setUserClone] = useState(user);
     const [password, setPassword] = useState<string>("");
     const [userId, setUserId] = useState<string | null>(null);
-    const { data: subscription } = usersAPI.useGetSubscriptionQuery(user?.user_id  || skipToken);
-    const { data: profileUrl } = usersAPI.useGetCoverByIdQuery(user?.user_id || skipToken);
+    const {data: subscription} = usersAPI.useGetSubscriptionQuery(user?.user_id || skipToken);
+    const {data: profileUrl} = usersAPI.useGetCoverByIdQuery(user?.user_id || skipToken);
 
     useEffect(() => {
         console.log(subscription);
@@ -131,7 +131,8 @@ export default function AccountContainer() {
                             {subscription?.result?.cancel_at?.toLocaleString().search("1970") ? (
                                 <h1>Canceling on {subscription?.result?.cancel_at?.toLocaleString()}</h1>
                             ) : (
-                                <h1>Next payment on {new Date(subscription?.result?.current_period_end?.toLocaleString() || "").toLocaleDateString()}</h1>
+                                <h1>Next payment
+                                    on {new Date(subscription?.result?.current_period_end?.toLocaleString() || "").toLocaleDateString()}</h1>
                             )}
                         </div>
                     ) : (
@@ -171,11 +172,15 @@ export default function AccountContainer() {
                             className="rounded-md p-3 bg-dark-background text-white border-2 border-gray-500"
                             type="date" placeholder="Birthday"
                             value={userClone?.birthday ? new Date(userClone.birthday).toISOString().split('T')[0] : ""}
-                            onChange={(e) => setUserClone({...userClone, birthday: new Date(e.target.value).toISOString()})}
+                            onChange={(e) => setUserClone({
+                                ...userClone,
+                                birthday: new Date(e.target.value).toISOString()
+                            })}
                         />
                         <button
                             onClick={handleSave}
-                            className="bg-green-400 text-white rounded-lg p-2">Save</button>
+                            className="bg-green-400 text-white rounded-lg p-2">Save
+                        </button>
                     </div>
                 </div>
             </div>

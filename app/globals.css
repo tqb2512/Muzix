@@ -3,47 +3,46 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 214, 219, 220;
+    --background-end-rgb: 255, 255, 255;
 }
 
 ::-webkit-scrollbar {
-  width: 13px;
+    width: 13px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(var(--foreground-rgb), 0.2);
+    background-color: rgba(var(--foreground-rgb), 0.2);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(var(--foreground-rgb), 0.5);
+    background-color: rgba(var(--foreground-rgb), 0.5);
 }
 
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+    :root {
+        --foreground-rgb: 255, 255, 255;
+        --background-start-rgb: 0, 0, 0;
+        --background-end-rgb: 0, 0, 0;
+    }
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+    color: rgb(var(--foreground-rgb));
+    background: linear-gradient(
+            to bottom,
+            transparent,
+            rgb(var(--background-end-rgb))
+    ) rgb(var(--background-start-rgb));
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+    .text-balance {
+        text-wrap: balance;
+    }
 }

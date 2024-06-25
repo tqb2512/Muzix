@@ -1,7 +1,7 @@
 "use client";
 import React, {useEffect} from "react";
-import { useSupabase } from "@/libs/Supabase/SupabaseProvider";
-import { useRouter } from "next/navigation";
+import {useSupabase} from "@/libs/Supabase/SupabaseProvider";
+import {useRouter} from "next/navigation";
 import Link from "next/link";
 
 export default function UpdatePasswordForm() {
@@ -11,7 +11,7 @@ export default function UpdatePasswordForm() {
     const [password, setPassword] = React.useState("");
     const [error, setError] = React.useState<string | null>(null);
 
-    const { client } = useSupabase();
+    const {client} = useSupabase();
 
     const handleUpdatePassword = async () => {
         if (!password) {

@@ -1,10 +1,10 @@
 import * as albumsAPI from "@/libs/Redux/features/apiSlices/albums";
-import { album, artist } from "@prisma/client";
+import {album, artist} from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function AlbumBox({ album, artist }: { album: album, artist: artist }) {
-    const { data } = albumsAPI.useGetCoverByIdQuery(album.album_id)
+export default function AlbumBox({album, artist}: { album: album, artist: artist }) {
+    const {data} = albumsAPI.useGetCoverByIdQuery(album.album_id)
 
     return (
         <Link

@@ -1,4 +1,4 @@
-import { album, artist, playlist, section, section_albums, section_artists, section_playlists } from "@prisma/client";
+import {album, artist, playlist, section, section_albums, section_artists, section_playlists} from "@prisma/client";
 import AlbumBox from "./Album";
 import ArtistBox from "./Artist";
 import PlaylistBox from "./Playlist";
@@ -23,7 +23,7 @@ function sortByCreatedAt(a: any, b: any) {
     return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
 }
 
-export default function Section({ section }: { section: Section }) {
+export default function Section({section}: { section: Section }) {
 
     const items = [...section.section_albums, ...section.section_artists, ...section.section_playlists]
     const [numOfCols, setNumOfCols] = useState(6);
@@ -35,11 +35,11 @@ export default function Section({ section }: { section: Section }) {
             return null
         }
         if ('album' in item) {
-            return <AlbumBox key={index} album={item.album} artist={item.album.artist} />
+            return <AlbumBox key={index} album={item.album} artist={item.album.artist}/>
         } else if ('artist' in item) {
-            return <ArtistBox key={index} artist={item.artist} />
+            return <ArtistBox key={index} artist={item.artist}/>
         } else if ('playlist' in item) {
-            return <PlaylistBox key={index} playlist={item.playlist} />
+            return <PlaylistBox key={index} playlist={item.playlist}/>
         }
     })
 

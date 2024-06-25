@@ -1,5 +1,5 @@
 "use server";
-import { createClient } from "../server";
+import {createClient} from "../server";
 
 export async function readUserSession() {
     const supabase = createClient();

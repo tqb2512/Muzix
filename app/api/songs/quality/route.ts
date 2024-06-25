@@ -1,13 +1,13 @@
-import { NextResponse } from "next/server";
-import { ListObjectsV2Command } from "@aws-sdk/client-s3";
-import { s3Client } from "@/app/api/base";
+import {NextResponse} from "next/server";
+import {ListObjectsV2Command} from "@aws-sdk/client-s3";
+import {s3Client} from "@/app/api/base";
 
 
 export async function GET(req: Request) {
     const id = new URL(req.url).searchParams.get("id") || ""
 
     if (id === "") {
-        return NextResponse.json({ error: "No id provided" }, { status: 400 });
+        return NextResponse.json({error: "No id provided"}, {status: 400});
     }
 
     const data = await s3Client.send(new ListObjectsV2Command({
@@ -22,5 +22,5 @@ export async function GET(req: Request) {
     });
     quality?.shift();
 
-    return NextResponse.json({ quality }, { status: 200 });
+    return NextResponse.json({quality}, {status: 200});
 }

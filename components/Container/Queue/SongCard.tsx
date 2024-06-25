@@ -1,9 +1,9 @@
-import { album, artist, artist_contribute_song, song } from "@prisma/client";
+import {album, artist, artist_contribute_song, song} from "@prisma/client";
 import * as albumsAPI from "@/libs/Redux/features/apiSlices/albums";
 import Image from "next/image";
 import Link from "next/link";
 import * as queue from "@/libs/Redux/features/slices/queue";
-import { useDispatch } from "react-redux";
+import {useDispatch} from "react-redux";
 
 interface Song extends song {
     album: album & {
@@ -14,10 +14,10 @@ interface Song extends song {
     }[];
 }
 
-export default function SongCard({ song, index }: { song: Song, index: number }) {
+export default function SongCard({song, index}: { song: Song, index: number }) {
 
     const dispatch = useDispatch();
-    const { data: albumCoverUrl } = albumsAPI.useGetCoverByIdQuery(song.album.album_id);
+    const {data: albumCoverUrl} = albumsAPI.useGetCoverByIdQuery(song.album.album_id);
 
     const handleDoubleClick = () => {
         dispatch(queue.playAtIndex(index));
@@ -42,11 +42,13 @@ export default function SongCard({ song, index }: { song: Song, index: number })
                     </div>
                     <div className="flex space-x-3">
                         <div className="flex-shrink-0">
-                            <Image src={albumCoverUrl?.url || "/next.svg"} alt="Album cover" width={40} height={40} className="rounded-md flex-shrink-0" />
+                            <Image src={albumCoverUrl?.url || "/next.svg"} alt="Album cover" width={40} height={40}
+                                   className="rounded-md flex-shrink-0"/>
                         </div>
 
                         <div className="flex flex-col justify-between">
-                            <div className={`${index === 0 ? "text-green-500" : "text-white"} overflow-hidden truncate`}>
+                            <div
+                                className={`${index === 0 ? "text-green-500" : "text-white"} overflow-hidden truncate`}>
                                 {song?.name}
                             </div>
                             <div className="text-xs">
@@ -58,7 +60,8 @@ export default function SongCard({ song, index }: { song: Song, index: number })
                                 </Link>
                                 {song?.artist_contribute_song.map((artist) => {
                                     return (
-                                        <Link key={artist.artist.artist_id} href={`/artists/${artist.artist.artist_id}`} className="hover:text-white hover:underline">
+                                        <Link key={artist.artist.artist_id} href={`/artists/${artist.artist.artist_id}`}
+                                              className="hover:text-white hover:underline">
                                             <span>, {artist.artist.name}</span>
                                         </Link>
                                     );

@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
-import { prisma } from "@/app/api/base";
+import {NextResponse} from "next/server";
+import {prisma} from "@/app/api/base";
 
 export async function GET(req: Request) {
 
@@ -8,5 +8,5 @@ export async function GET(req: Request) {
     const playlists = await prisma.playlist.findMany({
         take: parseInt(limit),
     });
-    return NextResponse.json({ playlists }, { status: 200 });
+    return NextResponse.json({playlists}, {status: 200});
 }

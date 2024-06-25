@@ -1,15 +1,15 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { persistStore, persistReducer, FLUSH, REHYDRATE, REGISTER, PAUSE, PERSIST, PURGE } from "redux-persist";
+import {combineReducers, configureStore} from "@reduxjs/toolkit";
+import {persistReducer, persistStore} from "redux-persist";
 import createWebStorage from "redux-persist/es/storage/createWebStorage";
 import player from "./features/slices/player";
 import queue from "./features/slices/queue";
 import user from "./features/slices/user";
-import { songsAPI } from "./features/apiSlices/songs";
-import { albumsAPI } from "./features/apiSlices/albums";
-import { playlistsAPI } from "./features/apiSlices/playlists";
-import { sectionsAPI } from "./features/apiSlices/sections";
-import { artistsAPI } from "./features/apiSlices/artists";
-import { usersAPI } from "./features/apiSlices/users";
+import {songsAPI} from "./features/apiSlices/songs";
+import {albumsAPI} from "./features/apiSlices/albums";
+import {playlistsAPI} from "./features/apiSlices/playlists";
+import {sectionsAPI} from "./features/apiSlices/sections";
+import {artistsAPI} from "./features/apiSlices/artists";
+import {usersAPI} from "./features/apiSlices/users";
 
 const rootReducer = combineReducers({
     player,
@@ -40,6 +40,7 @@ export function createPersistStore() {
     }
     return createWebStorage("local");
 }
+
 const storage = typeof window !== "undefined"
     ? createWebStorage("local")
     : createPersistStore();

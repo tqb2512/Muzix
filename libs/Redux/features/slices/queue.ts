@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { song } from "@prisma/client";
-import { setSong } from "./player";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {song} from "@prisma/client";
+import {setSong} from "./player";
 
 export interface Queue {
     songs: song[];
@@ -45,5 +45,5 @@ const queueSlice = createSlice({
     },
 });
 
-export const { play, clear, push, shift, removeAtIndex, playAtIndex } = queueSlice.actions;
+export const {play, clear, push, shift, removeAtIndex, playAtIndex} = queueSlice.actions;
 export default queueSlice.reducer;

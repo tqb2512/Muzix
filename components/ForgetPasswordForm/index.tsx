@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
-import { useSupabase } from "@/libs/Supabase/SupabaseProvider";
-import { useRouter } from "next/navigation";
+import {useSupabase} from "@/libs/Supabase/SupabaseProvider";
+import {useRouter} from "next/navigation";
 import Link from "next/link";
 
 export default function ForgetPasswordForm() {
@@ -9,10 +9,10 @@ export default function ForgetPasswordForm() {
     const router = useRouter();
     const [email, setEmail] = React.useState("");
     const [error, setError] = React.useState<string | null>(null);
-    const { client } = useSupabase();
+    const {client} = useSupabase();
 
     const handleForgetPassword = async () => {
-        const { error } = await client.auth.resetPasswordForEmail(email, {
+        const {error} = await client.auth.resetPasswordForEmail(email, {
             redirectTo: "http://localhost:3000/update-password",
         });
 

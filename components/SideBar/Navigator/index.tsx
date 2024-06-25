@@ -20,14 +20,14 @@ const navigators: NavigatorProps[] = [
     }
 ]
 
-export default function NavigatorSection({ isExpanded = true }: { isExpanded?: boolean }) {
+export default function NavigatorSection({isExpanded = true}: { isExpanded?: boolean }) {
     return (
         <div className="rounded-lg bg-dark-background">
             {navigators.map((navigator, index) => (
                 <Link href={navigator.link} key={index}
-                    className="font-bold flex ml-2 items-center p-4 text-gray-button hover:text-white transition-all duration-300 ease-in-out"
+                      className="font-bold flex ml-2 items-center p-4 text-gray-button hover:text-white transition-all duration-300 ease-in-out"
                 >
-                    <navigator.icon className="w-7 h-7 mr-4 fill-current flex-shrink-0" />
+                    <navigator.icon className="w-7 h-7 mr-4 fill-current flex-shrink-0"/>
                     {isExpanded && navigator.title}
                 </Link>
             ))}

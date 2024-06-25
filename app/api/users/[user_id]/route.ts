@@ -1,14 +1,14 @@
-import { NextResponse } from "next/server";
-import { prisma, s3Client } from "@/app/api/base";
-import { PutObjectCommand } from "@aws-sdk/client-s3";
-import { readFile, readFileSync } from "fs";
+import {NextResponse} from "next/server";
+import {prisma, s3Client} from "@/app/api/base";
+import {PutObjectCommand} from "@aws-sdk/client-s3";
+import {readFileSync} from "fs";
 
 export async function GET(req: Request) {
 
     const user_id = req.url.split("/").pop() || "";
 
     if (user_id === "") {
-        return NextResponse.json({ error: "No user_id provided" }, { status: 400 });
+        return NextResponse.json({error: "No user_id provided"}, {status: 400});
     }
 
     const user = await prisma.user.findUnique({
@@ -57,16 +57,16 @@ export async function GET(req: Request) {
         }
     });
 
-    return NextResponse.json({ user }, { status: 200 });
+    return NextResponse.json({user}, {status: 200});
 }
 
 export async function POST(req: Request) {
-    const { action, type, id } = await req.json();
+    const {action, type, id} = await req.json();
     const user_id = req.url.split("/").pop()?.split("?")[0] || "";
     const playlist_id = new URL(req.url).searchParams.get("playlist_id") || ""
 
     if (user_id === "") {
-        return NextResponse.json({ error: "No user_id provided" }, { status: 400 });
+        return NextResponse.json({error: "No user_id provided"}, {status: 400});
     }
 
     switch (action) {
@@ -97,7 +97,7 @@ export async function POST(req: Request) {
                     });
                     break;
                 default:
-                    return NextResponse.json({ error: "Invalid type" }, { status: 400 });
+                    return NextResponse.json({error: "Invalid type"}, {status: 400});
             }
             break;
         case "like":
@@ -119,7 +119,7 @@ export async function POST(req: Request) {
                     });
                     break;
                 default:
-                    return NextResponse.json({ error: "Invalid type" }, { status: 400 });
+                    return NextResponse.json({error: "Invalid type"}, {status: 400});
             }
             break;
         case "unfollow":
@@ -155,7 +155,7 @@ export async function POST(req: Request) {
                     });
                     break;
                 default:
-                    return NextResponse.json({ error: "Invalid type" }, { status: 400 });
+                    return NextResponse.json({error: "Invalid type"}, {status: 400});
             }
             break;
         case "unlike":
@@ -181,7 +181,7 @@ export async function POST(req: Request) {
                     });
                     break;
                 default:
-                    return NextResponse.json({ error: "Invalid type" }, { status: 400 });
+                    return NextResponse.json({error: "Invalid type"}, {status: 400});
             }
             break;
         case "create":
@@ -236,8 +236,8 @@ export async function POST(req: Request) {
             }
             break;
         default:
-            return NextResponse.json({ error: "Invalid action" }, { status: 400 });
+            return NextResponse.json({error: "Invalid action"}, {status: 400});
     }
 
-    return NextResponse.json({ success: true }, { status: 200 });
+    return NextResponse.json({success: true}, {status: 200});
 }

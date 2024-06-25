@@ -13,9 +13,9 @@ function sortByCreatedAt(a: any, b: any) {
     return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
 }
 
-export default function SectionContainer({ section_id }: SectionContainerProps) {
+export default function SectionContainer({section_id}: SectionContainerProps) {
 
-    const { data: section } = sectionsAPI.useGetSectionByIdQuery(section_id);
+    const {data: section} = sectionsAPI.useGetSectionByIdQuery(section_id);
     const [numOfCols, setNumOfCols] = useState(6);
     const containerRef = useRef<HTMLDivElement>(null);
     const items = [...(section?.section?.section_albums || []), ...(section?.section?.section_artists || []), ...(section?.section?.section_playlists || [])]
@@ -24,11 +24,11 @@ export default function SectionContainer({ section_id }: SectionContainerProps) 
     const renderItems = items.map((item, index) => {
 
         if ('album' in item) {
-            return <AlbumBox key={index} album={item.album} artist={item.album.artist} />
+            return <AlbumBox key={index} album={item.album} artist={item.album.artist}/>
         } else if ('artist' in item) {
-            return <ArtistBox key={index} artist={item.artist} />
+            return <ArtistBox key={index} artist={item.artist}/>
         } else if ('playlist' in item) {
-            return <PlaylistBox key={index} playlist={item.playlist} />
+            return <PlaylistBox key={index} playlist={item.playlist}/>
         }
     })
 

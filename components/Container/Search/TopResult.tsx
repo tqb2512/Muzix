@@ -1,12 +1,12 @@
-import { Result } from "@/app/api/search/route";
-import { useEffect, useState } from "react";
+import {Result} from "@/app/api/search/route";
+import {useEffect, useState} from "react";
 import Image from "next/image";
 
 interface TopResultBoxProps {
     searchResults: Result;
 }
 
-export default function TopResultBox({ searchResults }: TopResultBoxProps) {
+export default function TopResultBox({searchResults}: TopResultBoxProps) {
 
     const [coverUrl, setCoverUrl] = useState<string>("");
 
@@ -39,7 +39,7 @@ export default function TopResultBox({ searchResults }: TopResultBoxProps) {
                     <div className="h-full w-full p-6 flex flex-col justify-between">
                         <div className="size-32 rounded-md overflow-hidden relative shrink-0">
                             <Image src={coverUrl || "/next.svg"} alt="Album cover" fill sizes="128px"
-                                className="object-cover" />
+                                   className="object-cover"/>
                         </div>
                         <div>
                             <h1 className="text-2xl font-bold truncate">{searchResults.topResult?.name}</h1>
@@ -53,7 +53,7 @@ export default function TopResultBox({ searchResults }: TopResultBoxProps) {
 
                         <div className="size-32 rounded-full overflow-hidden relative shrink-0">
                             <Image src={coverUrl || "/next.svg"} alt="Artist cover" fill sizes="128px"
-                                className="object-cover" />
+                                   className="object-cover"/>
                         </div>
                         <div>
                             <h1 className="text-2xl font-bold truncate">{searchResults.topResult?.name}</h1>
@@ -67,7 +67,7 @@ export default function TopResultBox({ searchResults }: TopResultBoxProps) {
 
                         <div className="size-32 rounded-md overflow-hidden relative shrink-0">
                             <Image src={coverUrl || "/next.svg"} alt="Playlist cover" fill sizes="128px"
-                                className="object-cover" />
+                                   className="object-cover"/>
                         </div>
                         <div>
                             <h1 className="text-2xl font-bold truncate">{searchResults.topResult?.name}</h1>
@@ -81,7 +81,7 @@ export default function TopResultBox({ searchResults }: TopResultBoxProps) {
 
                         <div className="size-32 rounded-md overflow-hidden relative shrink-0">
                             <Image src={coverUrl || "/next.svg"} alt="Song cover" fill sizes="128px"
-                                className="object-cover" />
+                                   className="object-cover"/>
                         </div>
                         <div>
                             <h1 className="text-2xl font-bold truncate">{searchResults.topResult?.name}</h1>
@@ -99,7 +99,8 @@ export default function TopResultBox({ searchResults }: TopResultBoxProps) {
     }
 
     return (
-        <div className="mt-4 sm:w-full lg:w-[24rem] h-[15.5rem] rounded-lg bg-opacity-30 bg-hover-gray-background hover:bg-opacity-100">
+        <div
+            className="mt-4 sm:w-full lg:w-[24rem] h-[15.5rem] rounded-lg bg-opacity-30 bg-hover-gray-background hover:bg-opacity-100">
             {renderTopResult()}
         </div>
     )

@@ -1,10 +1,10 @@
 import * as playlistsAPI from "@/libs/Redux/features/apiSlices/playlists";
-import { playlist } from "@prisma/client";
+import {playlist} from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function PlaylistBox({ playlist }: { playlist: playlist }) {
-    const { data } = playlistsAPI.useGetCoverByIdQuery(playlist.playlist_id)
+export default function PlaylistBox({playlist}: { playlist: playlist }) {
+    const {data} = playlistsAPI.useGetCoverByIdQuery(playlist.playlist_id)
 
     return (
         <Link

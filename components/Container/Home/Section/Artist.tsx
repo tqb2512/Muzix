@@ -1,10 +1,10 @@
 import * as artistsAPI from "@/libs/Redux/features/apiSlices/artists";
-import { artist } from "@prisma/client";
+import {artist} from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function ArtistBox({ artist }: { artist: artist }) {
-    const { data } = artistsAPI.useGetCoverByIdQuery(artist.artist_id)
+export default function ArtistBox({artist}: { artist: artist }) {
+    const {data} = artistsAPI.useGetCoverByIdQuery(artist.artist_id)
 
     return (
         <Link

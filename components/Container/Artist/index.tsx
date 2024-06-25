@@ -7,24 +7,24 @@ import * as usersAPI from "@/libs/Redux/features/apiSlices/users";
 import * as userSlice from "@/libs/Redux/features/slices/user";
 import * as queueSlice from "@/libs/Redux/features/slices/queue";
 import Image from "next/image";
-import React, { useContext, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/libs/Redux/store";
-import { ColorContext } from "@/components/MainPanel/ColorContext";
-import { artist } from "@prisma/client";
+import React, {useContext, useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "@/libs/Redux/store";
+import {ColorContext} from "@/components/MainPanel/ColorContext";
+import {artist} from "@prisma/client";
 
 interface ArtistContainerProps {
     artist_id: string;
 }
 
-export default function ArtistContainer({ artist_id }: ArtistContainerProps) {
+export default function ArtistContainer({artist_id}: ArtistContainerProps) {
 
     const dispatch = useDispatch();
     const user = useSelector((state: RootState) => state.user);
-    const { color } = useContext(ColorContext);
-    const { data: artist } = artistsAPI.useGetInfoByIdQuery(artist_id);
-    const { data: coverUrl } = artistsAPI.useGetCoverByIdQuery(artist_id);
-    const { data: songs } = artistsAPI.useGetSongsByIdQuery(artist_id);
+    const {color} = useContext(ColorContext);
+    const {data: artist} = artistsAPI.useGetInfoByIdQuery(artist_id);
+    const {data: coverUrl} = artistsAPI.useGetCoverByIdQuery(artist_id);
+    const {data: songs} = artistsAPI.useGetSongsByIdQuery(artist_id);
     const [action, setAction] = React.useState<"Follow" | "Unfollow">("Follow");
     const [sendAction] = usersAPI.useSendActionMutation();
 
@@ -64,13 +64,13 @@ export default function ArtistContainer({ artist_id }: ArtistContainerProps) {
 
     return (
         <div className="bg-gradient-to-b from-transparent to-dark-background to-[50dvh]"
-            style={{ backgroundColor: color }}>
+             style={{backgroundColor: color}}>
             <div className="px-6 pb-6 flex">
                 <div className="h-52 w-52 rounded-full overflow-hidden relative flex-shrink-0">
                     <Image
                         id="coverImage"
                         src={coverUrl?.url || "/next.svg"} alt="Artist cover" fill sizes="208px"
-                        className="object-cover" />
+                        className="object-cover"/>
                 </div>
                 <div className="ml-5 flex flex-col justify-end mb-2 space-y-2">
                     <div className="text-sm">Artist</div>
@@ -87,14 +87,14 @@ export default function ArtistContainer({ artist_id }: ArtistContainerProps) {
                         <button
                             onClick={handlePlay}
                             className="rounded-full bg-green-500 h-12 w-12 flex items-center justify-center">
-                            <Icons.Play className="w-5 h-5 fill-current text-black" />
+                            <Icons.Play className="w-5 h-5 fill-current text-black"/>
                         </button>
                         <button
                             onClick={() => {
                                 document.getElementById("artist-dropdown")?.classList.toggle("hidden");
                             }}
                             className="rounded-full bg-transparent h-12 w-12 flex items-center justify-center">
-                            <Icons.ThreeDots className="w-7 h-7 fill-current text-gray-button" />
+                            <Icons.ThreeDots className="w-7 h-7 fill-current text-gray-button"/>
                         </button>
                         <div
                             id="artist-dropdown"
@@ -115,9 +115,9 @@ export default function ArtistContainer({ artist_id }: ArtistContainerProps) {
 
                 <div>
                     <div className="text-2xl font-bold">Popular</div>
-                    <ListTable songs={songs?.songs || []} />
+                    <ListTable songs={songs?.songs || []}/>
                 </div>
-                <AlbumTable albums={artist?.artist.album || []} />
+                <AlbumTable albums={artist?.artist.album || []}/>
             </div>
         </div>
     )

@@ -4,7 +4,7 @@ export default function AppPage() {
 
     return (
         <div className="h-full">
-            <HomeContainer />
+            <HomeContainer/>
         </div>
     );
 }

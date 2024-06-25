@@ -1,9 +1,9 @@
-import { stripe } from "@/libs/Stripe/stripe";
-import { NextResponse } from "next/server";
-import { prisma} from "@/app/api/base";
+import {stripe} from "@/libs/Stripe/stripe";
+import {NextResponse} from "next/server";
+import {prisma} from "@/app/api/base";
 
 export async function POST(req: Request) {
-    const { subscription_id, user_id } = await req.json();
+    const {subscription_id, user_id} = await req.json();
 
     const subscription = await stripe.subscriptions.retrieve(subscription_id);
 
@@ -23,5 +23,5 @@ export async function POST(req: Request) {
         }
     });
 
-    return new NextResponse("Subscription canceled", { status: 200 });
+    return new NextResponse("Subscription canceled", {status: 200});
 }

@@ -1,9 +1,9 @@
 "use client";
-import { LibrarySection } from "./Library";
+import {LibrarySection} from "./Library";
 import NavigatorSection from "./Navigator";
-import { useRef, useState } from "react";
+import {useRef, useState} from "react";
 
-export default function SideBar({ className }: { className?: string }) {
+export default function SideBar({className}: { className?: string }) {
 
     const [isExpanded, setIsExpanded] = useState(true);
     const sideBarRef = useRef<HTMLDivElement>(null);
@@ -13,10 +13,10 @@ export default function SideBar({ className }: { className?: string }) {
             <div
                 ref={sideBarRef}
                 className="flex flex-col space-y-2 h-full"
-                style={{ width: "250px" }}
+                style={{width: "250px"}}
             >
-                <NavigatorSection isExpanded={isExpanded} />
-                <LibrarySection isExpanded={isExpanded} />
+                <NavigatorSection isExpanded={isExpanded}/>
+                <LibrarySection isExpanded={isExpanded}/>
             </div>
             <div
                 className="w-1 h-full hover:bg-neutral-800 transition-all duration-300 ease-in-out hover:cursor-grab"
@@ -28,8 +28,7 @@ export default function SideBar({ className }: { className?: string }) {
                         const newWidth = (width || 0) + (e.clientX - x);
                         if (newWidth > 250) {
                             sideBar?.style.setProperty("width", `${newWidth}px`);
-                        }
-                        else if (newWidth < 100) {
+                        } else if (newWidth < 100) {
                             sideBar?.style.setProperty("width", "74px");
                             setIsExpanded(false);
 

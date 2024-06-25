@@ -1,5 +1,5 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { section, section_albums, section_artists, section_playlists, album, artist, playlist } from "@prisma/client";
+import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
+import {album, artist, playlist, section, section_albums, section_artists, section_playlists} from "@prisma/client";
 
 export interface Section extends section {
     section_albums: section_albums & {
@@ -17,7 +17,7 @@ export interface Section extends section {
 
 export const sectionsAPI = createApi({
     reducerPath: "sections",
-    baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
+    baseQuery: fetchBaseQuery({baseUrl: "/api"}),
     endpoints: (builder) => ({
         getSections: builder.query<{ sections: Section[] }, number>({
             query: (limit) => `sections?limit=${limit}` as string,
@@ -28,4 +28,4 @@ export const sectionsAPI = createApi({
     }),
 });
 
-export const { useGetSectionsQuery, useGetSectionByIdQuery } = sectionsAPI;
+export const {useGetSectionsQuery, useGetSectionByIdQuery} = sectionsAPI;

@@ -1,5 +1,16 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { user, playlist, artist, album, song, user_following_artist, user_following_playlist, user_like_album, user_like_song, subscription } from "@prisma/client";
+import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
+import {
+    album,
+    artist,
+    playlist,
+    song,
+    subscription,
+    user,
+    user_following_artist,
+    user_following_playlist,
+    user_like_album,
+    user_like_song
+} from "@prisma/client";
 
 interface Response {
     url: string;
@@ -39,7 +50,7 @@ interface UserAction {
 
 export const usersAPI = createApi({
     reducerPath: "users",
-    baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
+    baseQuery: fetchBaseQuery({baseUrl: "/api"}),
     endpoints: (builder) => ({
         getCoverById: builder.query<Response, string>({
             query: (id) => `users/cover?id=${id}` as string,
@@ -54,17 +65,23 @@ export const usersAPI = createApi({
                 body: body,
             }),
         }),
-        getSubscription: builder.query<{result: subscription}, string>({
+        getSubscription: builder.query<{ result: subscription }, string>({
             query: (id) => `users/${id}/subscription` as string,
         }),
         updateCover: builder.mutation<void, { id: string, cover: string }>({
-            query: ({ id, cover }) => ({
+            query: ({id, cover}) => ({
                 url: `users/cover/update?id=${id}`,
                 method: "POST",
-                body: { cover },
+                body: {cover},
             }),
         }),
     }),
 });
 
-export const { useGetCoverByIdQuery, useGetUserByIdQuery, useSendActionMutation, useGetSubscriptionQuery, useUpdateCoverMutation } = usersAPI;
+export const {
+    useGetCoverByIdQuery,
+    useGetUserByIdQuery,
+    useSendActionMutation,
+    useGetSubscriptionQuery,
+    useUpdateCoverMutation
+} = usersAPI;

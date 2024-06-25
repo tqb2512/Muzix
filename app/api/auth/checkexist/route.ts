@@ -1,7 +1,7 @@
 import {prisma} from "@/app/api/base";
 import {NextResponse} from "next/server";
 
-export function GET (req: Request) {
+export function GET(req: Request) {
     const email = new URL(req.url).searchParams.get("email") || ""
     const username = new URL(req.url).searchParams.get("username") || ""
 

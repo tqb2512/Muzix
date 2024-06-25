@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
-import { prisma } from "@/app/api/base";
-import { song } from "@prisma/client";
+import {NextResponse} from "next/server";
+import {prisma} from "@/app/api/base";
+import {song} from "@prisma/client";
 
 export async function GET(req: Request) {
 
@@ -30,5 +30,5 @@ export async function GET(req: Request) {
         });
     }
 
-    return NextResponse.json({ songs }, { status: 200 });
+    return NextResponse.json({songs}, {status: 200});
 }

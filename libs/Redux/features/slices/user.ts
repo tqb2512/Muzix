@@ -1,7 +1,15 @@
-import { album, artist, playlist, song, user, user_following_artist, user_following_playlist, user_like_album, user_like_song } from "@prisma/client";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { remove } from "@supabase/storage-js/dist/module/lib/fetch";
-import { playlistsAPI } from "../apiSlices/playlists";
+import {
+    album,
+    artist,
+    playlist,
+    song,
+    user,
+    user_following_artist,
+    user_following_playlist,
+    user_like_album,
+    user_like_song
+} from "@prisma/client";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 export interface User extends user {
     playlist: playlist[];
@@ -125,5 +133,18 @@ const userSlice = createSlice({
     },
 });
 
-export const { setUser, clearUser, followArtist, unfollowArtist, likeAlbum, unlikeAlbum, likeSong, unlikeSong, followPlaylist, unfollowPlaylist, addPlaylist, removePlaylist } = userSlice.actions;
+export const {
+    setUser,
+    clearUser,
+    followArtist,
+    unfollowArtist,
+    likeAlbum,
+    unlikeAlbum,
+    likeSong,
+    unlikeSong,
+    followPlaylist,
+    unfollowPlaylist,
+    addPlaylist,
+    removePlaylist
+} = userSlice.actions;
 export default userSlice.reducer;

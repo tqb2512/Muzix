@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
-import { useSupabase } from "@/libs/Supabase/SupabaseProvider";
-import { useRouter } from "next/navigation";
+import {useSupabase} from "@/libs/Supabase/SupabaseProvider";
+import {useRouter} from "next/navigation";
 import Link from "next/link";
 import {readFileSync} from "fs";
 import Image from "next/image";
@@ -16,46 +16,46 @@ export default function SignupForm() {
     const [birthday, setBirthday] = React.useState<Date>(new Date());
     const [error, setError] = React.useState<string | null>(null);
 
-    const { client } = useSupabase();
+    const {client} = useSupabase();
 
     const handleSignup = async () => {
         const birthdayDate = `${birthday.getFullYear()}-${String(birthday.getMonth() + 1).padStart(2, '0')}-${String(birthday.getDate()).padStart(2, '0')}`;
 
         await fetch(`/api/auth/checkexist?email=${email}&username=${username}`)
-        .then(response => response.json())
-        .then(async data => {
-            if (data.email) {
-                setError("Email already exists");
-                return;
-            } else if (data.username) {
-                setError("Username already exists");
-                return;
-            } else {
-                const {error: error, data: user} = await client.auth.signUp({
-                    email,
-                    password,
-                    options: {
-                        data: {
-                            email,
-                            username,
-                            gender,
-                            birthday: birthdayDate
-                        }
-                    }
-                });
-
-                if (error) {
-                    setError(error.message);
+            .then(response => response.json())
+            .then(async data => {
+                if (data.email) {
+                    setError("Email already exists");
+                    return;
+                } else if (data.username) {
+                    setError("Username already exists");
+                    return;
                 } else {
-                    fetch(`/api/users/cover/update?id=${user.user?.id}`, {
-                        method: "POST",
-                        body: JSON.stringify({cover: ""})
+                    const {error: error, data: user} = await client.auth.signUp({
+                        email,
+                        password,
+                        options: {
+                            data: {
+                                email,
+                                username,
+                                gender,
+                                birthday: birthdayDate
+                            }
+                        }
                     });
-                    setError(null);
-                    router.push("/login");
+
+                    if (error) {
+                        setError(error.message);
+                    } else {
+                        fetch(`/api/users/cover/update?id=${user.user?.id}`, {
+                            method: "POST",
+                            body: JSON.stringify({cover: ""})
+                        });
+                        setError(null);
+                        router.push("/login");
+                    }
                 }
-            }
-        })
+            })
     }
 
 

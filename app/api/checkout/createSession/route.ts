@@ -1,8 +1,8 @@
-import { stripe } from "@/libs/Stripe/stripe";
-import { NextResponse } from "next/server";
+import {stripe} from "@/libs/Stripe/stripe";
+import {NextResponse} from "next/server";
 
 export async function POST(req: Request) {
-    const { customer_id } = await req.json();
+    const {customer_id} = await req.json();
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         mode: "subscription",
@@ -17,5 +17,5 @@ export async function POST(req: Request) {
         cancel_url: `${req.headers.get("origin")}/`,
     })
 
-    return new NextResponse(JSON.stringify({ id: session.id }), { status: 200 });
+    return new NextResponse(JSON.stringify({id: session.id}), {status: 200});
 }

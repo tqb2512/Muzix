@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
-import { useSupabase } from "@/libs/Supabase/SupabaseProvider";
-import { useRouter } from "next/navigation";
+import {useSupabase} from "@/libs/Supabase/SupabaseProvider";
+import {useRouter} from "next/navigation";
 import Link from "next/link";
 
 export default function LoginForm() {
@@ -10,10 +10,10 @@ export default function LoginForm() {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [error, setError] = React.useState<string | null>(null);
-    const { client } = useSupabase();
+    const {client} = useSupabase();
 
     const handleLogin = async () => {
-        const { error } = await client.auth.signInWithPassword({
+        const {error} = await client.auth.signInWithPassword({
             email,
             password,
         });
@@ -55,9 +55,10 @@ export default function LoginForm() {
                     >
                         Log In
                     </button>
-                    <hr className="border-gray-500" />
+                    <hr className="border-gray-500"/>
                     <div className="text-white text-center">
-                        Don&apos;t have an account? <Link href="/signup" className="text-green-500 hover:underline">Sign up</Link>
+                        Don&apos;t have an account? <Link href="/signup" className="text-green-500 hover:underline">Sign
+                        up</Link>
                     </div>
                 </div>
             </div>

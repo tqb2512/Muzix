@@ -1,8 +1,8 @@
 "use client"
 import Navbar from "./Navbar";
-import { useEffect, useState } from "react";
-import { ColorContext } from "@/components/MainPanel/ColorContext";
-import { usePathname } from "next/navigation";
+import {useEffect, useState} from "react";
+import {ColorContext} from "@/components/MainPanel/ColorContext";
+import {usePathname} from "next/navigation";
 
 function rgbToHex(uint8ClampedArrayElement: number, uint8ClampedArrayElement2: number, uint8ClampedArrayElement3: number) {
     return ((uint8ClampedArrayElement << 16) + (uint8ClampedArrayElement2 << 8) + uint8ClampedArrayElement3).toString(16).padStart(6, '0');
@@ -16,7 +16,7 @@ function darkenColor(color: string, amount: number) {
     return `#${((r << 16) + (g << 8) + b).toString(16).padStart(6, '0')}`;
 }
 
-export default function MainPanel({ children, }: Readonly<{ children: React.ReactNode; }>) {
+export default function MainPanel({children,}: Readonly<{ children: React.ReactNode; }>) {
     const pathName = usePathname();
     const [color, setColor] = useState("#121212");
 
@@ -45,10 +45,10 @@ export default function MainPanel({ children, }: Readonly<{ children: React.Reac
     }, [pathName]);
 
     return (
-        <ColorContext.Provider value={{ color, setColor }}>
+        <ColorContext.Provider value={{color, setColor}}>
             <div className="rounded-lg bg-dark-background h-full w-full overflow-hidden">
                 <div className="flex flex-col h-full">
-                    <Navbar />
+                    <Navbar/>
                     <div className="h-full overflow-y-auto">
                         {children}
                     </div>

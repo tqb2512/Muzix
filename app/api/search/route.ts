@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
-import { prisma, elastic } from "@/app/api/base";
-import { album, artist, playlist, song, user, artist_contribute_song } from "@prisma/client";
+import {NextResponse} from "next/server";
+import {elastic, prisma} from "@/app/api/base";
+import {album, artist, artist_contribute_song, playlist, song, user} from "@prisma/client";
 
 const SongsPoints = {
     liked: 0.3,
@@ -63,7 +63,7 @@ export async function GET(req: Request) {
     const userId = new URL(req.url).searchParams.get("userId") || "";
 
     if (!userId) {
-        return NextResponse.json({ error: "userId is required" }, { status: 400 });
+        return NextResponse.json({error: "userId is required"}, {status: 400});
     }
 
     const user = await prisma.user.findUnique({
@@ -89,7 +89,7 @@ export async function GET(req: Request) {
     });
 
     if (matchQueryResult.length === 0) {
-        return NextResponse.json({ error: "No results found" }, { status: 404 });
+        return NextResponse.json({error: "No results found"}, {status: 404});
     }
 
     let Result: Result = {
@@ -120,7 +120,6 @@ export async function GET(req: Request) {
         }
     });
 
-    
 
     const prismaAlbums = await prisma.album.findMany({
         where: {
@@ -241,5 +240,5 @@ export async function GET(req: Request) {
     Result.playlists = playlists.sort((a, b) => b.points - a.points);
     Result.topResult = Math.max(Result.songs[0]?.points || 0, Result.albums[0]?.points || 0, Result.artists[0]?.points || 0, Result.playlists[0]?.points || 0) === 0 ? null : [...Result.songs, ...Result.albums, ...Result.artists, ...Result.playlists].sort((a, b) => b.points - a.points)[0];
 
-    return NextResponse.json({ Result }, { status: 200 });
+    return NextResponse.json({Result}, {status: 200});
 }

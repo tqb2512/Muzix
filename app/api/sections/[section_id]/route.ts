@@ -1,11 +1,11 @@
-import { NextResponse } from "next/server";
-import { prisma } from "@/app/api/base";
+import {NextResponse} from "next/server";
+import {prisma} from "@/app/api/base";
 
 export async function GET(req: Request) {
     const section_id = req.url.split("/").pop() || "";
 
     if (section_id === "") {
-        return NextResponse.json({ error: "No section_id provided" }, { status: 400 });
+        return NextResponse.json({error: "No section_id provided"}, {status: 400});
     }
 
     const section = await prisma.section.findMany({
@@ -34,6 +34,6 @@ export async function GET(req: Request) {
             }
         }
     });
-    
-    return NextResponse.json({ section: section[0] }, { status: 200 });
+
+    return NextResponse.json({section: section[0]}, {status: 200});
 }
