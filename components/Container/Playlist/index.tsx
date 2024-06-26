@@ -129,7 +129,7 @@ export default function PlaylistContainer({playlist_id}: PlaylistContainerProps)
                             <Image src={profileUrl?.url || "/next.svg"} alt="Profile cover" fill sizes="24px"
                                    className="object-cover"/>
                         </div>
-                        <Link href={`/app/artist/${playlist?.playlist.user.user_id}`} className="hover:underline">{playlist?.playlist.user.username}</Link>
+                        <Link href={`/app/user/${playlist?.playlist.user.user_id}`} className="hover:underline">{playlist?.playlist.user.username}</Link>
                         <h4>&ensp;&bull; &ensp;{songs?.songs.length} songs,
                             about {toMMSS(songs?.songs.reduce((acc, song) => acc + song.duration_ms, 0) || 0)} minutes</h4>
                     </div>
