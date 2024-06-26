@@ -69,13 +69,13 @@ export default function ListItem({song, index}: ListItemProps) {
                 <div
                     id={`song-${song.song_id}-dropbox`}
                     className="z-50 hidden bg-neutral-800 rounded-md w-48 absolute right-4 p-1">
-                    <button
+                    <div
                         onClick={() => {
                             dispatch(queue.push(song));
                         }}
                         className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
                         <h1>Add to queue</h1>
-                    </button>
+                    </div>
                 </div>
             </button>
 

@@ -13,6 +13,8 @@ import {ColorContext} from "@/components/MainPanel/ColorContext";
 import {useDispatch, useSelector} from "react-redux";
 import {album, artist, song} from "@prisma/client";
 import {RootState} from "@/libs/Redux/store";
+import Link from "next/link";
+import {toMMSS} from "@/components/AudioPlayer";
 
 interface SongContainerProps {
     song_id: string;
@@ -80,7 +82,10 @@ export default function SongContainer({song_id}: SongContainerProps) {
                             <Image id="coverImage" src={profileUrl?.url || "/next.svg"} alt="Profile cover" fill
                                    sizes="24px" className="object-cover"/>
                         </div>
-                        <h4>{album?.album.artist.name}&ensp; &bull; &ensp;{album?.album.name} &ensp; &bull; &ensp; {song?.songs[0].duration_ms}</h4>
+                        <Link href={`/app/artist/${album?.album.artist.artist_id}`} className="hover:underline">{album?.album.artist.name}</Link>
+                        <h4>&ensp;&bull;&ensp;</h4>
+                        <Link href={`/app/album/${album?.album.album_id}`} className="hover:underline">{album?.album.name}</Link>
+                        <h4>&ensp;&bull; &ensp; {toMMSS(song?.songs[0].duration_ms || 0)}</h4>
                     </div>
                 </div>
             </div>

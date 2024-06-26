@@ -14,6 +14,7 @@ import {RootState} from "@/libs/Redux/store";
 import {skipToken} from "@reduxjs/toolkit/query";
 import {album, artist} from "@prisma/client";
 import {toMMSS} from "@/components/AudioPlayer";
+import Link from "next/link";
 
 interface AlbumContainerProps {
     album_id: string;
@@ -82,7 +83,8 @@ export default function AlbumContainer({album_id}: AlbumContainerProps) {
                             <Image src={profileUrl?.url || "/next.svg"} alt="Profile cover" fill sizes="24px"
                                    className="object-cover"/>
                         </div>
-                        <h4>{album?.album.artist.name}&ensp; &bull; &ensp;{songs?.songs.length} songs,
+                        <Link href={`/app/artist/${album?.album.artist.artist_id}`} className="hover:underline">{album?.album.artist.name}</Link>
+                        <h4>&ensp;&bull; &ensp;{songs?.songs.length} songs,
                             about {toMMSS(songs?.songs.reduce((acc, song) => acc + song.duration_ms, 0) || 0)} minutes</h4>
                     </div>
                 </div>
