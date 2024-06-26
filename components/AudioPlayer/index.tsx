@@ -24,10 +24,9 @@ export default function AudioPlayer({className}: { className?: string }) {
     const playerState = useSelector((state: RootState) => state.player);
     const queueState = useSelector((state: RootState) => state.queue);
     const audioRef = useRef<HTMLAudioElement>(null);
-    const user = useSelector((state: RootState) => state.user);
+    const userState = useSelector((state: RootState) => state.user);
     const {data: songUrl} = songsAPI.useGetFileByIdQuery(playerState.song.song_id || skipToken);
-    const {data: subscription} = usersAPI.useGetSubscriptionQuery(user?.user_id || skipToken);
-    const [isSubscribed, setIsSubscribed] = useState(true);
+    const {data: subscription} = usersAPI.useGetSubscriptionQuery(userState?.user_id || skipToken);
     const [isRepeat, setIsRepeat] = useState(false);
     const [isShuffle, setIsShuffle] = useState(false);
 
@@ -42,10 +41,9 @@ export default function AudioPlayer({className}: { className?: string }) {
             if (subscription?.result?.status != "active") {
                 audioRef.current?.pause();
                 dispatch(player.setStatus("paused"));
-                setIsSubscribed(false);
             }
         }
-    }, [playerState.status, subscription?.result?.status]);
+    }, [dispatch, playerState.status, subscription]);
 
     useEffect(() => {
         if (queueState.songs.length > 0) {
@@ -95,7 +93,7 @@ export default function AudioPlayer({className}: { className?: string }) {
                 <NowPlaying/>
 
                 {
-                    isSubscribed ?
+                    subscription?.result.status == "active" ?
                         <div className="flex flex-col items-center justify-center flex-grow space-y-2">
                             <div className="flex space-x-8">
                                 <button

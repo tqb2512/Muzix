@@ -10,7 +10,8 @@ export async function POST(req: Request) {
         },
         data: {
             gender: user.gender,
-            birthday: user.birthdate,
+            birthday: user.birthday,
+            email: user.email
         }
     });
 

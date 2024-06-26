@@ -151,7 +151,7 @@ export default function PlaylistContainer({playlist_id}: PlaylistContainerProps)
                         </button>
                         <div
                             id="album-dropdown"
-                            className="z-50 hidden bg-neutral-800 rounded-md w-48 relative top-16 right-14 p-1">
+                            className="z-50 hidden bg-neutral-800 rounded-md w-48 relative top-20 right-14 p-1">
                             <div className="flex flex-col justify-between w-full">
                                 <button
                                     onClick={handleFollow}

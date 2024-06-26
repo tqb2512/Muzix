@@ -1,5 +1,5 @@
 "use client";
-import {useEffect, useState} from "react";
+import { useState} from "react";
 import * as usersAPI from "@/libs/Redux/features/apiSlices/users";
 import {skipToken} from "@reduxjs/toolkit/query";
 import {stripeClient} from "@/libs/Stripe/stripeClient";
@@ -9,21 +9,18 @@ import Link from "next/link";
 import Image from "next/image";
 import {createClient} from "@/libs/Supabase/client";
 import {useRouter} from "next/navigation";
+import {RootState} from "@/libs/Redux/store";
 
 export default function AccountContainer() {
 
     const router = useRouter();
     const supabase = useSupabase();
-    const user = useSelector((state: any) => state.user);
-    const [userClone, setUserClone] = useState(user);
+    const userState = useSelector((state: RootState) => state.user);
+    const [userClone, setUserClone] = useState(userState);
     const [password, setPassword] = useState<string>("");
-    const [userId, setUserId] = useState<string | null>(null);
-    const {data: subscription} = usersAPI.useGetSubscriptionQuery(user?.user_id || skipToken);
-    const {data: profileUrl} = usersAPI.useGetCoverByIdQuery(user?.user_id || skipToken);
-
-    useEffect(() => {
-        console.log(subscription);
-    }, [subscription]);
+    const {data: subscription, refetch: refetchSub} = usersAPI.useGetSubscriptionQuery(userState?.user_id || skipToken);
+    const {data: profileUrl} = usersAPI.useGetCoverByIdQuery(userState?.user_id || skipToken);
+    const {refetch: retechUser} = usersAPI.useGetUserByIdQuery(userState?.user_id || skipToken);
 
     const handleSubscribe = async () => {
         const stripe = await stripeClient;
@@ -54,29 +51,48 @@ export default function AccountContainer() {
                 method: "POST",
                 body: JSON.stringify({
                     subscription_id: subscription?.result?.subscription_id,
-                    user_id: userId
+                    user_id: userState.user_id
                 })
+            }).then(() => {
+                refetchSub()
             })
         })
     }
 
+    function isValidTime(time: Date) {
+        const date = new Date(time);
+        return !isNaN(date.getTime());
+    }
+
     const handleSave = async () => {
-        if (userClone?.email != user?.email) {
-            await supabase.client.auth.updateUser({email: userClone?.email});
+        if (userClone?.email != userState?.email && userClone?.email) {
+            const {error} = await supabase.client.auth.updateUser({email: userClone?.email})
+            if (error) {
+                alert(error.message)
+                return;
+            }
             alert("Email updated, please verify your email")
         }
         if (password !== "") {
-            await supabase.client.auth.updateUser({password});
+            const {error} = await supabase.client.auth.updateUser({password})
+            if (error) {
+                alert(error.message)
+                return;
+            }
+            alert("Password updated")
         }
-        await fetch("api/users/update", {
-            method: "POST",
-            body: JSON.stringify({
-                user: userClone,
+        if (userState.birthday != userClone.birthday || userState.gender != userClone.gender || userClone?.email != userState?.email && userClone?.email) {
+            await fetch("api/users/update", {
+                method: "POST",
+                body: JSON.stringify({
+                    user: userClone,
+                })
+            }).then((res) => res.json()).then((data) => {
+                alert("Profile updated")
+                retechUser();
+                router.push("/app")
             })
-        }).then((res) => res.json()).then((data) => {
-            console.log(data);
-            alert("Profile updated")
-        })
+        }
     }
 
     return (
@@ -100,7 +116,7 @@ export default function AccountContainer() {
                         id="dropdown"
                         className="z-50 bg-neutral-800 rounded-md w-48 h-max right-6 top-16 absolute p-1 hidden">
                         <div className="flex flex-col justify-between w-full">
-                            <Link href={`/app/user/${user.user_id}`}
+                            <Link href={`/app/user/${userState.user_id}`}
                                   className="h-10 w-full hover:bg-neutral-700 rounded-sm flex items-center p-2">
                                 Profile
                             </Link>
@@ -128,7 +144,7 @@ export default function AccountContainer() {
                         <div className="flex flex-col justify-between h-full pb-4">
                             <h1 className="text-4xl text-green-400 font-semibold">Muzix Premium</h1>
                             {subscription?.result?.cancel_at?.toLocaleString().search("1970") ? (
-                                <h1>Canceling on {subscription?.result?.cancel_at?.toLocaleString()}</h1>
+                                <h1>Canceling on {new Date(subscription?.result?.cancel_at?.toLocaleString() || "").toLocaleDateString()}</h1>
                             ) : (
                                 <h1>Next payment
                                     on {new Date(subscription?.result?.current_period_end?.toLocaleString() || "").toLocaleDateString()}</h1>
@@ -161,7 +177,7 @@ export default function AccountContainer() {
                         />
                         <select
                             className="rounded-md p-3 bg-dark-background text-white border-2 border-gray-500"
-                            value={userClone?.gender}
+                            value={userClone?.gender || "male"}
                             onChange={(e) => setUserClone({...userClone, gender: e.target.value})}>
                             <option value="male">Male</option>
                             <option value="female">Female</option>
@@ -169,10 +185,10 @@ export default function AccountContainer() {
                         <input
                             className="rounded-md p-3 bg-dark-background text-white border-2 border-gray-500"
                             type="date" placeholder="Birthday"
-                            value={userClone?.birthday ? new Date(userClone.birthday).toISOString().split('T')[0] : ""}
+                            value={isValidTime(userClone?.birthday || new Date()) ? new Date(userClone?.birthday || new Date())?.toISOString().split("T")[0] : ""}
                             onChange={(e) => setUserClone({
                                 ...userClone,
-                                birthday: new Date(e.target.value).toISOString()
+                                birthday: new Date(e.target.value)
                             })}
                         />
                         <button

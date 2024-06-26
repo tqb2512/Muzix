@@ -90,7 +90,7 @@ export default function SearchContainer() {
                         {searchResults?.playlists?.length > 0 && (
                             <div>
                                 <h1 className="text-2xl font-bold">Playlists</h1>
-                                <div className="mt-2 grid grid-cols-6 gap-4">
+                                <div className="mt-2 grid grid-cols-5 gap-4">
                                     {searchResults?.playlists?.map((playlist) => (
                                         <PlaylistBox key={playlist.playlist_id} playlist={playlist}/>
                                     ))}

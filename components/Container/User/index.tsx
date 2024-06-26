@@ -19,6 +19,7 @@ export default function UserContainer({user_id}: UserContainerProps) {
     const {data: user} = usersAPI.useGetUserByIdQuery(user_id);
     const {color} = useContext(ColorContext);
     const [editImage, setEditImage] = useState<File | null>(null);
+    const [sendAction] = usersAPI.useSendActionMutation();
 
     const imageToBase64 = (file: File | null) => {
         if (!file) return Promise.resolve("");
@@ -28,6 +29,15 @@ export default function UserContainer({user_id}: UserContainerProps) {
                 resolve(reader.result as string);
             }
             reader.readAsDataURL(file);
+        })
+    }
+
+    const handleFollow = (action: any) => {
+        sendAction({
+            user_id: userState.user_id,
+            action: action,
+            type: "user",
+            id: user_id
         })
     }
 

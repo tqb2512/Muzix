@@ -97,7 +97,7 @@ export async function GET(req: Request) {
         songs: [],
         albums: [],
         artists: [],
-        playlists: []
+        playlists: [],
     }
 
     const prismaSongs = await prisma.song.findMany({
