@@ -24,6 +24,7 @@ export default function MainPanel({children,}: Readonly<{ children: React.ReactN
         setColor("#121212");
         const cover = document.getElementById("coverImage") as HTMLImageElement;
         if (cover) {
+            cover.crossOrigin = "";
             const loadImage = () => {
                 const canvas = document.createElement("canvas");
                 const ctx = canvas.getContext("2d");

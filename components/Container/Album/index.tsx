@@ -72,7 +72,9 @@ export default function AlbumContainer({album_id}: AlbumContainerProps) {
              style={{backgroundColor: color}}>
             <div className="px-6 pb-6 flex">
                 <div className="h-52 w-52 rounded-lg overflow-hidden relative flex-shrink-0">
-                    <Image id="coverImage" src={coverUrl?.url || "/next.svg"} alt="Playlist cover" fill sizes="208px"
+                    <Image id="coverImage" src={coverUrl?.url || "/next.svg"} alt="Album cover" fill sizes="208px"
+                           priority={true}
+                           crossOrigin={"anonymous"}
                            className="object-cover"/>
                 </div>
                 <div className="ml-5 flex flex-col justify-end mb-2 space-y-2">
